@@ -5,22 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>ObeSplit</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{background:#000;margin:0}
-.purple{background:#7A1EFF}
-.glow{background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-#editor{display:none}
-</style>
+<style>body{background:#000;margin:0}.purple{background:#7A1EFF}.glow{background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;} #editor{display:none}</style>
 </head>
 <body>
 
-<!-- ================= HOME - YOUR WORKING ONE ================= -->
+<!-- HOME -->
 <div id="home" class="max-w-[420px] mx-auto min-h-screen bg-black p-4 pb-[90px] flex flex-col">
-  <div onclick="fileIn.click()" class="purple rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2 active:scale-90">
-    <div class="text-[56px]">📹</div>
-    <div class="glow font-black text-[18px]">New video +</div>
+  <div onclick="document.getElementById('fileIn').click()" class="purple rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2">
+    <div class="text-[56px]">📹</div><div class="glow font-black text-[18px]">New video +</div>
   </div>
-
   <div class="flex gap-4 mt-4">
     <div class="flex flex-col gap-4">
       <div class="purple w-[110px] h-[110px] rounded-[14px] flex flex-col items-center justify-center"><div class="text-[36px]">🌀</div><div class="glow text-[11px] font-bold">Ai generator</div></div>
@@ -28,121 +21,73 @@ body{background:#000;margin:0}
     </div>
     <div class="purple flex-1 rounded-[14px] flex flex-col items-center justify-center"><div class="text-[68px]">📷</div><div class="glow font-black text-[18px]">Edit photo</div></div>
   </div>
-
-  <div class="flex justify-between items-center mt-8 px-1">
-    <div class="glow font-black text-[28px]">Projects</div>
-    <div class="text-[22px]">☰</div>
-  </div>
-
+  <div class="flex justify-between items-center mt-8 px-1"><div class="glow font-black text-[28px]">Projects</div><div class="text-[22px] text-white">☰</div></div>
   <div class="fixed bottom-0 left-0 right-0 max-w-[420px] mx-auto h-[72px] bg-black flex justify-around items-center border-t border-zinc-800">
     <div class="text-center"><div class="text-[22px]">✂️</div><div class="text-cyan-400 text-[12px] font-bold">Edit</div></div>
-    <div class="text-center opacity-60"><div class="text-[22px]">📄</div><div class="text-[11px]">Templates</div></div>
-    <div class="text-center opacity-60"><div class="text-[22px]">👤</div><div class="text-[11px]">Me</div></div>
+    <div class="text-center opacity-60"><div class="text-[22px]">📄</div><div class="text-white text-[11px]">Templates</div></div>
+    <div class="text-center opacity-60"><div class="text-[22px]">👤</div><div class="text-white text-[11px]">Me</div></div>
   </div>
 </div>
 
-<!-- ================= TIMELINE EDITOR - LIKE YOUR 2ND PICTURE ================= -->
+<!-- EDITOR -->
 <div id="editor" class="h-[100dvh] w-screen bg-[#0E0E0E] flex-col">
-
-  <!-- Top bar - X search Export -->
-  <div class="h-[48px] min-h-[48px] bg-[#1A1A1A] flex items-center justify-between px-4">
-    <div class="flex items-center gap-5">
-      <button onclick="goHome()" class="text-white text-[22px]">✕</button>
-      <span class="text-zinc-400 text-[18px]">🔍</span>
-    </div>
+  <div class="h-[48px] bg-[#1A1A1A] flex items-center justify-between px-4">
+    <div class="flex items-center gap-5"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span class="text-zinc-400">🔍</span></div>
     <button onclick="doExport()" class="bg-[#2EE5FF] text-black px-5 py-1.5 rounded-[8px] font-bold text-[14px]">Export</button>
   </div>
 
-  <!-- Preview - vertical 9:16 like CapCut -->
   <div class="flex-1 bg-[#0E0E0E] flex items-center justify-center relative">
-    <div class="w-[58%] max-w-[280px] aspect-[9/16] bg-black relative overflow-hidden rounded-sm">
-      <video id="vid" class="w-full h-full object-cover block bg-black" playsinline muted preload="auto" style="display:block; z-index:5;"></video>
-      <div id="ph" class="absolute inset-0 flex items-center justify-center text-zinc-600 text-[12px]">Pick video</div>
+    <div class="w-[58%] max-w-[280px] aspect-[9/16] bg-black relative overflow-hidden">
+      <video id="vid" class="w-full h-full object-contain block bg-black" playsinline muted preload="auto" style="z-index:10; display:block;"></video>
+      <div id="ph" class="absolute inset-0 flex items-center justify-center text-zinc-600 text-[12px] z-0">Pick video</div>
     </div>
   </div>
 
-  <!-- Controls: expand, play, PIP ON, undo, redo -->
-  <div class="h-[38px] min-h-[38px] bg-[#1A1A1A] flex items-center justify-between px-4 text-zinc-400">
-    <span class="text-[16px]">⛶</span>
-    <button onclick="toggle()" id="playBtn" class="bg-white text-black w-8 h-8 rounded-full flex items-center justify-center text-[14px]">▶</button>
-    <div class="flex items-center gap-4 text-[12px]"><span>🖼️ PIP <span class="bg-white text-black px-1 rounded text-[9px]">ON</span></span><span>↩️</span><span>↪️</span></div>
+  <div class="h-[38px] bg-[#1A1A1A] flex items-center justify-between px-4 text-zinc-400">
+    <span>⛶</span><button onclick="toggle()" id="playBtn" class="bg-white text-black w-8 h-8 rounded-full">▶</button>
+    <div class="flex gap-3 text-[11px]"><span>PIP ON</span><span>↩️</span><span>↪️</span></div>
   </div>
 
-  <!-- Time ruler -->
-  <div class="h-[24px] min-h-[24px] bg-[#1A1A1A] border-y border-zinc-800 flex items-center px-3 text-[11px] text-zinc-400 font-mono">
-    <span id="tTxt">00:00 / 00:13</span>
-    <div class="ml-auto flex gap-2 text-[10px]"><span>00:00</span><span>·</span><span>00:01</span><span>·</span><span>00:02</span><span>·</span><span>00:03</span><span>·</span><span>00:04</span></div>
-  </div>
+  <div class="h-[24px] bg-[#1A1A1A] border-y border-zinc-800 flex items-center px-3 text-[11px] text-zinc-400"><span id="tTxt">00:00 / 00:13</span></div>
 
-  <!-- Tracks -->
-  <div class="h-[180px] min-h-[180px] bg-[#1E1E1E] flex relative overflow-hidden">
-    <!-- left labels -->
-    <div class="w-[56px] bg-[#1E1E1E] border-r border-zinc-800 flex flex-col">
-      <div class="h-[46px] flex flex-col items-center justify-center border-b border-zinc-800"><span class="text-[14px]">🔊</span><span class="text-[8px] text-zinc-400">Mute<br>clip</span></div>
-      <div class="h-[36px] flex flex-col items-center justify-center border-b border-zinc-800"><span class="text-[12px]">✏️</span><span class="text-[8px] text-zinc-400">Cover</span></div>
-    </div>
-    <div class="w-[46px] bg-[#1E1E1E] border-r border-zinc-800 flex flex-col">
-      <div class="h-[46px] border-b border-zinc-800"></div>
-      <div class="h-[36px] flex items-center justify-center border-b border-zinc-800"><span class="text-[10px] text-zinc-500">♫</span></div>
-      <div class="h-[36px] flex items-center justify-center"><span class="text-[10px] text-zinc-500">T</span></div>
-    </div>
-
-    <!-- right timeline -->
-    <div class="flex-1 relative p-2 space-y-[8px]">
-      <div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-10 pointer-events-none"><div class="w-2 h-2 bg-white rotate-45 -ml-[3px]"></div></div>
-
-      <div class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-2 relative">
-        <div class="flex gap-[2px] w-[82%] h-[28px]"><div class="flex-1 bg-[#3A3A3A] rounded-[4px]"></div><div class="flex-1 bg-[#3A3A3A] rounded-[4px]"></div><div class="flex-1 bg-[#3A3A3A] rounded-[4px]"></div></div>
-        <div class="ml-auto w-8 h-8 bg-white rounded-[8px] flex items-center justify-center text-black font-bold">+</div>
-      </div>
-      <div onclick="addAudio()" class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add audio</div>
-      <div onclick="addText()" class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add text</div>
+  <div class="h-[180px] bg-[#1E1E1E] flex relative">
+    <div class="w-[56px] border-r border-zinc-800 flex flex-col"><div class="h-[46px] flex flex-col items-center justify-center border-b border-zinc-800"><span>🔊</span><span class="text-[7px] text-zinc-400">Mute clip</span></div><div class="h-[36px] flex flex-col items-center justify-center border-b border-zinc-800"><span class="text-[10px]">✏️</span><span class="text-[7px] text-zinc-400">Cover</span></div></div>
+    <div class="flex-1 relative p-2 space-y-2">
+      <div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-20"><div class="w-2 h-2 bg-white rotate-45 -ml-[3px]"></div></div>
+      <div class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-2"><div class="flex gap-1 w-[80%] h-[26px]"><div class="flex-1 bg-zinc-600 rounded"></div><div class="flex-1 bg-zinc-600 rounded"></div><div class="flex-1 bg-zinc-600 rounded"></div></div><div class="ml-auto w-8 h-8 bg-white rounded flex items-center justify-center text-black font-bold">+</div></div>
+      <div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add audio</div>
+      <div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add text</div>
     </div>
   </div>
 
-  <!-- Bottom tools - exact like your picture -->
-  <div class="h-[66px] min-h-[66px] bg-[#1A1A1A] border-t border-zinc-800 flex justify-around items-center px-1">
-    <div onclick="doSplit()" class="flex flex-col items-center"><span class="text-[20px]">✂️</span><span class="text-[11px] text-white">Edit</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🎵</span><span class="text-[11px] text-white">Audio</span></div>
-    <div onclick="addText()" class="flex flex-col items-center"><span class="text-[16px] font-bold">T</span><span class="text-[11px] text-white">Text</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">✨</span><span class="text-[11px] text-zinc-300">Effects</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🖼️</span><span class="text-[11px] text-zinc-300">Overlay</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">💬</span><span class="text-[11px] text-zinc-300">Captions</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🎨</span><span class="text-[11px] text-zinc-300">Filters</span></div>
+  <div class="h-[66px] bg-[#1A1A1A] border-t border-zinc-800 flex justify-around items-center">
+    <div class="flex flex-col items-center"><span>✂️</span><span class="text-[11px] text-white">Edit</span></div>
+    <div class="flex flex-col items-center"><span>🎵</span><span class="text-[11px] text-white">Audio</span></div>
+    <div class="flex flex-col items-center"><span>T</span><span class="text-[11px] text-white">Text</span></div>
+    <div class="flex flex-col items-center"><span>✨</span><span class="text-[11px] text-zinc-300">Effects</span></div>
+    <div class="flex flex-col items-center"><span>🖼️</span><span class="text-[11px] text-zinc-300">Overlay</span></div>
+    <div class="flex flex-col items-center"><span>💬</span><span class="text-[11px] text-zinc-300">Captions</span></div>
+    <div class="flex flex-col items-center"><span>🎨</span><span class="text-[11px] text-zinc-300">Filters</span></div>
   </div>
 </div>
 
-<input type="file" id="fileIn" hidden accept="video/*,image/*">
-<input type="file" id="audioIn" hidden accept="audio/*">
-
+<input type="file" id="fileIn" hidden accept="video/*">
 <script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), tTxt=document.getElementById('tTxt'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn');
-
+const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt');
 fileIn.onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
-  console.log('picked', f.name);
-  const url = URL.createObjectURL(f);
-  vid.src = url;
-  vid.muted = true;
-  vid.playsInline = true;
-  vid.preload = 'auto';
-  home.style.display='none';
-  editor.style.display='flex';
-  ph.style.display='none';
-  vid.style.display='block';
-
-  vid.onloadeddata = () => {
-    console.log('video loaded');
-    vid.play().then(()=>{ playBtn.textContent='⏸'; }).catch(()=>{});
-  };
+  const url=URL.createObjectURL(f);
+  vid.src=url; vid.muted=true; vid.playsInline=true;
+  home.style.display='none'; editor.style.display='flex';
+  ph.style.display='none'; vid.style.display='block';
+  vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; };
   vid.load();
 };
-
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.removeAttribute('src'); vid.load(); ph.style.display='flex'; playBtn.textContent='▶';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13); if(!isNaN(d)) tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; if(vid.ended) playBtn.textContent='▶';}
-function doSplit(){alert('Split at '+tTxt.textContent);}
-function addText(){const t=prompt('Enter text:'); if(!t) return; const el=document.createElement('div'); el.textContent=t; el.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:22px;font-weight:900;text-shadow:2px 2px 4px black;z-index:20;'; vid.parentElement.appendChild(el);}
-function addAudio(){document.getElementById('audioIn')?.click();}
-function doExport(){if(!vid.src){alert('No video'); return;} const a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
+function goHome(){ editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; }
+function toggle(){ if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';} }
+vid.ontimeupdate=()=>{ const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13); if(!isNaN(d)) tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; }
+function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
 </script>
+
+</body>
+</html>
