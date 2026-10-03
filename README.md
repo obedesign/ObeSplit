@@ -1,2 +1,2 @@
-# ObeSplit-
+# ObeSplit 
 Video editing app 
