@@ -2,69 +2,1280 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ObeSplit</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBE Video Editor</title>
+
 <style>
-*{ -webkit-tap-highlight-color:transparent; font-family: Inter,sans-serif }
-.glow{background:linear-gradient(90deg,#2EF2FF,#A66CFF,#FF6BFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.card{background:#6F2CFF;box-shadow:0 10px 25px rgba(111,44,255,.4)}
-#home{display:block} #editor{display:none}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #000;
+    color: white;
+    overflow-x: hidden;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+/* =========================
+   HOME PAGE
+========================= */
+
+.page {
+    min-height: 100vh;
+    background: #000;
+    display: none;
+    position: relative;
+}
+
+.page.active {
+    display: block;
+}
+
+.home {
+    min-height: 100vh;
+    padding: 35px 20px 100px;
+}
+
+/* New video */
+
+.new-video {
+    width: 100%;
+    max-width: 680px;
+    height: 270px;
+    margin: 0 auto 35px;
+    border-radius: 15px;
+
+    background:
+        radial-gradient(circle at 50% 20%,
+        rgba(0,255,255,.45),
+        transparent 35%),
+        linear-gradient(135deg,#6f16ff,#8d20ed);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        0 0 25px rgba(110,0,255,.4);
+}
+
+.video-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.video-screen {
+    width: 230px;
+    height: 120px;
+    border-radius: 30px;
+
+    background: linear-gradient(
+        145deg,
+        #10e8ff,
+        #006bff 55%,
+        #ff00bd
+    );
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.35),
+        inset 0 0 20px rgba(255,255,255,.25);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-icon {
+    width: 0;
+    height: 0;
+    border-top: 28px solid transparent;
+    border-bottom: 28px solid transparent;
+    border-left: 45px solid white;
+    margin-left: 10px;
+}
+
+.camera-side {
+    width: 65px;
+    height: 105px;
+    border-radius: 15px;
+    background: linear-gradient(
+        160deg,
+        #00eaff,
+        #006eff,
+        #ff00bf
+    );
+    clip-path: polygon(0 25%,100% 0,100% 100%,0 75%);
+}
+
+.new-video-title {
+    font-size: 35px;
+    font-weight: bold;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #16baff,
+        #ff43e7
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.plus {
+    color: #20e7ff;
+}
+
+/* Home cards */
+
+.home-grid {
+    max-width: 680px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.small-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.home-card {
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #7c18ee,
+        #6d24e7
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 20px rgba(255,255,255,.08),
+        0 8px 20px rgba(70,0,150,.25);
+}
+
+.small-card {
+    height: 150px;
+}
+
+.large-card {
+    height: 320px;
+}
+
+.card-icon {
+    font-size: 60px;
+
+    background: linear-gradient(
+        135deg,
+        #00eaff,
+        #0d9cff,
+        #ff00cc
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.card-text {
+    position: absolute;
+    bottom: 18px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #a0eaff,
+        #ff52e5
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.large-card .card-text {
+    font-size: 28px;
+}
+
+.projects {
+    max-width: 680px;
+    margin: 55px auto 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 38px;
+    font-weight: bold;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #00baff,
+        #ff4de5
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.menu-icon {
+    font-size: 35px;
+    background: linear-gradient(
+        180deg,
+        #00eaff,
+        #ff00d4
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Bottom navigation */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 85px;
+
+    background: rgba(0,0,0,.96);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border-top: 1px solid #151515;
+
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    color: white;
+    background: none;
+}
+
+.nav-icon {
+    font-size: 30px;
+
+    background: linear-gradient(
+        135deg,
+        #00eaff,
+        #ff00cc
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.nav-label {
+    font-size: 16px;
+    font-weight: bold;
+
+    background: linear-gradient(
+        90deg,
+        #00eaff,
+        #ff00cc
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* =========================
+   MEDIA SELECT PAGE
+========================= */
+
+.media-page {
+    min-height: 100vh;
+    padding: 25px 20px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.back {
+    font-size: 30px;
+    background: none;
+}
+
+.media-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.next-btn,
+.export-btn {
+    background: linear-gradient(
+        90deg,
+        #00cfff,
+        #08bde8
+    );
+
+    color: #001018;
+
+    padding: 12px 22px;
+    border-radius: 12px;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.pick-box {
+    max-width: 700px;
+    margin: auto;
+
+    min-height: 300px;
+
+    border: 2px dashed #333;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.upload-icon {
+    font-size: 60px;
+
+    background: linear-gradient(
+        135deg,
+        #00eaff,
+        #ff00cc
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.pick-button {
+    background: linear-gradient(
+        90deg,
+        #7a1cff,
+        #b000ff
+    );
+
+    padding: 15px 30px;
+    border-radius: 12px;
+
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#fileInput {
+    display: none;
+}
+
+.selected-files {
+    max-width: 700px;
+    margin: 25px auto;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.file-thumb {
+    height: 110px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #111;
+}
+
+.file-thumb img,
+.file-thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =========================
+   EDITOR
+========================= */
+
+.editor-page {
+    background: #111;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.editor-top {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 15px;
+
+    background: #141414;
+
+    gap: 20px;
+}
+
+.editor-top button {
+    background: none;
+    font-size: 25px;
+}
+
+.editor-spacer {
+    flex: 1;
+}
+
+.editor-export {
+    background: #12c9e9 !important;
+    color: #001015 !important;
+
+    padding: 11px 20px;
+
+    border-radius: 10px;
+
+    font-size: 16px !important;
+    font-weight: bold;
+}
+
+/* Preview */
+
+.preview-area {
+    height: 45vh;
+    min-height: 350px;
+
+    background: #111;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+#previewVideo,
+#previewImage {
+    max-width: 75%;
+    max-height: 90%;
+
+    display: none;
+
+    background: #000;
+}
+
+.empty-preview {
+    width: 55%;
+    height: 90%;
+
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #555;
+}
+
+.play-button {
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background: #222;
+
+    font-size: 22px;
+}
+
+/* Timeline */
+
+.timeline {
+    height: 220px;
+
+    background: #171717;
+
+    border-top: 1px solid #292929;
+
+    position: relative;
+
+    overflow-x: auto;
+}
+
+.timeline-inner {
+    min-width: 900px;
+    height: 100%;
+
+    position: relative;
+}
+
+.time-ruler {
+    height: 40px;
+
+    display: flex;
+
+    padding-left: 120px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+.time-mark {
+    width: 70px;
+    padding-top: 10px;
+}
+
+.track-label {
+    position: absolute;
+    left: 10px;
+    color: #888;
+    font-size: 12px;
+}
+
+.video-label {
+    top: 55px;
+}
+
+.audio-label {
+    top: 115px;
+}
+
+.text-label {
+    top: 165px;
+}
+
+.video-track {
+    position: absolute;
+
+    top: 45px;
+    left: 120px;
+
+    height: 55px;
+
+    display: flex;
+
+    gap: 3px;
+}
+
+.clip {
+    width: 140px;
+    height: 55px;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    background: #252525;
+
+    border: 1px solid #444;
+
+    position: relative;
+}
+
+.clip img,
+.clip video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.clip-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background: rgba(0,0,0,.6);
+
+    font-size: 9px;
+    padding: 3px;
+}
+
+/* Add tracks */
+
+.add-track {
+    position: absolute;
+
+    left: 120px;
+    right: 20px;
+
+    height: 42px;
+
+    background: #202020;
+
+    border-radius: 6px;
+
+    color: #999;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 15px;
+
+    font-size: 14px;
+}
+
+.audio-track {
+    top: 110px;
+}
+
+.text-track {
+    top: 160px;
+}
+
+.add-track:hover {
+    background: #292929;
+}
+
+/* Playhead */
+
+.playhead {
+    position: absolute;
+
+    top: 40px;
+    left: 120px;
+
+    width: 2px;
+    height: 180px;
+
+    background: #fff;
+
+    z-index: 20;
+}
+
+.playhead::before {
+    content: "";
+
+    position: absolute;
+
+    top: -5px;
+    left: -5px;
+
+    width: 12px;
+    height: 12px;
+
+    background: #fff;
+
+    border-radius: 50%;
+}
+
+/* Bottom editing tools */
+
+.tools {
+    height: 95px;
+
+    background: #111;
+
+    display: flex;
+
+    justify-content: space-around;
+    align-items: center;
+
+    border-top: 1px solid #222;
+}
+
+.tool {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #ddd;
+
+    background: none;
+
+    font-size: 13px;
+}
+
+.tool-icon {
+    font-size: 28px;
+}
+
+/* Responsive */
+
+@media(max-width:600px) {
+
+    .new-video {
+        height: 230px;
+    }
+
+    .video-screen {
+        width: 190px;
+        height: 100px;
+    }
+
+    .new-video-title {
+        font-size: 28px;
+    }
+
+    .large-card {
+        height: 250px;
+    }
+
+    .section-title {
+        font-size: 30px;
+    }
+
+    .preview-area {
+        height: 40vh;
+        min-height: 300px;
+    }
+
+    #previewVideo,
+    #previewImage {
+        max-width: 80%;
+    }
+}
 </style>
 </head>
-<body class="bg-black m-0">
 
-<!-- HOME - SHOWS FIRST -->
-<div id="home" class="max-w-[420px] mx-auto min-h-screen bg-black px-4 pt-8 pb-28">
-<div onclick="document.getElementById('fileIn').click()" class="card rounded-[26px] p-8 text-center active:scale-95">
-<div style="font-size:70px">📹</div>
-<div class="text-[28px] font-black glow mt-2">New video +</div>
-</div>
-<div class="grid grid-cols-5 gap-3 mt-4">
-<div class="col-span-2 space-y-3">
-<div class="card rounded-[20px] h-[110px] flex flex-col items-center justify-center"><div style="font-size:38px">🌀</div><div class="text-[11px] font-bold glow">Ai generator</div></div>
-<div class="card rounded-[20px] h-[110px] flex flex-col items-center justify-center"><div style="font-size:34px">☁️</div><div class="text-[11px] font-bold glow">Space</div></div>
-</div>
-<div class="col-span-3 card rounded-[20px] h-[232px] flex flex-col items-center justify-center"><div style="font-size:85px">📷</div><div class="text-[22px] font-bold glow">Edit photo</div></div>
-</div>
-<div class="flex justify-between items-center mt-8"><h2 class="text-[32px] font-black glow">Projects</h2><div class="flex flex-col gap-1.5"><div class="w-8 h-2 rounded-full bg-cyan-300"></div><div class="w-8 h-2 rounded-full bg-cyan-300"></div><div class="w-8 h-2 rounded-full bg-cyan-300"></div></div></div>
-<p class="text-zinc-600 text-sm mt-4">Tap New video + to start</p>
-<div class="fixed bottom-0 left-0 right-0 bg-black border-t border-zinc-900"><div class="max-w-[420px] mx-auto flex justify-around py-3 text-center"><div><div style="font-size:26px">🎬</div><div class="text-xs font-bold glow">Edit</div></div><div class="opacity-50"><div style="font-size:26px">🗂️</div><div class="text-xs">Templates</div></div><div class="opacity-50"><div style="font-size:26px">👤</div><div class="text-xs">Me</div></div></div></div>
-</div>
+<body>
 
-<!-- EDITOR - HIDDEN UNTIL VIDEO PICKED -->
-<div id="editor" class="h-screen w-screen bg-[#121212] flex-col">
-<div class="h-[48px] flex items-center justify-between px-3 bg-[#121212]">
-<div class="flex items-center gap-6"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span>🔍</span></div>
-<div class="flex items-center gap-2"><div class="w-28 h-9 bg-[#2A2A2A] rounded-lg"></div><button onclick="exportV()" class="bg-[#33E5F3] text-black font-bold px-5 py-2 rounded-xl text-sm">Export</button></div>
-</div>
-<div class="flex-1 bg-black relative flex items-center justify-center">
-<video id="vid" class="w-full h-full object-contain bg-black" playsinline muted controls></video>
-<div id="noVid" class="absolute text-zinc-500 text-center"><div style="font-size:50px">🎬</div><div class="text-sm mt-2">Picking video...</div></div>
-<div id="txtOver" class="absolute font-bold text-white text-2xl hidden pointer-events-none"></div>
-</div>
-<div class="h-11 bg-[#1A1A1A] border-y border-[#222] flex items-center justify-between px-4">
-47 <div class="h-11 bg-[#121212]...
-52 <div class="h-7 bg-[#121212]... <-- 00:00 time
-56 <div class="h-[140px] bg-[#0F0F0F]... <-- Mute clip + clip
-64 <div class="h-[48px] bg-[#121212]... <-- Edit Audio Text
- const f=e.target.files[0]; if(!f) return;
- const url=URL.createObjectURL(f);
- vid.src=url; vid.load();
- document.getElementById('noVid').style.display='none';
- home.style.display='none'; editor.style.display='flex';
- vid.onloadeddata=()=>{vid.play(); document.getElementById('playBtn').textContent='⏸'; upd()};
-});
-function goHome(){editor.style.display='none'; home.style.display='block'; vid.pause();}
-function toggle(){vid.paused?vid.play():vid.pause()}
-vid.onplay=()=>{document.getElementById('playBtn').textContent='⏸'}
-vid.onpause=()=>{document.getElementById('playBtn').textContent='▶'}
-vid.ontimeupdate=upd;
-function upd(){let c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||0); document.getElementById('tTxt').textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; let p=35+(vid.currentTime/(vid.duration||1))*55; document.getElementById('ph').style.left=p+'%';}
-function mute(){vid.muted=!vid.muted; document.getElementById('mic').textContent=vid.muted?'🔇':'🔊';}
-function split(){alert('Split at '+vid.currentTime.toFixed(1)+'s')}
-function addTxt(){let t=prompt('Text:'); if(!t) return; let o=document.getElementById('txtOver'); o.textContent=t; o.style.display='block'; o.style.top='30%';}
-function exportV(){let a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
-</script>
-</body>
-</html>
+<!-- ==================================================
+     HOME
+================================================== -->
+
+<section id="homePage" class="page active">
+
+    <div class="home">
+
+        <!-- NEW VIDEO -->
+        <button class="new-video" onclick="openMediaPage()">
+
+            <div class="video-logo">
+
+                <div class="video-screen">
+                    <div class="play-icon"></div>
+                </div>
+
+                <div class="camera-side"></div>
+
+            </div>
+
+            <div class="new-video-title">
+                New video <span class="plus">+</span>
+            </div>
+
+        </button>
+
+
+        <!-- HOME CARDS -->
+
+        <div class="home-grid">
+
+            <div class="small-column">
+
+                <button
+                    class="home-card small-card"
+                    onclick="alert('AI Generator coming soon')">
+
+                    <div class="card-icon">AI</div>
+                    <div class="card-text">AI Generator</div>
+
+                </button>
+
+
+                <button
+                    class="home-card small-card"
+                    onclick="alert('Cloud Space coming soon')">
+
+                    <div class="card-icon">☁</div>
+                    <div class="card-text">Space</div>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="home-card large-card"
+                onclick="alert('Photo editor coming soon')">
+
+                <div class="card-icon">◎</div>
+                <div class="card-text">Edit photo</div>
+
+            </button>
+
+        </div>
+
+
+        <!-- PROJECTS -->
+
+        <div class="projects">
+
+            <div class="section-title">
+                Projects
+            </div>
+
+            <div class="menu-icon">
+                ☰
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="bottom-nav">
+
+        <button class="nav-item">
+
+            <div class="nav-icon">✂</div>
+            <div class="nav-label">Edit</div>
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <div class="nav-icon">▣</div>
+            <div class="nav-label">Templates</div>
+
+        </button>
+
+
+        <button class="nav-item">
+
+            <div class="nav-icon">●</div>
+            <div class="nav-label">Me</div>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     MEDIA SELECT PAGE
+================================================== -->
+
+<section id="mediaPage" class="page">
+
+    <div class="media-page">
+
+        <div class="top-bar">
+
+            <button class="back" onclick="showHome()">
+                ×
+            </button>
+
+            <div class="media-title">
+                Select media
+            </div>
+
+            <button
+                class="next-btn"
+                onclick="openEditor()">
+
+                Next
+
+            </button>
+
+        </div>
+
+
+        <div class="pick-box">
+
+            <div class="upload-icon">
+                ＋
+            </div>
+
+            <h2>
+                Add photos or videos
+            </h2>
+
+            <p style="color:#777;">
+                Select one or multiple files
+            </p>
+
+            <label class="pick-button" for="fileInput">
+                Select from device
+            </label>
+
+            <input
+                id="fileInput"
+                type="file"
+                accept="video/*,image/*"
+                multiple
+                onchange="handleFiles(event)"
+            >
+
+        </div>
+
+
+        <div
+            id="selectedFiles"
+            class="selected-files">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     EDITOR
+================================================== -->
+
+<section id="editorPage" class="page editor-page">
+
+    <!-- TOP BAR -->
+
+    <div class="editor-top">
+
+        <button onclick="backToMedia()">
+            ×
+        </button>
+
+        <button>
+            🔍
+        </button>
+
+        <div class="editor-spacer"></div>
+
+        <button class="editor-export">
+            Export
+        </button>
+
+    </div>
+
+
+    <!-- PREVIEW -->
+
+    <div class="preview-area">
+
+        <div
+            id="emptyPreview"
+            class="empty-preview">
+
+            Preview
+
+        </div>
+
+        <video
+            id="previewVideo"
+            controls>
+        </video>
+
+        <img
+            id="previewImage">
+
+        <button
+            class="play-button"
+            onclick="togglePlay()">
+
+            ▶
+
+        </button>
+
+    </div>
+
+
+    <!-- TIMELINE -->
+
+    <div class="timeline" id="timeline">
+
+        <div class="timeline-inner">
+
+            <!-- TIME RULER -->
+
+            <div class="time-ruler">
+
+                <div class="time-mark">00:00</div>
+                <div class="time-mark">00:01</div>
+                <div class="time-mark">00:02</div>
+                <div class="time-mark">00:03</div>
+                <div class="time-mark">00:04</div>
+                <div class="time-mark">00:05</div>
+                <div class="time-mark">00:06</div>
+                <div class="time-mark">00:07</div>
+                <div class="time-mark">00:08</div>
+
+            </div>
+
+
+            <!-- TRACK LABELS -->
+
+            <div class="track-label video-label">
+                Video
+            </div>
+
+            <div class="track-label audio-label">
+                Audio
+            </div>
+
+            <div class="track-label text-label">
+                Text
+            </div>
+
+
+            <!-- VIDEO CLIPS -->
+
+            <div
+                id="videoTrack"
+                class="video-track">
+            </div>
+
+
+            <!-- AUDIO -->
+
+            <button
+                class="add-track audio-track">
+
+                ＋ Add audio
+
+            </button>
+
+
+            <!-- TEXT -->
+
+            <button
+                class="add-track text-track">
+
+                ＋ Add text
+
+            </button>
+
+
+            <!-- PLAYHEAD -->
+
+            <div
+                id="playhead"
+                class="playhead">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EDITING TOOLS -->
+
+    <div class="tools">
+
+        <button class="tool">
+            <div class="tool-icon">✂</div>
+            <div>Edit</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">♫</div>
+            <div>Audio</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">T</div>
+            <div>Text</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">☆</div>
+            <div>Effects</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">▧</div>
+            <div>Overlay</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">▤</div>
+            <div>Captions</div>
+        </button>
+
+        <button class="tool">
+            <div class="tool-icon">◌</div>
+            <div>Filters</div>
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* ================================================
+   GLOBAL DATA
+================================================ */
+
+let selectedFiles = [];
+
+let currentFileIndex = 0;
+
+
+/* ================================================
+   PAGE NAVIGATION
+================================================ */
+
+function showPage(id) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+}
+
+
+function showHome() {
+
+    showPage("homePage");
+
+}
+
+
+function openMediaPage() {
+
+    showPage("mediaPage");
+
+}
+
+
+function backToMedia() {
+
+    showPage("mediaPage");
+
+}
+
+
+function openEditor() {
+
+    if (selectedFiles.length === 0) {
+
+        alert("Please select a photo or video first.");
+
+        return;
+
+    }
+
+    showPage("editorPage");
+
+    buildTimeline();
+
+    showPreview(0);
+
+}
+
+
+/* ================================================
+   FILE SELECTION
+================================================ */
+
+function handleFiles(event) {
+
+    const files = Array.from(event.target.files);
+
+    selectedFiles = files;
+
+    const container =
+        document.getElementById("selectedFiles");
+
+    container.innerHTML = "";
+
+    files.forEach((file, index) => {
+
+        const box = document.createElement("div");
+
+        box.className = "file-thumb";
+
+        if (file.type.startsWith("video/")) {
+
+            const video =
+                document.createElement("video");
+
+            video.src = URL.createObjectURL(file);
+
+            video.muted = true;
+
+            box.appendChild(video);
+
+        } else {
+
+            const img =
+                document.createElement("img");
+
+            img.src = URL.createObjectURL(file);
+
+            box.appendChild(img);
+
+        }
+
+        box.onclick = () => {
+
+            currentFileIndex = index;
+
+        };
+
+        container.appendChild(box);
+
+    });
+
+}
+
+
+/* ================================================
+   TIMELINE
+================================================ */
+
+function buildTimeline() {
+
+    const track =
+        document.getElementById("videoTrack");
+
+    track.innerHTML = "";
+
+    selectedFiles.forEach((file, index) => {
+
+        const clip =
+            document.createElement("div");
+
+        clip.className = "c
