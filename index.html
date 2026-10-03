@@ -177,6 +177,7 @@ button{
   align-items:center;
   justify-content:center;
   position:relative;
+  transition:.25s;
 }
 
 .preview video,
@@ -207,6 +208,8 @@ button{
   display:none;
   text-shadow:0 2px 7px #000;
   pointer-events:none;
+  max-width:90%;
+  word-break:break-word;
 }
 
 /* CONTROLS */
@@ -278,6 +281,7 @@ button{
   background:#181818;
   border-radius:6px;
   overflow:hidden;
+  display:flex;
 }
 
 .clip{
@@ -452,8 +456,6 @@ button{
   transform:translateX(-50%) translateY(0);
 }
 
-/* FILE INPUT */
-
 input[type=file]{
   display:none;
 }
@@ -474,34 +476,57 @@ input[type=file]{
   </div>
 
   <div class="hero">
-    <h1>Create. Edit. Split.</h1>
-    <p>Powerful video editing made simple.</p>
 
-    <button class="newVideo" onclick="openMediaPicker()">
+    <h1>Create. Edit. Split.</h1>
+
+    <p>
+      Powerful video editing made simple.
+    </p>
+
+    <button
+      class="newVideo"
+      onclick="openMediaPicker()">
       ＋ NEW VIDEO
     </button>
+
   </div>
 
   <div class="homeTools">
 
-    <button class="homeTool" onclick="openMediaPicker()">
+    <button
+      class="homeTool"
+      onclick="openMediaPicker()">
+
       <div class="icon">🎬</div>
       <span>Edit Video</span>
+
     </button>
 
-    <button class="homeTool" onclick="openImagePicker()">
+    <button
+      class="homeTool"
+      onclick="openImagePicker()">
+
       <div class="icon">🖼️</div>
       <span>Edit Photo</span>
+
     </button>
 
-    <button class="homeTool" onclick="showToast('Templates coming soon')">
+    <button
+      class="homeTool"
+      onclick="showToast('Templates coming soon')">
+
       <div class="icon">✨</div>
       <span>Templates</span>
+
     </button>
 
-    <button class="homeTool" onclick="showToast('Cloud Space coming soon')">
+    <button
+      class="homeTool"
+      onclick="showToast('Cloud Space coming soon')">
+
       <div class="icon">☁️</div>
       <span>Space</span>
+
     </button>
 
   </div>
@@ -515,11 +540,19 @@ input[type=file]{
 
   <div class="editorTop">
 
-    <button class="back" onclick="goHome()">‹</button>
+    <button
+      class="back"
+      onclick="goHome()">
+      ‹
+    </button>
 
-    <div class="title">ObeSplit</div>
+    <div class="title">
+      ObeSplit
+    </div>
 
-    <button class="export" onclick="exportVideo()">
+    <button
+      class="export"
+      onclick="exportVideo()">
       Export
     </button>
 
@@ -530,11 +563,17 @@ input[type=file]{
 
   <div class="previewWrap">
 
-    <div class="preview" id="preview">
+    <div
+      class="preview"
+      id="preview">
 
-      <div class="emptyPreview" id="emptyPreview">
+      <div
+        class="emptyPreview"
+        id="emptyPreview">
+
         <div>🎬</div>
         Select a video
+
       </div>
 
       <video
@@ -543,7 +582,9 @@ input[type=file]{
         preload="metadata">
       </video>
 
-      <img id="imagePreview">
+      <img
+        id="imagePreview"
+        alt="">
 
       <div id="textLayer"></div>
 
@@ -556,23 +597,37 @@ input[type=file]{
 
   <div class="playerControls">
 
-    <button class="playBtn" id="playBtn" onclick="togglePlay()">
+    <button
+      class="playBtn"
+      id="playBtn"
+      onclick="togglePlay()">
       ▶
     </button>
 
-    <span class="time" id="currentTime">
+    <span
+      class="time"
+      id="currentTime">
       00:00
     </span>
 
     <div class="progress">
-      <div class="progressBar" id="progressBar"></div>
+
+      <div
+        class="progressBar"
+        id="progressBar">
+      </div>
+
     </div>
 
-    <span class="time" id="duration">
+    <span
+      class="time"
+      id="duration">
       00:00
     </span>
 
-    <button onclick="toggleMute()" id="muteBtn">
+    <button
+      onclick="toggleMute()"
+      id="muteBtn">
       🔊
     </button>
 
@@ -584,19 +639,33 @@ input[type=file]{
   <div class="timelineSection">
 
     <div class="timelineHeader">
-      <span>Timeline</span>
-      <span id="clipInfo">No media</span>
+
+      <span>
+        Timeline
+      </span>
+
+      <span id="clipInfo">
+        No media
+      </span>
+
     </div>
 
     <div class="timeline">
 
-      <div class="timelineTrack" id="timelineTrack">
+      <div
+        class="timelineTrack"
+        id="timelineTrack">
 
-        <div class="clip" id="clip">
+        <div
+          class="clip selected"
+          id="clip">
           Your media
         </div>
 
-        <div class="playhead"></div>
+        <div
+          class="playhead"
+          id="playhead">
+        </div>
 
       </div>
 
@@ -609,74 +678,130 @@ input[type=file]{
 
   <div class="tools">
 
-    <button class="tool" onclick="splitClip()">
+    <button
+      class="tool"
+      onclick="splitClip()">
+
       <div class="toolIcon">✂️</div>
       <div class="toolName">Split</div>
+
     </button>
 
-    <button class="tool" onclick="openOverlay()">
+    <button
+      class="tool"
+      onclick="openOverlay()">
+
       <div class="toolIcon">▣</div>
       <div class="toolName">Overlay</div>
+
     </button>
 
-    <button class="tool" onclick="openCaptions()">
+    <button
+      class="tool"
+      onclick="openCaptions()">
+
       <div class="toolIcon">CC</div>
       <div class="toolName">Captions</div>
+
     </button>
 
-    <button class="tool" onclick="openText()">
+    <button
+      class="tool"
+      onclick="openText()">
+
       <div class="toolIcon">T</div>
       <div class="toolName">Text</div>
+
     </button>
 
-    <button class="tool" onclick="openAspect()">
+    <button
+      class="tool"
+      onclick="openAspect()">
+
       <div class="toolIcon">▣</div>
       <div class="toolName">Ratio</div>
+
     </button>
 
-    <button class="tool" onclick="spliceClip()">
+    <button
+      class="tool"
+      onclick="spliceClip()">
+
       <div class="toolIcon">🔗</div>
       <div class="toolName">Splice</div>
+
     </button>
 
-    <button class="tool" onclick="removeBackground()">
+    <button
+      class="tool"
+      onclick="removeBackground()">
+
       <div class="toolIcon">🧍</div>
       <div class="toolName">Remove BG</div>
+
     </button>
 
-    <button class="tool" onclick="addKeyframe()">
+    <button
+      class="tool"
+      onclick="addKeyframe()">
+
       <div class="toolIcon">◆</div>
       <div class="toolName">Keyframe</div>
+
     </button>
 
-    <button class="tool" onclick="openSpeed()">
+    <button
+      class="tool"
+      onclick="openSpeed()">
+
       <div class="toolIcon">⚡</div>
       <div class="toolName">Speed</div>
+
     </button>
 
-    <button class="tool" onclick="openEffects()">
+    <button
+      class="tool"
+      onclick="openEffects()">
+
       <div class="toolIcon">✨</div>
       <div class="toolName">Effects</div>
+
     </button>
 
-    <button class="tool" onclick="openFilters()">
+    <button
+      class="tool"
+      onclick="openFilters()">
+
       <div class="toolIcon">🎨</div>
       <div class="toolName">Filters</div>
+
     </button>
 
-    <button class="tool" onclick="openAnimations()">
+    <button
+      class="tool"
+      onclick="openAnimations()">
+
       <div class="toolIcon">🎬</div>
       <div class="toolName">Animation</div>
+
     </button>
 
-    <button class="tool" onclick="openLayers()">
+    <button
+      class="tool"
+      onclick="openLayers()">
+
       <div class="toolIcon">▤</div>
       <div class="toolName">Layers</div>
+
     </button>
 
-    <button class="tool" onclick="deleteClip()">
+    <button
+      class="tool"
+      onclick="deleteClip()">
+
       <div class="toolIcon">🗑️</div>
       <div class="toolName">Delete</div>
+
     </button>
 
   </div>
@@ -701,7 +826,9 @@ input[type=file]{
 
 <!-- MODAL -->
 
-<div class="modal" id="modal">
+<div
+  class="modal"
+  id="modal">
 
   <div class="sheet">
 
@@ -711,7 +838,9 @@ input[type=file]{
         Options
       </h3>
 
-      <button class="close" onclick="closeModal()">
+      <button
+        class="close"
+        onclick="closeModal()">
         ×
       </button>
 
@@ -724,7 +853,9 @@ input[type=file]{
 </div>
 
 
-<div class="toast" id="toast">
+<div
+  class="toast"
+  id="toast">
   Done
 </div>
 
@@ -752,9 +883,13 @@ const editor =
 const emptyPreview =
   document.getElementById("emptyPreview");
 
+const preview =
+  document.getElementById("preview");
+
 let mediaType = null;
 let mediaLoaded = false;
 let currentSpeed = 1;
+let keyframes = [];
 
 
 /* =========================
@@ -763,13 +898,17 @@ let currentSpeed = 1;
 
 function openMediaPicker(){
 
-  document.getElementById("videoInput").click();
+  document
+    .getElementById("videoInput")
+    .click();
 
 }
 
 function openImagePicker(){
 
-  document.getElementById("imageInput").click();
+  document
+    .getElementById("imageInput")
+    .click();
 
 }
 
@@ -789,18 +928,21 @@ function goHome(){
 
 function loadVideo(event){
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if(!file) return;
 
-  const url =
+  video.src =
     URL.createObjectURL(file);
 
-  video.src = url;
-
   video.style.display = "block";
-  imagePreview.style.display = "none";
-  emptyPreview.style.display = "none";
+
+  imagePreview.style.display =
+    "none";
+
+  emptyPreview.style.display =
+    "none";
 
   mediaType = "video";
   mediaLoaded = true;
@@ -808,8 +950,11 @@ function loadVideo(event){
   editor.style.display = "block";
   home.style.display = "none";
 
-  document.getElementById("clipInfo").textContent =
-    file.name;
+  document
+    .getElementById("clipInfo")
+    .textContent = file.name;
+
+  resetTimeline(file.name);
 
   video.load();
 
@@ -824,18 +969,22 @@ function loadVideo(event){
 
 function loadImage(event){
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if(!file) return;
 
-  const url =
+  imagePreview.src =
     URL.createObjectURL(file);
 
-  imagePreview.src = url;
+  imagePreview.style.display =
+    "block";
 
-  imagePreview.style.display = "block";
-  video.style.display = "none";
-  emptyPreview.style.display = "none";
+  video.style.display =
+    "none";
+
+  emptyPreview.style.display =
+    "none";
 
   mediaType = "image";
   mediaLoaded = true;
@@ -843,10 +992,56 @@ function loadImage(event){
   editor.style.display = "block";
   home.style.display = "none";
 
-  document.getElementById("clipInfo").textContent =
-    file.name;
+  document
+    .getElementById("clipInfo")
+    .textContent = file.name;
+
+  resetTimeline(file.name);
 
   showToast("Photo added");
+
+}
+
+
+/* =========================
+   RESET TIMELINE
+========================= */
+
+function resetTimeline(name){
+
+  document
+    .getElementById("timelineTrack")
+    .innerHTML =
+    '<div class="clip selected" id="clip">'
+    + escapeHtml(name) +
+    '</div>' +
+    '<div class="playhead" id="playhead"></div>';
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(text){
+
+  return String(text).replace(
+    /[&<>"']/g,
+    function(match){
+
+      const map = {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      };
+
+      return map[match];
+
+    }
+  );
 
 }
 
@@ -874,12 +1069,18 @@ function togglePlay(){
   if(video.paused){
 
     video.play();
-    document.getElementById("playBtn").textContent = "❚❚";
+
+    document
+      .getElementById("playBtn")
+      .textContent = "❚❚";
 
   }else{
 
     video.pause();
-    document.getElementById("playBtn").textContent = "▶";
+
+    document
+      .getElementById("playBtn")
+      .textContent = "▶";
 
   }
 
@@ -890,33 +1091,68 @@ function togglePlay(){
    VIDEO EVENTS
 ========================= */
 
-video.addEventListener("loadedmetadata",()=>{
+video.addEventListener(
+  "loadedmetadata",
+  function(){
 
-  document.getElementById("duration").textContent =
-    formatTime(video.duration);
+    document
+      .getElementById("duration")
+      .textContent =
+      formatTime(video.duration);
 
-});
+  }
+);
 
-video.addEventListener("timeupdate",()=>{
 
-  const percent =
-    (video.currentTime / video.duration) * 100;
+video.addEventListener(
+  "timeupdate",
+  function(){
 
-  document.getElementById("progressBar").style.width =
-    percent + "%";
+    if(!video.duration) return;
 
-  document.getElementById("currentTime").textContent =
-    formatTime(video.currentTime);
+    const percent =
+      (video.currentTime /
+       video.duration) * 100;
 
-});
+    document
+      .getElementById("progressBar")
+      .style.width =
+      percent + "%";
 
-video.addEventListener("ended",()=>{
+    document
+      .getElementById("currentTime")
+      .textContent =
+      formatTime(video.currentTime);
 
-  document.getElementById("playBtn").textContent =
-    "▶";
+    const playhead =
+      document.getElementById("playhead");
 
-});
+    if(playhead){
 
+      playhead.style.left =
+        percent + "%";
+
+    }
+
+  }
+);
+
+
+video.addEventListener(
+  "ended",
+  function(){
+
+    document
+      .getElementById("playBtn")
+      .textContent = "▶";
+
+  }
+);
+
+
+/* =========================
+   TIME
+========================= */
 
 function formatTime(seconds){
 
@@ -929,9 +1165,11 @@ function formatTime(seconds){
   const secs =
     Math.floor(seconds % 60);
 
-  return String(mins).padStart(2,"0") +
-    ":" +
-    String(secs).padStart(2,"0");
+  return (
+    String(mins).padStart(2,"0")
+    + ":" +
+    String(secs).padStart(2,"0")
+  );
 
 }
 
@@ -942,16 +1180,22 @@ function formatTime(seconds){
 
 function toggleMute(){
 
-  if(!mediaLoaded || mediaType !== "video"){
+  if(
+    !mediaLoaded ||
+    mediaType !== "video"
+  ){
 
     showToast("Add a video first");
     return;
 
   }
 
-  video.muted = !video.muted;
+  video.muted =
+    !video.muted;
 
-  document.getElementById("muteBtn").textContent =
+  document
+    .getElementById("muteBtn")
+    .textContent =
     video.muted ? "🔇" : "🔊";
 
 }
@@ -978,37 +1222,45 @@ function splitClip(){
   }
 
   const track =
-    document.getElementById("timelineTrack");
+    document.getElementById(
+      "timelineTrack"
+    );
 
-  const oldClip =
-    document.getElementById("clip");
+  let percent = 50;
 
-  const first =
-    document.createElement("div");
+  if(video.duration){
 
-  first.className = "clip selected";
-  first.textContent = "Part 1";
+    percent =
+      (video.currentTime /
+       video.duration) * 100;
 
-  const second =
-    document.createElement("div");
+    percent =
+      Math.max(
+        5,
+        Math.min(95,percent)
+      );
 
-  second.className = "clip";
-  second.textContent = "Part 2";
+  }
 
-  first.style.width = "50%";
-  second.style.width = "50%";
+  track.innerHTML =
 
-  track.innerHTML = "";
+    '<div class="clip selected" ' +
+    'style="width:' +
+    percent +
+    '%">Part 1</div>' +
 
-  track.appendChild(first);
-  track.appendChild(second);
+    '<div class="clip" ' +
+    'style="width:' +
+    (100-percent) +
+    '%">Part 2</div>' +
 
-  const playhead =
-    document.createElement("div");
+    '<div class="playhead" ' +
+    'id="playhead"></div>';
 
-  playhead.className = "playhead";
-
-  track.appendChild(playhead);
+  document
+    .getElementById("playhead")
+    .style.left =
+    percent + "%";
 
   showToast("Clip split");
 
@@ -1035,14 +1287,34 @@ function deleteClip(){
 
   imagePreview.removeAttribute("src");
 
-  video.style.display = "none";
-  imagePreview.style.display = "none";
-  emptyPreview.style.display = "block";
+  video.style.display =
+    "none";
+
+  imagePreview.style.display =
+    "none";
+
+  emptyPreview.style.display =
+    "block";
 
   mediaLoaded = false;
+  mediaType = null;
 
-  document.getElementById("clipInfo").textContent =
+  document
+    .getElementById("clipInfo")
+    .textContent =
     "No media";
+
+  document
+    .getElementById("timelineTrack")
+    .innerHTML =
+    '<div class="clip" id="clip">' +
+    'Your media</div>' +
+    '<div class="playhead" id="playhead"></div>';
+
+  document
+    .getElementById("progressBar")
+    .style.width =
+    "0%";
 
   showToast("Media deleted");
 
@@ -1058,24 +1330,27 @@ function openOverlay(){
   openModal(
     "Overlay",
     `
-      <div class="optionGrid">
+    <div class="optionGrid">
 
-        <button class="option"
-          onclick="openImagePicker();closeModal()">
-          🖼️<br>Add Photo
-        </button>
+      <button
+        class="option"
+        onclick="openImagePicker();closeModal()">
+        🖼️<br>Add Photo
+      </button>
 
-        <button class="option"
-          onclick="openMediaPicker();closeModal()">
-          🎬<br>Add Video
-        </button>
+      <button
+        class="option"
+        onclick="openMediaPicker();closeModal()">
+        🎬<br>Add Video
+      </button>
 
-        <button class="option"
-          onclick="showToast('Overlay layer added');closeModal()">
-          ➕<br>Layer
-        </button>
+      <button
+        class="option"
+        onclick="showToast('Overlay layer added');closeModal()">
+        ➕<br>Layer
+      </button>
 
-      </div>
+    </div>
     `
   );
 
@@ -1091,25 +1366,29 @@ function openText(){
   openModal(
     "Add Text",
     `
-      <input
-        id="textInput"
-        class="textInput"
-        placeholder="Type your text...">
+    <input
+      id="textInput"
+      class="textInput"
+      placeholder="Type your text...">
 
-      <button
-        class="primary"
-        onclick="applyText()">
-        Add Text
-      </button>
+    <button
+      class="primary"
+      onclick="applyText()">
+      Add Text
+    </button>
     `
   );
 
 }
 
+
 function applyText(){
 
   const value =
-    document.getElementById("textInput").value;
+    document
+      .getElementById("textInput")
+      .value
+      .trim();
 
   if(!value){
 
@@ -1119,10 +1398,15 @@ function applyText(){
   }
 
   const layer =
-    document.getElementById("textLayer");
+    document.getElementById(
+      "textLayer"
+    );
 
-  layer.textContent = value;
-  layer.style.display = "block";
+  layer.textContent =
+    value;
+
+  layer.style.display =
+    "block";
 
   closeModal();
 
@@ -1140,159 +1424,9 @@ function openCaptions(){
   openModal(
     "Captions",
     `
-      <div class="optionGrid">
+    <div class="optionGrid">
 
-        <button class="option"
-          onclick="showToast('Auto captions started');closeModal()">
-          🎤<br>Auto
-        </button>
-
-        <button class="option"
-          onclick="openText();">
-          T<br>Manual
-        </button>
-
-        <button class="option"
-          onclick="showToast('Caption style selected');closeModal()">
-          Aa<br>Style
-        </button>
-
-      </div>
-    `
-  );
-
-}
-
-
-/* =========================
-   ASPECT RATIO
-========================= */
-
-function openAspect(){
-
-  openModal(
-    "Aspect Ratio",
-    `
-      <div class="optionGrid">
-
-        <button class="option"
-          onclick="setRatio('9 / 16')">
-          9:16
-        </button>
-
-        <button class="option"
-          onclick="setRatio('16 / 9')">
-          16:9
-        </button>
-
-        <button class="option"
-          onclick="setRatio('1 / 1')">
-          1:1
-        </button>
-
-        <button class="option"
-          onclick="setRatio('4 / 5')">
-          4:5
-        </button>
-
-        <button class="option"
-          onclick="setRatio('4 / 3')">
-          4:3
-        </button>
-
-        <button class="option"
-          onclick="setRatio('3 / 4')">
-          3:4
-        </button>
-
-      </div>
-    `
-  );
-
-}
-
-function setRatio(ratio){
-
-  const preview =
-    document.getElementById("preview");
-
-  preview.style.aspectRatio = ratio;
-  preview.style.height = "auto";
-
-  closeModal();
-
-  showToast("Ratio changed");
-
-}
-
-
-/* =========================
-   SPLICE
-========================= */
-
-function spliceClip(){
-
-  if(!mediaLoaded){
-
-    showToast("Add media first");
-    return;
-
-  }
-
-  showToast("Splice tool selected");
-
-}
-
-
-/* =========================
-   REMOVE BACKGROUND
-========================= */
-
-function removeBackground(){
-
-  if(!mediaLoaded){
-
-    showToast("Add media first");
-    return;
-
-  }
-
-  showToast("Remove Background selected");
-
-}
-
-
-/* =========================
-   KEYFRAME
-========================= */
-
-function addKeyframe(){
-
-  if(!mediaLoaded){
-
-    showToast("Add media first");
-    return;
-
-  }
-
-  showToast(
-    "Keyframe added at " +
-    formatTime(video.currentTime)
-  );
-
-}
-
-
-/* =========================
-   SPEED
-========================= */
-
-function openSpeed(){
-
-  openModal(
-    "Speed",
-    `
-      <div class="optionGrid">
-
-        <button class="option"
-          onclick="setSpeed(.2
+      <button
+        class="option"
+        onclick="showToast('Auto captions selected');closeModal()">
+    
