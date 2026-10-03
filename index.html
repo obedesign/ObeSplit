@@ -1,155 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ObeSplit - Video Editor</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #000; color: #fff; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-        .hidden { display: none !important; }
-
-        /* --- SCREEN 1: HOMEPAGE --- */
-        #homepage { display: flex; flex-direction: column; height: 100%; padding: 16px; width: 100%; max-width: 500px; margin: 0 auto; flex: 1; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 25px; }
-        .brand-title { font-size: 32px; font-weight: 800; background: linear-gradient(to right, #40e0d0, #ff007f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Three-bar Custom Hamburger Menu Icon */
-        .menu-btn { display: flex; flex-direction: column; gap: 5px; cursor: pointer; width: 24px; }
-        .menu-btn span { display: block; height: 3px; width: 100%; background: #c299ff; border-radius: 2px; }
-
-        /* Layout Grid matching your original design */
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
-        
-        .main-btn { grid-column: span 2; background: #622cf3; border-radius: 24px; padding: 45px 20px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
-        .main-btn .icon-cam { width: 55px; height: 35px; background: #9667ff; border-radius: 8px; position: relative; }
-        .main-btn .icon-cam::after { content: ''; position: absolute; right: -8px; top: 10px; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid #9667ff; }
-        .main-btn h2 { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-        
-        .side-btn { background: #121214; border-radius: 20px; padding: 25px 15px; text-align: center; border: 1px solid #1f1f23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; min-height: 130px; }
-        .side-btn.purple-theme { background: linear-gradient(145deg, #170535, #290b52); border: none; }
-        
-        /* Spiral Vector Icon for AI Generator */
-        .icon-spiral { width: 34px; height: 34px; border: 3px solid #20b2aa; border-radius: 50%; border-top-color: transparent; border-bottom-color: transparent; animation: spin 4s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        .side-btn.purple-theme p { color: #cf9fff; font-weight: 600; font-size: 13px; }
-
-        /* Camera Icon for Edit Photo */
-        .icon-camera-flat { width: 44px; height: 28px; background: #3a3a3c; border-radius: 6px; position: relative; border: 2px solid #a8a8af; }
-        .icon-camera-flat::before { content: ''; position: absolute; top: -6px; left: 14px; width: 12px; height: 5px; background: #a8a8af; border-radius: 2px 2px 0 0; }
-        .icon-camera-flat::after { content: ''; position: absolute; top: 4px; left: 12px; width: 12px; height: 12px; border: 2px solid #a8a8af; border-radius: 50%; }
-        .side-btn p.photo-text { color: #cfcfd6; font-weight: 700; font-size: 16px; margin-top: 2px; }
-        
-        /* Projects Area */
-        .projects-section { margin-top: 10px; }
-        .projects-section h3 { font-size: 28px; font-weight: 700; margin-bottom: 20px; color: #fff; }
-        .no-projects { color: #55555d; font-size: 14px; text-align: center; margin-top: 35px; font-weight: 500; }
-        
-        /* Bottom Navigation Bar */
-        .nav-bar { margin-top: auto; display: flex; justify-content: space-around; padding: 12px 0 8px; border-top: 1px solid #16161a; background: #000; width: 100%; }
-        .nav-item { text-align: center; color: #55555d; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-        .nav-item.active { color: #3cd6ff; }
-        .nav-icon { width: 22px; height: 18px; border: 2px solid currentColor; border-radius: 3px; position: relative; }
-        .nav-item:nth-child(2) .nav-icon { width: 20px; height: 16px; background: currentColor; opacity: 0.4; border: none; }
-        .nav-item:nth-child(3) .nav-icon { width: 16px; height: 16px; border-radius: 50%; }
-
-        /* --- SCREEN 2: TIMELINE EDITOR --- */
-        #editor-screen { display: flex; flex-direction: column; height: 100%; position: relative; width: 100%; }
-        .editor-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: #111; }
-        .close-btn { font-size: 24px; cursor: pointer; font-weight: 300; }
-        .export-btn { background: #00c3ff; color: #000; padding: 6px 18px; border-radius: 20px; font-weight: 700; border: none; cursor: pointer; font-size: 14px; }
-        
-        .preview-window { flex: 1; background: #000; display: flex; justify-content: center; align-items: center; max-height: 45%; }
-        .preview-window video { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
-        .playback-controls { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #121212; font-size: 12px; color: #8e8e93; }
-        .play-btn { font-size: 20px; color: #fff; cursor: pointer; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 16px solid #fff; }
-        .play-btn.paused { width: 14px; height: 18px; border: none; border-left: 5px solid #fff; border-right: 5px solid #fff; }
-        
-        .timeline-area { background: #17171c; padding: 15px 0; overflow-x: auto; display: flex; flex-direction: column; position: relative; }
-        .timeline-scaler { height: 20px; border-bottom: 1px solid #222; display: flex; padding-left: 50%; color: #444; font-size: 10px; gap: 40px; margin-bottom: 10px; }
-        .playhead-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #fff; z-index: 10; pointer-events: none; }
-        
-        .track-row { display: flex; align-items: center; margin-bottom: 8px; padding-left: 50%; min-height: 45px; position: relative; }
-        .track-label { width: 60px; position: absolute; left: 15px; background: #17171c; z-index: 5; font-size: 11px; color: #8e8e93; }
-        .media-block { background: #2c2c2e; height: 42px; border-radius: 6px; border: 1px solid #3a3a3c; display: flex; align-items: center; padding: 0 12px; font-size: 11px; white-space: nowrap; color: #fff; }
-        
-        .editor-footer-nav { margin-top: auto; display: flex; padding: 12px 5px; background: #111; border-top: 1px solid #1c1c1e; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .footer-tool { text-align: center; color: #aeaeb2; font-size: 11px; padding: 0 14px; cursor: pointer; min-width: 65px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-        .footer-tool-icon { width: 18px; height: 18px; border: 2px solid currentColor; border-radius: 2px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ObeSplit</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style> *{font-family:system-ui} </style>
 </head>
-<body>
+<body class="bg-black">
 
-    <input type="file" id="video-picker" accept="video/*" class="hidden">
-    <input type="file" id="photo-picker" accept="image/*" class="hidden">
+<!-- ========== 1. HOME ========== -->
+<div id="home" class="max-w-[400px] mx-auto min-h-screen bg-[#0A0A0A] p-6">
+  <h1 class="text-white text-[24px] font-black mb-6">ObeSplit</h1>
+  <div onclick="fileIn.click()" class="bg-[#7C3AED] rounded-[24px] py-14 text-center">
+    <div class="text-[60px]">📹</div>
+    <div class="text-white font-bold mt-2">+ New Video</div>
+  </div>
+</div>
 
-    <!-- SCREEN 1: HOMEPAGE -->
-    <div id="homepage">
-        <div class="header">
-            <h1 class="brand-title">ObeSplit</h1>
-            <div class="menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+<!-- ========== 2. EDITOR ========== -->
+<div id="editor" class="hidden h-screen flex-col bg-[#111]">
 
-        <div class="grid-container">
-            <div class="main-btn" id="btn-new-video">
-                <div class="icon-cam"></div>
-                <h2>New video +</h2>
-            </div>
-            <div class="side-btn purple-theme">
-                <div class="icon-spiral"></div>
-                <p>Ai generator</p>
-            </div>
-            <div class="side-btn" id="btn-edit-photo">
-                <div class="icon-camera-flat"></div>
-                <p class="photo-text">Edit photo</p>
-            </div>
-        </div>
+  <!-- Top Bar -->
+  <div class="h-[50px] flex justify-between items-center px-4">
+    <button onclick="goHome()" class="text-white text-xl">✕</button>
+    <button class="bg-cyan-300 text-black px-5 py-2 rounded-full font-bold text-sm">Export</button>
+  </div>
 
-        <div class="projects-section">
-            <h3>Projects</h3>
-            <div class="no-projects">No projects yet. Tap New video + to start.</div>
-        </div>
-
-        <div class="nav-bar">
-            <div class="nav-item active"><div class="nav-icon"></div>Edit</div>
-            <div class="nav-item"><div class="nav-icon"></div>Templates</div>
-            <div class="nav-item"><div class="nav-icon"></div>Me</div>
-        </div>
+  <!-- Preview -->
+  <div class="flex-1 bg-black flex items-center justify-center relative">
+    <video id="vid" class="w-full h-full object-contain" playsinline></video>
+    <div id="ph" class="absolute text-white/70 text-center">
+      <p class="font-bold text-xl tracking-widest">PHOTO/VIDEO</p>
+      <p>Obeedit</p>
     </div>
+  </div>
 
-    <!-- SCREEN 2: TIMELINE EDITOR -->
-    <div id="editor-screen" class="hidden">
-        <div class="editor-header">
-            <div class="close-btn" id="btn-close-editor">✕</div>
-            <div style="font-size: 18px; color: #8e8e93;">🔍</div>
-            <button class="export-btn">Export</button>
-        </div>
+  <!-- ========== 3. TIMELINE - EDIT ONLY THIS LATER ========== -->
+  <div class="bg-[#181818] border-t border-zinc-800">
+    <div class="h-[30px] flex justify-between items-center px-3 text-[11px] text-zinc-400">
+      <span id="time">00:00 / 00:20</span>
+      <span>00:00 00:01 00:02 00:03</span>
+    </div>
+    <div class="h-[130px] flex p-2 gap-2">
+      <div class="w-[65px] bg-[#222] rounded-xl flex flex-col items-center justify-center">
+        <span>🔊</span><span class="text-[8px] text-zinc-400">Mute clip</span>
+      </div>
+      <div class="flex-1 space-y-2">
+        <div class="h-[40px] bg-[#2a2a2a] rounded-xl flex items-center px-3 text-zinc-400 text-xs">clip <span class="ml-auto bg-white text-black w-6 h-6 rounded flex items-center justify-center">+</span></div>
+        <div class="h-[30px] bg-[#222] rounded-xl px-3 flex items-center text-xs text-zinc-300">+ Add audio</div>
+        <div class="h-[30px] bg-[#222] rounded-xl px-3 flex items-center text-xs text-zinc-300">+ Add text</div>
+      </div>
+    </div>
+  </div>
 
-        <div class="preview-window">
-            <video id="main-preview" playsinline></video>
-        </div>
+  <!-- ========== 4. BOTTOM TOOLS ========== -->
+  <div class="h-[70px] bg-[#121212] flex justify-around items-center border-t border-zinc-800">
+    <span class="text-white text-center text-[11px]">✂️<br>Edit</span>
+    <span class="text-white text-center text-[11px]">🎵<br>Audio</span>
+    <span class="text-white text-center text-[11px]">T<br>Text</span>
+    <span class="text-zinc-500 text-center text-[11px]">✨<br>Effects</span>
+    <span class="text-zinc-500 text-center text-[11px]">🖼️<br>Overlay</span>
+    <span class="text-zinc-500 text-center text-[11px]">💬<br>Captions</span>
+    <span class="text-zinc-500 text-center text-[11px]">🎨<br>Filters</span>
+  </div>
 
-        <div class="playback-controls">
-            <span id="current-time">00:00 / 00:13</span>
-            <div class="play-btn" id="btn-play"></div>
-            <div style="font-size: 16px; color: #fff;">⟲</div>
-        </div>
+</div>
 
-        <div class="timeline-area">
-            <div class="playhead-line"></div>
-            <div class="timeline-scaler">
-                <span>00:00</span><span>00:01</span><span>00:02</span><span>00:03</span><span>00:04</span>
-            </div>
-            
-            <div class="track-row">
-                <div class="track-label">🎬 Media</div>
-                <div class="media-block" id="timeline-media-clip">No clip loaded</div>
-            </div>
+<input type="file" id="fileIn" hidden accept="video/*,image/*">
 
-            
+<script>
+const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), time=document.getElementById('time');
+fileIn.onchange=e=>{
+  vid.src=URL.createObjectURL(e.target.files[0]);
+  home.classList.add('hidden'); editor.classList.remove('hidden'); editor.classList.add('flex');
+  ph.style.display='none'; vid.play();
+};
+function goHome(){ editor.classList.add('hidden'); home.classList.remove('hidden'); vid.pause(); vid.src=''; ph.style.display='block'; }
+vid.ontimeupdate=()=>{ time.textContent=`00:0${Math.floor(vid.currentTime)} / 00:20`; };
+</script>
+
+</body>
+</html>
