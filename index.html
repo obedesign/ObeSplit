@@ -120,19 +120,29 @@ const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid
 
 fileIn.onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
-  vid.src=URL.createObjectURL(f); vid.load();
-  home.style.display='none'; editor.style.display='flex';
-  ph.style.display='none'; vid.play(); playBtn.textContent='⏸';
+  console.log('picked', f.name);
+  const url = URL.createObjectURL(f);
+  vid.src = url;
+  vid.muted = true;
+  vid.playsInline = true;
+  vid.preload = 'auto';
+  home.style.display='none';
+  editor.style.display='flex';
+  ph.style.display='none';
+  vid.style.display='block';
+
+  vid.onloadeddata = () => {
+    console.log('video loaded');
+    vid.play().then(()=>{ playBtn.textContent='⏸'; }).catch(()=>{});
+  };
+  vid.load();
 };
 
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶';}
+function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.removeAttribute('src'); vid.load(); ph.style.display='flex'; playBtn.textContent='▶';}
 function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13); tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; if(vid.ended) playBtn.textContent='▶';}
+vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13); if(!isNaN(d)) tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; if(vid.ended) playBtn.textContent='▶';}
 function doSplit(){alert('Split at '+tTxt.textContent);}
-function addText(){const t=prompt('Enter text:'); if(!t) return; const el=document.createElement('div'); el.textContent=t; el.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:22px;font-weight:900;text-shadow:2px 2px 4px black;'; vid.parentElement.appendChild(el);}
-function addAudio(){document.getElementById('audioIn').click();}
+function addText(){const t=prompt('Enter text:'); if(!t) return; const el=document.createElement('div'); el.textContent=t; el.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:white;font-size:22px;font-weight:900;text-shadow:2px 2px 4px black;z-index:20;'; vid.parentElement.appendChild(el);}
+function addAudio(){document.getElementById('audioIn')?.click();}
 function doExport(){if(!vid.src){alert('No video'); return;} const a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
 </script>
-
-</body>
-</html>
