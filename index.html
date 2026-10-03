@@ -2,810 +2,1297 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ObeSplit</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 body{
-  background:#000;
   margin:0;
-  overflow:hidden;
+  background:#000;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
 }
 
-#editor{
-  display:none;
-}
-
-.timeline-track{
-  position:relative;
-  overflow:hidden;
+button{
+  border:0;
+  color:white;
+  background:none;
+  font:inherit;
   cursor:pointer;
 }
 
-#playhead{
+.app{
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  background:#050505;
+  position:relative;
+  overflow:hidden;
+}
+
+/* HOME */
+
+#home{
+  min-height:100vh;
+  padding:22px 18px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+.logo span{
+  color:#18e88a;
+}
+
+.profile{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#171717;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.hero{
+  margin-top:20px;
+  padding:24px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#111,#070707);
+  border:1px solid #202020;
+}
+
+.hero h1{
+  font-size:31px;
+  margin:0 0 8px;
+}
+
+.hero p{
+  color:#888;
+  margin:0;
+  font-size:14px;
+}
+
+.newVideo{
+  width:100%;
+  margin-top:25px;
+  padding:19px;
+  border-radius:17px;
+  background:#18e88a;
+  color:#000;
+  font-weight:800;
+  font-size:17px;
+}
+
+.homeTools{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
+}
+
+.homeTool{
+  padding:20px 12px;
+  border-radius:17px;
+  background:#111;
+  border:1px solid #202020;
+  text-align:center;
+}
+
+.homeTool .icon{
+  font-size:26px;
+  margin-bottom:8px;
+}
+
+.homeTool span{
+  display:block;
+  font-size:13px;
+}
+
+/* EDITOR */
+
+#editor{
+  display:none;
+  min-height:100vh;
+  background:#050505;
+  padding-bottom:110px;
+}
+
+.editorTop{
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  border-bottom:1px solid #191919;
+}
+
+.back{
+  font-size:24px;
+}
+
+.title{
+  font-weight:700;
+}
+
+.export{
+  background:#18e88a;
+  color:#000;
+  padding:9px 14px;
+  border-radius:9px;
+  font-weight:800;
+}
+
+/* PREVIEW */
+
+.previewWrap{
+  padding:12px;
+  background:#000;
+}
+
+.preview{
+  width:100%;
+  height:300px;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.preview video,
+.preview img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.emptyPreview{
+  text-align:center;
+  color:#777;
+}
+
+.emptyPreview div{
+  font-size:45px;
+  margin-bottom:10px;
+}
+
+#textLayer{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  display:none;
+  text-shadow:0 2px 7px #000;
+  pointer-events:none;
+}
+
+/* CONTROLS */
+
+.playerControls{
+  height:50px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:0 15px;
+  background:#080808;
+}
+
+.playBtn{
+  font-size:24px;
+}
+
+.time{
+  color:#aaa;
+  font-size:12px;
+}
+
+.progress{
+  flex:1;
+  height:4px;
+  background:#292929;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progressBar{
+  height:100%;
+  width:0%;
+  background:#18e88a;
+}
+
+/* TIMELINE */
+
+.timelineSection{
+  background:#090909;
+  padding:12px 10px;
+}
+
+.timelineHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.timelineHeader span{
+  font-size:12px;
+  color:#888;
+}
+
+.timeline{
+  height:105px;
+  background:#111;
+  border-radius:9px;
+  overflow-x:auto;
+  position:relative;
+  padding:10px;
+}
+
+.timelineTrack{
+  min-width:500px;
+  height:65px;
+  position:relative;
+  background:#181818;
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.clip{
+  height:100%;
+  min-width:140px;
+  background:linear-gradient(90deg,#222,#333);
+  border:2px solid transparent;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:12px;
+}
+
+.clip.selected{
+  border-color:#18e88a;
+}
+
+.playhead{
   position:absolute;
   top:0;
   bottom:0;
-  left:0%;
+  left:25%;
   width:2px;
   background:#fff;
-  z-index:50;
-  pointer-events:none;
-  box-shadow:0 0 5px rgba(255,255,255,.8);
+  z-index:5;
 }
 
-#playhead::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-4px;
-  width:10px;
-  height:10px;
-  background:#fff;
-  border-radius:50%;
-}
+/* TOOLBAR */
 
-.thumb-strip{
+.tools{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(430px,100%);
+  background:#101010;
+  border-top:1px solid #242424;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
   display:flex;
-  gap:2px;
-  height:28px;
-  width:100%;
+  overflow-x:auto;
+  gap:3px;
+  z-index:20;
 }
 
-.thumb-strip img{
-  width:50px;
-  height:28px;
-  object-fit:cover;
-  border-radius:3px;
-  flex-shrink:0;
+.tool{
+  min-width:67px;
+  padding:7px 3px;
+  text-align:center;
+  color:#aaa;
+}
+
+.tool:active{
+  transform:scale(.94);
+}
+
+.tool.active{
+  color:#18e88a;
+}
+
+.toolIcon{
+  font-size:21px;
+  margin-bottom:4px;
+}
+
+.toolName{
+  font-size:10px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:flex-end;
+  z-index:100;
+}
+
+.sheet{
+  width:min(430px,100%);
+  margin:auto;
+  background:#151515;
+  border-radius:20px 20px 0 0;
+  padding:20px;
+  max-height:75vh;
+  overflow:auto;
+}
+
+.sheetHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.sheet h3{
+  margin:0;
+}
+
+.close{
+  font-size:25px;
+  color:#aaa;
+}
+
+.optionGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.option{
+  padding:15px 7px;
+  background:#222;
+  border-radius:12px;
+  text-align:center;
+  color:#ddd;
+}
+
+.option:active{
+  background:#18e88a;
+  color:#000;
+}
+
+.slider{
+  width:100%;
+  accent-color:#18e88a;
+}
+
+.textInput{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #333;
+  background:#080808;
+  color:#fff;
+  outline:none;
+  margin-bottom:12px;
+}
+
+.primary{
+  width:100%;
+  padding:14px;
+  background:#18e88a;
+  color:#000;
+  border-radius:11px;
+  font-weight:800;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(20px);
+  background:#fff;
+  color:#000;
+  padding:11px 17px;
+  border-radius:20px;
+  font-size:13px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* FILE INPUT */
+
+input[type=file]{
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= HOME ================= -->
+<div class="app">
 
-<div id="home"
-class="max-w-[420px] mx-auto min-h-screen bg-black p-4 flex flex-col">
+<!-- HOME -->
 
-  <div
-    onclick="fileIn.click()"
-    class="bg-[#7A1EFF] rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2">
+<section id="home">
 
-    <div class="text-[50px]">📹</div>
-
-    <div
-      class="font-black text-[18px]"
-      style="
-      background:linear-gradient(90deg,#00F0FF,#FF00FF);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;">
-      New video +
-    </div>
+  <div class="top">
+    <div class="logo">Obe<span>Split</span></div>
+    <div class="profile">👤</div>
   </div>
 
+  <div class="hero">
+    <h1>Create. Edit. Split.</h1>
+    <p>Powerful video editing made simple.</p>
 
-  <div class="flex gap-4 mt-4">
-
-    <div class="flex flex-col gap-4">
-
-      <div
-        class="bg-[#7A1EFF] w-[110px] h-[110px] rounded-[14px]
-        flex flex-col items-center justify-center">
-
-        <div class="text-[36px]">🌀</div>
-
-        <div
-          class="text-[11px] font-bold"
-          style="
-          background:linear-gradient(90deg,#00F0FF,#FF00FF);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;">
-          Ai generator
-        </div>
-      </div>
-
-
-      <div
-        class="bg-[#7A1EFF] w-[110px] h-[110px] rounded-[14px]
-        flex flex-col items-center justify-center">
-
-        <div class="text-[32px]">☁️</div>
-
-        <div
-          class="text-[11px] font-bold"
-          style="
-          background:linear-gradient(90deg,#00F0FF,#FF00FF);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;">
-          Space
-        </div>
-      </div>
-
-    </div>
-
-
-    <div
-      class="bg-[#7A1EFF] flex-1 rounded-[14px]
-      flex flex-col items-center justify-center">
-
-      <div class="text-[68px]">📷</div>
-
-      <div
-        class="font-black text-[18px]"
-        style="
-        background:linear-gradient(90deg,#00F0FF,#FF00FF);
-        -webkit-background-clip:text;
-        -webkit-text-fill-color:transparent;">
-        Edit photo
-      </div>
-
-    </div>
-
+    <button class="newVideo" onclick="openMediaPicker()">
+      ＋ NEW VIDEO
+    </button>
   </div>
 
-</div>
+  <div class="homeTools">
 
-
-<!-- ================= EDITOR ================= -->
-
-<div
-id="editor"
-class="h-[100dvh] w-screen bg-[#0E0E0E] flex-col">
-
-
-<!-- TOP BAR -->
-
-<div
-class="h-[48px] bg-[#1A1A1A] flex items-center
-justify-between px-4">
-
-  <div class="flex items-center gap-5">
-
-    <button
-      onclick="goHome()"
-      class="text-white text-[22px]">
-      ✕
+    <button class="homeTool" onclick="openMediaPicker()">
+      <div class="icon">🎬</div>
+      <span>Edit Video</span>
     </button>
 
-    <span class="text-zinc-400">
-      🔍
+    <button class="homeTool" onclick="openImagePicker()">
+      <div class="icon">🖼️</div>
+      <span>Edit Photo</span>
+    </button>
+
+    <button class="homeTool" onclick="showToast('Templates coming soon')">
+      <div class="icon">✨</div>
+      <span>Templates</span>
+    </button>
+
+    <button class="homeTool" onclick="showToast('Cloud Space coming soon')">
+      <div class="icon">☁️</div>
+      <span>Space</span>
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- EDITOR -->
+
+<section id="editor">
+
+  <div class="editorTop">
+
+    <button class="back" onclick="goHome()">‹</button>
+
+    <div class="title">ObeSplit</div>
+
+    <button class="export" onclick="exportVideo()">
+      Export
+    </button>
+
+  </div>
+
+
+  <!-- PREVIEW -->
+
+  <div class="previewWrap">
+
+    <div class="preview" id="preview">
+
+      <div class="emptyPreview" id="emptyPreview">
+        <div>🎬</div>
+        Select a video
+      </div>
+
+      <video
+        id="video"
+        playsinline
+        preload="metadata">
+      </video>
+
+      <img id="imagePreview">
+
+      <div id="textLayer"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PLAYER -->
+
+  <div class="playerControls">
+
+    <button class="playBtn" id="playBtn" onclick="togglePlay()">
+      ▶
+    </button>
+
+    <span class="time" id="currentTime">
+      00:00
     </span>
 
-  </div>
-
-
-  <button
-    onclick="doExport()"
-    class="bg-[#2EE5FF] text-black px-5 py-1.5
-    rounded-[8px] font-bold text-[14px]">
-    Export
-  </button>
-
-</div>
-
-
-<!-- VIDEO PREVIEW -->
-
-<div
-class="flex-1 bg-[#0E0E0E] flex items-center justify-center">
-
-  <div
-    class="w-[58%] max-w-[280px] aspect-[9/16]
-    bg-black relative overflow-hidden">
-
-    <video
-      id="vid"
-      class="w-full h-full object-contain block bg-black"
-      playsinline
-      muted>
-    </video>
-
-    <div
-      id="ph"
-      class="absolute inset-0 flex items-center justify-center
-      text-zinc-600 text-[12px]">
-      Pick video
+    <div class="progress">
+      <div class="progressBar" id="progressBar"></div>
     </div>
 
+    <span class="time" id="duration">
+      00:00
+    </span>
+
+    <button onclick="toggleMute()" id="muteBtn">
+      🔊
+    </button>
+
   </div>
 
-</div>
 
+  <!-- TIMELINE -->
 
-<!-- PLAYER CONTROLS -->
+  <div class="timelineSection">
 
-<div
-class="h-[38px] bg-[#1A1A1A] flex items-center
-justify-between px-4 text-zinc-400">
-
-  <span>⛶</span>
-
-  <button
-    onclick="toggle()"
-    id="playBtn"
-    class="bg-white text-black w-8 h-8
-    rounded-full">
-    ▶
-  </button>
-
-  <div class="flex gap-3 text-[11px]">
-    <span>PIP ON</span>
-    <span>↩️</span>
-    <span>↪️</span>
-  </div>
-
-</div>
-
-
-<!-- TIME -->
-
-<div
-class="h-[24px] bg-[#1A1A1A] border-y border-zinc-800
-flex items-center px-3 text-[11px] text-zinc-400">
-
-  <span id="tTxt">
-    00:00 / 00:00
-  </span>
-
-</div>
-
-
-<!-- ================= TIMELINE ================= -->
-
-<div
-class="h-[180px] bg-[#1E1E1E] flex relative">
-
-
-  <!-- LEFT TOOLS -->
-
-  <div
-    class="w-[56px] border-r border-zinc-800 flex flex-col">
-
-    <div
-      class="h-[46px] flex flex-col items-center
-      justify-center border-b border-zinc-800">
-
-      <span>🔊</span>
-      <span class="text-[7px] text-zinc-400">
-        Mute clip
-      </span>
-
+    <div class="timelineHeader">
+      <span>Timeline</span>
+      <span id="clipInfo">No media</span>
     </div>
 
+    <div class="timeline">
 
-    <div
-      class="h-[36px] flex flex-col items-center
-      justify-center border-b border-zinc-800">
+      <div class="timelineTrack" id="timelineTrack">
 
-      <span class="text-[10px]">✏️</span>
+        <div class="clip" id="clip">
+          Your media
+        </div>
 
-      <span class="text-[7px] text-zinc-400">
-        Cover
-      </span>
+        <div class="playhead"></div>
 
-    </div>
-
-  </div>
-
-
-  <!-- TIMELINE AREA -->
-
-  <div
-    class="flex-1 relative p-2 space-y-2">
-
-    <!-- VIDEO TRACK -->
-
-    <div
-      id="timeline"
-      class="timeline-track h-[42px]
-      bg-[#2A2A2A] rounded-[8px]
-      flex items-center px-1">
-
-      <div
-        id="strip"
-        class="thumb-strip">
       </div>
 
-      <div
-        class="absolute right-1 top-[5px]
-        w-8 h-8 bg-white rounded
-        flex items-center justify-center
-        text-black font-bold">
-        +
-      </div>
-
-      <!-- MOVING PLAYHEAD -->
-
-      <div id="playhead"></div>
-
-    </div>
-
-
-    <!-- AUDIO -->
-
-    <div
-      class="h-[34px] bg-[#2A2A2A]
-      rounded-[8px] flex items-center
-      px-3 text-[12px] text-zinc-400">
-
-      + Add audio
-
-    </div>
-
-
-    <!-- TEXT -->
-
-    <div
-      class="h-[34px] bg-[#2A2A2A]
-      rounded-[8px] flex items-center
-      px-3 text-[12px] text-zinc-400">
-
-      + Add text
-
     </div>
 
   </div>
 
-</div>
 
+  <!-- TOOLBAR -->
 
-<!-- ================= BOTTOM TOOLS ================= -->
+  <div class="tools">
 
-<div
-class="h-[66px] bg-[#1A1A1A]
-border-t border-zinc-800
-flex justify-around items-center
-text-white text-[11px]">
+    <button class="tool" onclick="splitClip()">
+      <div class="toolIcon">✂️</div>
+      <div class="toolName">Split</div>
+    </button>
 
-  <div class="flex flex-col items-center">
-    <span>✂️</span>
-    <span>Edit</span>
+    <button class="tool" onclick="openOverlay()">
+      <div class="toolIcon">▣</div>
+      <div class="toolName">Overlay</div>
+    </button>
+
+    <button class="tool" onclick="openCaptions()">
+      <div class="toolIcon">CC</div>
+      <div class="toolName">Captions</div>
+    </button>
+
+    <button class="tool" onclick="openText()">
+      <div class="toolIcon">T</div>
+      <div class="toolName">Text</div>
+    </button>
+
+    <button class="tool" onclick="openAspect()">
+      <div class="toolIcon">▣</div>
+      <div class="toolName">Ratio</div>
+    </button>
+
+    <button class="tool" onclick="spliceClip()">
+      <div class="toolIcon">🔗</div>
+      <div class="toolName">Splice</div>
+    </button>
+
+    <button class="tool" onclick="removeBackground()">
+      <div class="toolIcon">🧍</div>
+      <div class="toolName">Remove BG</div>
+    </button>
+
+    <button class="tool" onclick="addKeyframe()">
+      <div class="toolIcon">◆</div>
+      <div class="toolName">Keyframe</div>
+    </button>
+
+    <button class="tool" onclick="openSpeed()">
+      <div class="toolIcon">⚡</div>
+      <div class="toolName">Speed</div>
+    </button>
+
+    <button class="tool" onclick="openEffects()">
+      <div class="toolIcon">✨</div>
+      <div class="toolName">Effects</div>
+    </button>
+
+    <button class="tool" onclick="openFilters()">
+      <div class="toolIcon">🎨</div>
+      <div class="toolName">Filters</div>
+    </button>
+
+    <button class="tool" onclick="openAnimations()">
+      <div class="toolIcon">🎬</div>
+      <div class="toolName">Animation</div>
+    </button>
+
+    <button class="tool" onclick="openLayers()">
+      <div class="toolIcon">▤</div>
+      <div class="toolName">Layers</div>
+    </button>
+
+    <button class="tool" onclick="deleteClip()">
+      <div class="toolIcon">🗑️</div>
+      <div class="toolName">Delete</div>
+    </button>
+
   </div>
 
-  <div class="flex flex-col items-center">
-    <span>🎵</span>
-    <span>Audio</span>
-  </div>
-
-  <div class="flex flex-col items-center">
-    <span>T</span>
-    <span>Text</span>
-  </div>
-
-  <div class="flex flex-col items-center">
-    <span>✨</span>
-    <span>Effects</span>
-  </div>
-
-  <div class="flex flex-col items-center">
-    <span>🖼️</span>
-    <span>Overlay</span>
-  </div>
-
-  <div class="flex flex-col items-center">
-    <span>💬</span>
-    <span>Captions</span>
-  </div>
-
-  <div class="flex flex-col items-center">
-    <span>🎨</span>
-    <span>Filters</span>
-  </div>
-
-</div>
-
-</div>
+</section>
 
 
-<!-- FILE INPUT -->
+<!-- FILE INPUTS -->
 
 <input
-type="file"
-id="fileIn"
-hidden
-accept="video/*">
+  type="file"
+  id="videoInput"
+  accept="video/*"
+  onchange="loadVideo(event)">
+
+<input
+  type="file"
+  id="imageInput"
+  accept="image/*"
+  onchange="loadImage(event)">
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="sheet">
+
+    <div class="sheetHeader">
+
+      <h3 id="modalTitle">
+        Options
+      </h3>
+
+      <button class="close" onclick="closeModal()">
+        ×
+      </button>
+
+    </div>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+
+<div class="toast" id="toast">
+  Done
+</div>
+
+</div>
 
 
 <script>
 
-const fileIn = document.getElementById("fileIn");
-const vid = document.getElementById("vid");
-const home = document.getElementById("home");
-const editor = document.getElementById("editor");
-const ph = document.getElementById("ph");
-const playBtn = document.getElementById("playBtn");
-const tTxt = document.getElementById("tTxt");
-const strip = document.getElementById("strip");
-const playhead = document.getElementById("playhead");
-const timeline = document.getElementById("timeline");
+/* =========================
+   GLOBALS
+========================= */
 
-let videoURL = null;
+const video =
+  document.getElementById("video");
+
+const imagePreview =
+  document.getElementById("imagePreview");
+
+const home =
+  document.getElementById("home");
+
+const editor =
+  document.getElementById("editor");
+
+const emptyPreview =
+  document.getElementById("emptyPreview");
+
+let mediaType = null;
+let mediaLoaded = false;
+let currentSpeed = 1;
 
 
-/* ================= FILE SELECT ================= */
+/* =========================
+   HOME
+========================= */
 
-fileIn.addEventListener("change", function(e){
+function openMediaPicker(){
 
-  const file = e.target.files[0];
+  document.getElementById("videoInput").click();
+
+}
+
+function openImagePicker(){
+
+  document.getElementById("imageInput").click();
+
+}
+
+function goHome(){
+
+  video.pause();
+
+  editor.style.display = "none";
+  home.style.display = "block";
+
+}
+
+
+/* =========================
+   LOAD VIDEO
+========================= */
+
+function loadVideo(event){
+
+  const file = event.target.files[0];
 
   if(!file) return;
 
-  if(videoURL){
-    URL.revokeObjectURL(videoURL);
+  const url =
+    URL.createObjectURL(file);
+
+  video.src = url;
+
+  video.style.display = "block";
+  imagePreview.style.display = "none";
+  emptyPreview.style.display = "none";
+
+  mediaType = "video";
+  mediaLoaded = true;
+
+  editor.style.display = "block";
+  home.style.display = "none";
+
+  document.getElementById("clipInfo").textContent =
+    file.name;
+
+  video.load();
+
+  showToast("Video added");
+
+}
+
+
+/* =========================
+   LOAD IMAGE
+========================= */
+
+function loadImage(event){
+
+  const file = event.target.files[0];
+
+  if(!file) return;
+
+  const url =
+    URL.createObjectURL(file);
+
+  imagePreview.src = url;
+
+  imagePreview.style.display = "block";
+  video.style.display = "none";
+  emptyPreview.style.display = "none";
+
+  mediaType = "image";
+  mediaLoaded = true;
+
+  editor.style.display = "block";
+  home.style.display = "none";
+
+  document.getElementById("clipInfo").textContent =
+    file.name;
+
+  showToast("Photo added");
+
+}
+
+
+/* =========================
+   PLAY / PAUSE
+========================= */
+
+function togglePlay(){
+
+  if(!mediaLoaded){
+
+    showToast("Add a video first");
+    return;
+
   }
 
-  videoURL = URL.createObjectURL(file);
+  if(mediaType !== "video"){
 
-  vid.src = videoURL;
-  vid.muted = true;
+    showToast("Playback is for videos");
+    return;
 
-  home.style.display = "none";
-  editor.style.display = "flex";
+  }
 
-  ph.style.display = "none";
+  if(video.paused){
 
-  playhead.style.left = "0%";
-
-  vid.load();
-
-});
-
-
-/* ================= VIDEO LOADED ================= */
-
-vid.addEventListener("loadedmetadata", function(){
-
-  updateTime();
-
-  makeStrip();
-
-  vid.currentTime = 0;
-
-  vid.play()
-    .then(()=>{
-      playBtn.textContent = "⏸";
-    })
-    .catch(()=>{
-      playBtn.textContent = "▶";
-    });
-
-});
-
-
-/* ================= PLAY / PAUSE ================= */
-
-function toggle(){
-
-  if(!vid.src) return;
-
-  if(vid.paused){
-
-    vid.play();
-
-    playBtn.textContent = "⏸";
+    video.play();
+    document.getElementById("playBtn").textContent = "❚❚";
 
   }else{
 
-    vid.pause();
-
-    playBtn.textContent = "▶";
+    video.pause();
+    document.getElementById("playBtn").textContent = "▶";
 
   }
 
 }
 
 
-/* ================= TIME UPDATE ================= */
+/* =========================
+   VIDEO EVENTS
+========================= */
 
-vid.addEventListener("timeupdate", function(){
+video.addEventListener("loadedmetadata",()=>{
 
-  updateTime();
+  document.getElementById("duration").textContent =
+    formatTime(video.duration);
 
-  updatePlayhead();
+});
+
+video.addEventListener("timeupdate",()=>{
+
+  const percent =
+    (video.currentTime / video.duration) * 100;
+
+  document.getElementById("progressBar").style.width =
+    percent + "%";
+
+  document.getElementById("currentTime").textContent =
+    formatTime(video.currentTime);
+
+});
+
+video.addEventListener("ended",()=>{
+
+  document.getElementById("playBtn").textContent =
+    "▶";
 
 });
 
 
-/* ================= SMOOTH PLAYHEAD ================= */
-
-function updatePlayhead(){
-
-  if(!vid.duration || !isFinite(vid.duration)){
-    return;
-  }
-
-  const percent =
-    (vid.currentTime / vid.duration) * 100;
-
-  playhead.style.left =
-    Math.max(0, Math.min(100, percent)) + "%";
-
-}
-
-
-/* ================= TIME TEXT ================= */
-
 function formatTime(seconds){
 
-  if(!isFinite(seconds) || seconds < 0){
-    seconds = 0;
-  }
+  if(!seconds || isNaN(seconds))
+    return "00:00";
 
-  const minutes =
+  const mins =
     Math.floor(seconds / 60);
 
   const secs =
     Math.floor(seconds % 60);
 
-  return String(minutes).padStart(2,"0")
-    + ":" +
+  return String(mins).padStart(2,"0") +
+    ":" +
     String(secs).padStart(2,"0");
-}
-
-
-function updateTime(){
-
-  const current =
-    formatTime(vid.currentTime);
-
-  const duration =
-    formatTime(vid.duration);
-
-  tTxt.textContent =
-    current + " / " + duration;
 
 }
 
 
-/* ================= VIDEO ENDED ================= */
+/* =========================
+   MUTE
+========================= */
 
-vid.addEventListener("ended", function(){
+function toggleMute(){
 
-  playBtn.textContent = "▶";
+  if(!mediaLoaded || mediaType !== "video"){
 
-  updatePlayhead();
-
-});
-
-
-/* ================= CLICK TIMELINE ================= */
-
-timeline.addEventListener("click", function(e){
-
-  if(!vid.duration) return;
-
-  const rect =
-    timeline.getBoundingClientRect();
-
-  const x =
-    e.clientX - rect.left;
-
-  const percent =
-    Math.max(0, Math.min(1, x / rect.width));
-
-  vid.currentTime =
-    percent * vid.duration;
-
-  updatePlayhead();
-  updateTime();
-
-});
-
-
-/* ================= DRAG TIMELINE ================= */
-
-let dragging = false;
-
-timeline.addEventListener("pointerdown", function(e){
-
-  if(!vid.duration) return;
-
-  dragging = true;
-
-  timeline.setPointerCapture(e.pointerId);
-
-  seekFromPointer(e);
-
-});
-
-
-timeline.addEventListener("pointermove", function(e){
-
-  if(!dragging) return;
-
-  seekFromPointer(e);
-
-});
-
-
-timeline.addEventListener("pointerup", function(){
-
-  dragging = false;
-
-});
-
-
-function seekFromPointer(e){
-
-  const rect =
-    timeline.getBoundingClientRect();
-
-  const x =
-    e.clientX - rect.left;
-
-  const percent =
-    Math.max(0, Math.min(1, x / rect.width));
-
-  vid.currentTime =
-    percent * vid.duration;
-
-  updatePlayhead();
-  updateTime();
-
-}
-
-
-/* ================= THUMBNAILS ================= */
-
-function makeStrip(){
-
-  strip.innerHTML = "";
-
-  if(!vid.duration || !isFinite(vid.duration)){
+    showToast("Add a video first");
     return;
-  }
-
-  const canvas =
-    document.createElement("canvas");
-
-  canvas.width = 100;
-  canvas.height = 50;
-
-  const ctx =
-    canvas.getContext("2d");
-
-  const count = 7;
-
-  let i = 0;
-
-  const oldTime =
-    vid.currentTime;
-
-
-  function capture(){
-
-    if(i >= count){
-
-      vid.currentTime = oldTime;
-
-      updatePlayhead();
-
-      return;
-    }
-
-    const time =
-      (vid.duration / (count - 1)) * i;
-
-    vid.currentTime =
-      Math.min(time, vid.duration - 0.05);
 
   }
 
+  video.muted = !video.muted;
 
-  function handleSeeked(){
+  document.getElementById("muteBtn").textContent =
+    video.muted ? "🔇" : "🔊";
 
-    ctx.drawImage(
-      vid,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+}
 
-    const img =
-      document.createElement("img");
 
-    img.src =
-      canvas.toDataURL("image/jpeg",0.7);
+/* =========================
+   SPLIT
+========================= */
 
-    strip.appendChild(img);
+function splitClip(){
 
-    i++;
+  if(!mediaLoaded){
 
-    if(i < count){
-
-      capture();
-
-    }else{
-
-      vid.removeEventListener(
-        "seeked",
-        handleSeeked
-      );
-
-      vid.currentTime = oldTime;
-
-      updatePlayhead();
-      updateTime();
-
-    }
+    showToast("Add media first");
+    return;
 
   }
 
+  if(mediaType !== "video"){
 
-  vid.addEventListener(
-    "seeked",
-    handleSeeked
+    showToast("Split works on videos");
+    return;
+
+  }
+
+  const track =
+    document.getElementById("timelineTrack");
+
+  const oldClip =
+    document.getElementById("clip");
+
+  const first =
+    document.createElement("div");
+
+  first.className = "clip selected";
+  first.textContent = "Part 1";
+
+  const second =
+    document.createElement("div");
+
+  second.className = "clip";
+  second.textContent = "Part 2";
+
+  first.style.width = "50%";
+  second.style.width = "50%";
+
+  track.innerHTML = "";
+
+  track.appendChild(first);
+  track.appendChild(second);
+
+  const playhead =
+    document.createElement("div");
+
+  playhead.className = "playhead";
+
+  track.appendChild(playhead);
+
+  showToast("Clip split");
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteClip(){
+
+  if(!mediaLoaded){
+
+    showToast("Nothing selected");
+    return;
+
+  }
+
+  video.pause();
+
+  video.removeAttribute("src");
+  video.load();
+
+  imagePreview.removeAttribute("src");
+
+  video.style.display = "none";
+  imagePreview.style.display = "none";
+  emptyPreview.style.display = "block";
+
+  mediaLoaded = false;
+
+  document.getElementById("clipInfo").textContent =
+    "No media";
+
+  showToast("Media deleted");
+
+}
+
+
+/* =========================
+   OVERLAY
+========================= */
+
+function openOverlay(){
+
+  openModal(
+    "Overlay",
+    `
+      <div class="optionGrid">
+
+        <button class="option"
+          onclick="openImagePicker();closeModal()">
+          🖼️<br>Add Photo
+        </button>
+
+        <button class="option"
+          onclick="openMediaPicker();closeModal()">
+          🎬<br>Add Video
+        </button>
+
+        <button class="option"
+          onclick="showToast('Overlay layer added');closeModal()">
+          ➕<br>Layer
+        </button>
+
+      </div>
+    `
   );
 
-  capture();
-
 }
 
 
-/* ================= HOME ================= */
+/* =========================
+   TEXT
+========================= */
 
-function goHome(){
+function openText(){
 
-  vid.pause();
+  openModal(
+    "Add Text",
+    `
+      <input
+        id="textInput"
+        class="textInput"
+        placeholder="Type your text...">
 
-  vid.removeAttribute("src");
-
-  vid.load();
-
-  editor.style.display = "none";
-
-  home.style.display = "flex";
-
-  playBtn.textContent = "▶";
-
-  strip.innerHTML = "";
-
-  playhead.style.left = "0%";
-
-  tTxt.textContent =
-    "00:00 / 00:00";
-
-  ph.style.display = "flex";
-
-  fileIn.value = "";
+      <button
+        class="primary"
+        onclick="applyText()">
+        Add Text
+      </button>
+    `
+  );
 
 }
 
+function applyText(){
 
-/* ================= EXPORT ================= */
+  const value =
+    document.getElementById("textInput").value;
 
-function doExport(){
+  if(!value){
 
-  if(!vid.src){
-
-    alert("No video selected");
-
+    showToast("Enter some text");
     return;
 
   }
 
-  const a =
-    document.createElement("a");
+  const layer =
+    document.getElementById("textLayer");
 
-  a.href = vid.src;
+  layer.textContent = value;
+  layer.style.display = "block";
 
-  a.download =
-    "ObeSplit-video.mp4";
+  closeModal();
 
-  document.body.appendChild(a);
-
-  a.click();
-
-  document.body.removeChild(a);
+  showToast("Text added");
 
 }
 
-</script>
 
-</body>
-</html>
+/* =========================
+   CAPTIONS
+========================= */
+
+function openCaptions(){
+
+  openModal(
+    "Captions",
+    `
+      <div class="optionGrid">
+
+        <button class="option"
+          onclick="showToast('Auto captions started');closeModal()">
+          🎤<br>Auto
+        </button>
+
+        <button class="option"
+          onclick="openText();">
+          T<br>Manual
+        </button>
+
+        <button class="option"
+          onclick="showToast('Caption style selected');closeModal()">
+          Aa<br>Style
+        </button>
+
+      </div>
+    `
+  );
+
+}
+
+
+/* =========================
+   ASPECT RATIO
+========================= */
+
+function openAspect(){
+
+  openModal(
+    "Aspect Ratio",
+    `
+      <div class="optionGrid">
+
+        <button class="option"
+          onclick="setRatio('9 / 16')">
+          9:16
+        </button>
+
+        <button class="option"
+          onclick="setRatio('16 / 9')">
+          16:9
+        </button>
+
+        <button class="option"
+          onclick="setRatio('1 / 1')">
+          1:1
+        </button>
+
+        <button class="option"
+          onclick="setRatio('4 / 5')">
+          4:5
+        </button>
+
+        <button class="option"
+          onclick="setRatio('4 / 3')">
+          4:3
+        </button>
+
+        <button class="option"
+          onclick="setRatio('3 / 4')">
+          3:4
+        </button>
+
+      </div>
+    `
+  );
+
+}
+
+function setRatio(ratio){
+
+  const preview =
+    document.getElementById("preview");
+
+  preview.style.aspectRatio = ratio;
+  preview.style.height = "auto";
+
+  closeModal();
+
+  showToast("Ratio changed");
+
+}
+
+
+/* =========================
+   SPLICE
+========================= */
+
+function spliceClip(){
+
+  if(!mediaLoaded){
+
+    showToast("Add media first");
+    return;
+
+  }
+
+  showToast("Splice tool selected");
+
+}
+
+
+/* =========================
+   REMOVE BACKGROUND
+========================= */
+
+function removeBackground(){
+
+  if(!mediaLoaded){
+
+    showToast("Add media first");
+    return;
+
+  }
+
+  showToast("Remove Background selected");
+
+}
+
+
+/* =========================
+   KEYFRAME
+========================= */
+
+function addKeyframe(){
+
+  if(!mediaLoaded){
+
+    showToast("Add media first");
+    return;
+
+  }
+
+  showToast(
+    "Keyframe added at " +
+    formatTime(video.currentTime)
+  );
+
+}
+
+
+/* =========================
+   SPEED
+========================= */
+
+function openSpeed(){
+
+  openModal(
+    "Speed",
+    `
+      <div class="optionGrid">
+
+        <button class="option"
+          onclick="setSpeed(.2
