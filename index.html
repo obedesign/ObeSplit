@@ -2,67 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ObeSplit - Video Editor</title>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #000; color: #fff; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #000; color: #fff; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
         .hidden { display: none !important; }
 
         /* --- SCREEN 1: HOMEPAGE --- */
-        #homepage { display: flex; flex-direction: column; height: 100%; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px; }
-        .brand-title { font-size: 28px; font-weight: bold; background: linear-gradient(45deg, #00ffff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .menu-btn { font-size: 24px; color: #7f39fb; }
+        #homepage { display: flex; flex-direction: column; height: 100%; padding: 16px; width: 100%; max-width: 500px; margin: 0 auto; flex: 1; }
         
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .main-btn { grid-column: span 2; background: #7f39fb; border-radius: 20px; padding: 40px 20px; text-align: center; cursor: pointer; }
-        .main-btn i { font-size: 50px; color: #a272fc; margin-bottom: 10px; }
-        .main-btn h2 { font-size: 22px; color: #fff; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 25px; }
+        .brand-title { font-size: 32px; font-weight: 800; background: linear-gradient(to right, #40e0d0, #ff007f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .side-btn { background: #1a1a1a; border-radius: 20px; padding: 25px 15px; text-align: center; border: 1px solid #333; }
-        .side-btn.purple-theme { background: linear-gradient(135deg, #150030, #30005a); border: none; }
-        .side-btn i { font-size: 30px; margin-bottom: 8px; color: #00ffff; }
-        .side-btn p { font-size: 14px; font-weight: 500; }
+        /* Three-bar Custom Hamburger Menu Icon */
+        .menu-btn { display: flex; flex-direction: column; gap: 5px; cursor: pointer; width: 24px; }
+        .menu-btn span { display: block; height: 3px; width: 100%; background: #c299ff; border-radius: 2px; }
+
+        /* Layout Grid matching your original design */
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
         
-        .projects-section h3 { font-size: 22px; margin-bottom: 15px; color: #fff; }
-        .no-projects { color: #666; font-size: 14px; text-align: center; margin-top: 20px; }
+        .main-btn { grid-column: span 2; background: #622cf3; border-radius: 24px; padding: 45px 20px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+        .main-btn .icon-cam { width: 55px; height: 35px; background: #9667ff; border-radius: 8px; position: relative; }
+        .main-btn .icon-cam::after { content: ''; position: absolute; right: -8px; top: 10px; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 10px solid #9667ff; }
+        .main-btn h2 { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
         
-        .nav-bar { margin-top: auto; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: #00ffff; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
+        .side-btn { background: #121214; border-radius: 20px; padding: 25px 15px; text-align: center; border: 1px solid #1f1f23; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; min-height: 130px; }
+        .side-btn.purple-theme { background: linear-gradient(145deg, #170535, #290b52); border: none; }
+        
+        /* Spiral Vector Icon for AI Generator */
+        .icon-spiral { width: 34px; height: 34px; border: 3px solid #20b2aa; border-radius: 50%; border-top-color: transparent; border-bottom-color: transparent; animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .side-btn.purple-theme p { color: #cf9fff; font-weight: 600; font-size: 13px; }
+
+        /* Camera Icon for Edit Photo */
+        .icon-camera-flat { width: 44px; height: 28px; background: #3a3a3c; border-radius: 6px; position: relative; border: 2px solid #a8a8af; }
+        .icon-camera-flat::before { content: ''; position: absolute; top: -6px; left: 14px; width: 12px; height: 5px; background: #a8a8af; border-radius: 2px 2px 0 0; }
+        .icon-camera-flat::after { content: ''; position: absolute; top: 4px; left: 12px; width: 12px; height: 12px; border: 2px solid #a8a8af; border-radius: 50%; }
+        .side-btn p.photo-text { color: #cfcfd6; font-weight: 700; font-size: 16px; margin-top: 2px; }
+        
+        /* Projects Area */
+        .projects-section { margin-top: 10px; }
+        .projects-section h3 { font-size: 28px; font-weight: 700; margin-bottom: 20px; color: #fff; }
+        .no-projects { color: #55555d; font-size: 14px; text-align: center; margin-top: 35px; font-weight: 500; }
+        
+        /* Bottom Navigation Bar */
+        .nav-bar { margin-top: auto; display: flex; justify-content: space-around; padding: 12px 0 8px; border-top: 1px solid #16161a; background: #000; width: 100%; }
+        .nav-item { text-align: center; color: #55555d; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .nav-item.active { color: #3cd6ff; }
+        .nav-icon { width: 22px; height: 18px; border: 2px solid currentColor; border-radius: 3px; position: relative; }
+        .nav-item:nth-child(2) .nav-icon { width: 20px; height: 16px; background: currentColor; opacity: 0.4; border: none; }
+        .nav-item:nth-child(3) .nav-icon { width: 16px; height: 16px; border-radius: 50%; }
 
         /* --- SCREEN 2: TIMELINE EDITOR --- */
-        #editor-screen { display: flex; flex-direction: column; height: 100%; position: relative; }
-        .editor-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #111; }
-        .close-btn { font-size: 22px; cursor: pointer; }
-        .export-btn { background: #00bfff; color: #000; padding: 6px 16px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer; }
+        #editor-screen { display: flex; flex-direction: column; height: 100%; position: relative; width: 100%; }
+        .editor-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: #111; }
+        .close-btn { font-size: 24px; cursor: pointer; font-weight: 300; }
+        .export-btn { background: #00c3ff; color: #000; padding: 6px 18px; border-radius: 20px; font-weight: 700; border: none; cursor: pointer; font-size: 14px; }
         
-        .preview-window { flex: 1; background: #000; display: flex; justify-content: center; align-items: center; position: relative; max-height: 45%; }
+        .preview-window { flex: 1; background: #000; display: flex; justify-content: center; align-items: center; max-height: 45%; }
         .preview-window video { max-width: 100%; max-height: 100%; object-fit: contain; }
         
-        .playback-controls { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #141414; font-size: 12px; color: #aaa; }
-        .play-btn { font-size: 22px; color: #fff; cursor: pointer; }
+        .playback-controls { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #121212; font-size: 12px; color: #8e8e93; }
+        .play-btn { font-size: 20px; color: #fff; cursor: pointer; width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 16px solid #fff; }
+        .play-btn.paused { width: 14px; height: 18px; border: none; border-left: 5px solid #fff; border-right: 5px solid #fff; }
         
-        .timeline-area { background: #181818; padding: 15px 0; overflow-x: auto; display: flex; flex-direction: column; position: relative; }
-        .timeline-scaler { height: 20px; border-bottom: 1px solid #333; display: flex; padding-left: 50%; color: #555; font-size: 10px; gap: 40px; margin-bottom: 10px; }
+        .timeline-area { background: #17171c; padding: 15px 0; overflow-x: auto; display: flex; flex-direction: column; position: relative; }
+        .timeline-scaler { height: 20px; border-bottom: 1px solid #222; display: flex; padding-left: 50%; color: #444; font-size: 10px; gap: 40px; margin-bottom: 10px; }
         .playhead-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #fff; z-index: 10; pointer-events: none; }
         
-        .track-row { display: flex; align-items: center; margin-bottom: 8px; padding-left: 50%; min-height: 45px; }
-        .track-label { width: 60px; position: absolute; left: 15px; background: #181818; z-index: 5; font-size: 11px; color: #aaa; display: flex; align-items: center; gap: 5px; }
-        .media-block { background: #333; height: 40px; border-radius: 4px; border: 1px solid #555; display: flex; align-items: center; padding: 0 10px; font-size: 11px; white-space: nowrap; color: #fff; }
+        .track-row { display: flex; align-items: center; margin-bottom: 8px; padding-left: 50%; min-height: 45px; position: relative; }
+        .track-label { width: 60px; position: absolute; left: 15px; background: #17171c; z-index: 5; font-size: 11px; color: #8e8e93; }
+        .media-block { background: #2c2c2e; height: 42px; border-radius: 6px; border: 1px solid #3a3a3c; display: flex; align-items: center; padding: 0 12px; font-size: 11px; white-space: nowrap; color: #fff; }
         
-        .editor-footer-nav { margin-top: auto; display: flex; justify-content: space-around; padding: 12px 0; background: #111; border-top: 1px solid #222; overflow-x: auto; }
-        .footer-tool { text-align: center; color: #ccc; font-size: 11px; padding: 0 10px; cursor: pointer; min-width: 60px; }
-        .footer-tool i { font-size: 18px; display: block; margin-bottom: 5px; }
+        .editor-footer-nav { margin-top: auto; display: flex; padding: 12px 5px; background: #111; border-top: 1px solid #1c1c1e; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .footer-tool { text-align: center; color: #aeaeb2; font-size: 11px; padding: 0 14px; cursor: pointer; min-width: 65px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .footer-tool-icon { width: 18px; height: 18px; border: 2px solid currentColor; border-radius: 2px; }
     </style>
 </head>
 <body>
 
-    <!-- Hidden native file inputs to trigger phone gallery -->
     <input type="file" id="video-picker" accept="video/*" class="hidden">
     <input type="file" id="photo-picker" accept="image/*" class="hidden">
 
@@ -70,21 +89,25 @@
     <div id="homepage">
         <div class="header">
             <h1 class="brand-title">ObeSplit</h1>
-            <i class="fa-solid fa-bars menu-btn"></i>
+            <div class="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
 
         <div class="grid-container">
             <div class="main-btn" id="btn-new-video">
-                <i class="fa-solid fa-video"></i>
+                <div class="icon-cam"></div>
                 <h2>New video +</h2>
             </div>
             <div class="side-btn purple-theme">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div class="icon-spiral"></div>
                 <p>Ai generator</p>
             </div>
-            <div class="side-btn" id="btn-edit-photo" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <i class="fa-solid fa-camera" style="color: #a272fc; font-size: 40px;"></i>
-                <p style="margin-top: 5px; font-weight: bold;">Edit photo</p>
+            <div class="side-btn" id="btn-edit-photo">
+                <div class="icon-camera-flat"></div>
+                <p class="photo-text">Edit photo</p>
             </div>
         </div>
 
@@ -94,17 +117,17 @@
         </div>
 
         <div class="nav-bar">
-            <div class="nav-item active"><i class="fa-solid fa-clapperboard"></i>Edit</div>
-            <div class="nav-item"><i class="fa-solid fa-folder-open"></i>Templates</div>
-            <div class="nav-item"><i class="fa-solid fa-user"></i>Me</div>
+            <div class="nav-item active"><div class="nav-icon"></div>Edit</div>
+            <div class="nav-item"><div class="nav-icon"></div>Templates</div>
+            <div class="nav-item"><div class="nav-icon"></div>Me</div>
         </div>
     </div>
 
     <!-- SCREEN 2: TIMELINE EDITOR -->
     <div id="editor-screen" class="hidden">
         <div class="editor-header">
-            <i class="fa-solid fa-xmark close-btn" id="btn-close-editor"></i>
-            <i class="fa-solid fa-magnifying-glass" style="color: #aaa;"></i>
+            <div class="close-btn" id="btn-close-editor">✕</div>
+            <div style="font-size: 18px; color: #8e8e93;">🔍</div>
             <button class="export-btn">Export</button>
         </div>
 
@@ -113,9 +136,9 @@
         </div>
 
         <div class="playback-controls">
-            <span id="current-time">00:00 / 00:00</span>
-            <i class="fa-solid fa-play play-btn" id="btn-play"></i>
-            <i class="fa-solid fa-arrow-rotate-left" style="font-size: 16px;"></i>
+            <span id="current-time">00:00 / 00:13</span>
+            <div class="play-btn" id="btn-play"></div>
+            <div style="font-size: 16px; color: #fff;">⟲</div>
         </div>
 
         <div class="timeline-area">
@@ -124,54 +147,9 @@
                 <span>00:00</span><span>00:01</span><span>00:02</span><span>00:03</span><span>00:04</span>
             </div>
             
-            <!-- Video/Photo Track -->
             <div class="track-row">
-                <div class="track-label"><i class="fa-solid fa-video"></i> Media</div>
+                <div class="track-label">🎬 Media</div>
                 <div class="media-block" id="timeline-media-clip">No clip loaded</div>
             </div>
+
             
-            <!-- Audio Track -->
-            <div class="track-row">
-                <div class="track-label"><i class="fa-solid fa-music"></i> Audio</div>
-                <div class="media-block" style="background: #1e3a2f; border-color: #2e5a44; width: 120px; opacity: 0.5;">+ Add audio</div>
-            </div>
-
-            <!-- Text Track -->
-            <div class="track-row">
-                <div class="track-label"><i class="fa-solid fa-font"></i> Text</div>
-                <div class="media-block" style="background: #3a1e28; border-color: #5a2e3d; width: 100px; opacity: 0.5;">+ Add text</div>
-            </div>
-        </div>
-
-        <div class="editor-footer-nav">
-            <div class="footer-tool"><i class="fa-solid fa-scissors"></i>Edit</div>
-            <div class="footer-tool"><i class="fa-solid fa-music"></i>Audio</div>
-            <div class="footer-tool"><i class="fa-solid fa-font"></i>Text</div>
-            <div class="footer-tool"><i class="fa-solid fa-wand-magic-sparkles"></i>Effects</div>
-            <div class="footer-tool"><i class="fa-solid fa-layer-group"></i>Overlay</div>
-            <div class="footer-tool"><i class="fa-solid fa-closed-captioning"></i>Captions</div>
-            <div class="footer-tool"><i class="fa-solid fa-palette"></i>Filters</div>
-        </div>
-    </div>
-
-    <script>
-        // DOM Elements
-        const homepage = document.getElementById('homepage');
-        const editorScreen = document.getElementById('editor-screen');
-        const btnNewVideo = document.getElementById('btn-new-video');
-        const btnEditPhoto = document.getElementById('btn-edit-photo');
-        const btnCloseEditor = document.getElementById('btn-close-editor');
-        const videoPicker = document.getElementById('video-picker');
-        const photoPicker = document.getElementById('photo-picker');
-        const mainPreview = document.getElementById('main-preview');
-        const btnPlay = document.getElementById('btn-play');
-        const currentTimeDisplay = document.getElementById('current-time');
-        const timelineMediaClip = document.getElementById('timeline-media-clip');
-
-        // Go from Home to Gallery Selection (Video)
-        btnNewVideo.addEventListener('click', () => {
-            videoPicker.click();
-        });
-
-        // Go from Home to Gallery Selection (Photo)
-      
