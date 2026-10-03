@@ -44,24 +44,10 @@
 <div id="txtOver" class="absolute font-bold text-white text-2xl hidden pointer-events-none"></div>
 </div>
 <div class="h-11 bg-[#1A1A1A] border-y border-[#222] flex items-center justify-between px-4">
-<button class="text-lg">⛶</button>
-<button id="playBtn" onclick="toggle()" class="w-8 h-8 text-xl">▶</button>
-<div class="flex gap-5"><span>⧉ON</span><span>↶</span><span>↷</span></div>
-</div>
-<div class="h-7 bg-[#121212] flex items-center justify-between px-3 text-[11px] text-zinc-500"><span id="tTxt">00:00 / 00:00</span><span>00:00 00:01 00:02 00:03 00:04</span></div>
-<div class="h-[165px] bg-[#121212] flex relative">
-<div id="ph" class="absolute top-0 bottom-0 w-[2px] bg-white z-20 left-[40%]"></div>
-<div class="w-[27%] bg-[#1C1C1C] p-2 space-y-3"><button onclick="mute()" class="w-full bg-[#2A2A2A] rounded-xl py-3 flex flex-col items-center"><span id="mic">🔊</span><span class="text-[10px] mt-1">Mute<br>clip</span></button><button class="w-full bg-[#2A2A2A] rounded-xl py-3 flex flex-col items-center"><span>✎</span><span class="text-[10px] mt-1">Cover</span></button></div>
-<div class="flex-1 p-2"><div class="h-12 bg-[#2A2A2A] rounded-xl flex overflow-hidden"><div class="flex-1 border-r border-black/20 flex items-center justify-center text-[10px]">clip</div><div class="flex-1 border-r border-black/20"></div><div class="flex-1 border-r border-black/20"></div><div class="w-8 bg-white text-black m-1 rounded-md flex items-center justify-center font-bold">+</div></div><div onclick="document.getElementById('audIn').click()" class="mt-2 h-9 bg-[#1C1C1C] rounded-xl flex items-center px-3 text-sm text-zinc-400">+ Add audio</div><div onclick="addTxt()" class="mt-2 h-9 bg-[#1C1C1C] rounded-xl flex items-center px-3 text-sm text-zinc-400">+ Add text</div></div>
-</div>
-<div class="h-[68px] bg-[#121212] border-t border-[#222] flex justify-around items-center text-[11px]"><button onclick="split()" class="flex flex-col items-center">✂️<span>Edit</span></button><button class="flex flex-col items-center">🎵<span>Audio</span></button><button onclick="addTxt()" class="flex flex-col items-center">T<span>Text</span></button><button class="flex flex-col items-center">✨<span>Effects</span></button><button class="flex flex-col items-center">🖼️<span>Overlay</span></button><button class="flex flex-col items-center">📝<span>Captions</span></button><button class="flex flex-col items-center">☁️<span>Filters</span></button></div>
-</div>
-
-<input type="file" id="fileIn" accept="video/*" hidden>
-<input type="file" id="audIn" accept="audio/*" hidden>
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor');
-fileIn.addEventListener('change',e=>{
+47 <div class="h-11 bg-[#121212]...
+52 <div class="h-7 bg-[#121212]... <-- 00:00 time
+56 <div class="h-[140px] bg-[#0F0F0F]... <-- Mute clip + clip
+64 <div class="h-[48px] bg-[#121212]... <-- Edit Audio Text
  const f=e.target.files[0]; if(!f) return;
  const url=URL.createObjectURL(f);
  vid.src=url; vid.load();
