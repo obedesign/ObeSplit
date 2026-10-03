@@ -1,115 +1,995 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ObeSplit</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-*{-webkit-tap-highlight-color:transparent; font-family:Inter,sans-serif}
-#editor{display:none}
-</style>
-</head>
-<body class="bg-black m-0 p-0 overflow-hidden">
+import { useEffect, useRef, useState } from "react";
 
-<!-- ==================== HOME FIRST - LIKE CAPCUT ==================== -->
-<div id="home" class="max-w-[420px] mx-auto min-h-screen bg-[#0A0A0A] p-4 pb-20">
-  <div class="text-white font-black text-[22px] mb-4">ObeSplit</div>
-  <div onclick="fileIn.click()" class="bg-[#6F2CFF] rounded-[24px] p-12 text-center active:scale-95">
-    <div class="text-[70px]">📹</div>
-    <div class="text-white font-black text-[20px] mt-2">+ New video</div>
-  </div>
-  <div class="text-zinc-500 text-[12px] mt-8 text-center">Projects will show here</div>
-</div>
-
-<!-- ==================== EDITOR - CAPCUT CLONE ==================== -->
-<div id="editor" class="h-[100dvh] w-screen bg-[#0F0F0F] flex flex-col overflow-hidden">
-
-  <!-- Top bar -->
-  <div class="h-[52px] min-h-[52px] bg-[#0F0F0F] flex items-center justify-between px-3">
-    <button onclick="goHome()" class="text-white text-[20px]">✕</button>
-    <div class="flex gap-2">
-      <button class="bg-[#222] text-white px-4 py-2 rounded-full text-[12px]">Cover</button>
-      <button onclick="doExport()" class="bg-[#2EF2FF] text-black px-5 py-2 rounded-full text-[13px] font-bold">Export</button>
-    </div>
-  </div>
-
-  <!-- Preview - shows your sunset -->
-  <div class="flex-1 min-h-0 bg-black relative flex items-center justify-center overflow-hidden">
-    <video id="vid" class="w-full h-full object-contain bg-black" playsinline muted></video>
-    <div id="vdText" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-      <p class="text-white text-[28px] font-black tracking-widest">PHOTO/VIDEO</p>
-      <p class="text-white text-[18px]">Obeedit</p>
-    </div>
-    <button id="playBtn" onclick="toggle()" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center text-[14px]">▶</button>
-  </div>
-
-  <!-- ==================== TIMELINE START - Line 71 ==================== -->
-  <!-- Time -->
-  <div class="h-[36px] min-h-[36px] bg-[#0F0F0F] border-y border-[#232323] flex items-center justify-between px-3 text-[11px] text-zinc-300 font-mono">
-    <span id="tTxt">00:00 / 00:20</span>
-    <div class="flex gap-2 text-[10px] text-zinc-500"><span>00:00</span><span>00:01</span><span>00:02</span><span>00:03</span><span>00:04</span></div>
-  </div>
-
-  <!-- Tracks -->
-  <div class="h-[140px] min-h-[140px] bg-[#0F0F0F] flex relative overflow-hidden">
-    <div class="w-[74px] bg-[#181818] p-2 border-r border-[#232323]">
-      <button onclick="doMute()" class="bg-[#262626] rounded-[12px] w-full py-3 flex flex-col items-center">
-        <span id="micIcon" class="text-[16px]">🔊</span>
-        <span class="text-[8px] text-zinc-400 leading-[9px] mt-1">Mute<br>clip</span>
-      </button>
-    </div>
-    <div class="flex-1 p-2 space-y-2 overflow-hidden">
-      <div id="track" class="h-[44px] bg-[#262626] rounded-[12px] flex items-center px-2 border border-[#333] relative">
-        <div class="flex gap-[3px] w-[85%]"><div class="flex-1 h-[28px] bg-[#3A3A3A] rounded text-[10px] flex items-center justify-center text-zinc-400">clip</div><div class="flex-1 h-[28px] bg-[#444] rounded"></div></div>
-        <div class="absolute right-2 w-7 h-7 bg-white rounded-md flex items-center justify-center text-black font-bold">+</div>
-      </div>
-      <div onclick="pickAudio()" class="h-[32px] bg-[#1A1A1A] rounded-[10px] flex items-center px-3 text-[12px] text-zinc-300 border border-[#232323]"><span class="text-[#2EF2FF] mr-2">+</span> Add audio</div>
-      <div onclick="addText()" class="h-[32px] bg-[#1A1A1A] rounded-[10px] flex items-center px-3 text-[12px] text-zinc-300 border border-[#232323]"><span class="text-[#2EF2FF] mr-2">+</span> Add text</div>
-    </div>
-    <div id="playhead" class="absolute top-0 bottom-0 w-[2px] bg-white left-[50%]"><div class="w-2 h-2 bg-white rotate-45 -ml-[3px]"></div></div>
-  </div>
-  <!-- ==================== TIMELINE END ==================== -->
-
-  <!-- Bottom tools - FIXED to show -->
-  <div class="h-[72px] min-h-[72px] bg-[#121212] border-t border-[#232323] flex justify-around items-center px-1 pb-1">
-    <button onclick="doSplit()" class="flex flex-col items-center"><span class="text-[20px]">✂️</span><span class="text-[10px] text-white">Edit</span></button>
-    <button class="flex flex-col items-center"><span class="text-[18px]">🎵</span><span class="text-[10px] text-white">Audio</span></button>
-    <button onclick="addText()" class="flex flex-col items-center"><span class="text-[16px] font-black">T</span><span class="text-[10px] text-white">Text</span></button>
-    <button class="flex flex-col items-center"><span class="text-[18px]">✨</span><span class="text-[10px] text-zinc-400">Effects</span></button>
-    <button class="flex flex-col items-center"><span class="text-[18px]">🖼️</span><span class="text-[10px] text-zinc-400">Overlay</span></button>
-    <button class="flex flex-col items-center"><span class="text-[14px]">💬</span><span class="text-[10px] text-zinc-400">Captions</span></button>
-    <button class="flex flex-col items-center"><span class="text-[14px]">🎨</span><span class="text-[10px] text-zinc-400">Filters</span></button>
-  </div>
-</div>
-
-<input type="file" id="fileIn" accept="video/*,image/*" hidden>
-<input type="file" id="audioIn" accept="audio/*" hidden>
-
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), tTxt=document.getElementById('tTxt'), vdText=document.getElementById('vdText'), playBtn=document.getElementById('playBtn');
-
-fileIn.onchange=e=>{
-  const f=e.target.files[0]; if(!f) return;
-  vid.src=URL.createObjectURL(f); vid.load();
-  home.style.display='none'; editor.style.display='flex';
-  vdText.style.display='none'; vid.muted=false;
-  vid.onloadeddata=()=>{vid.play(); playBtn.textContent='⏸';}
+type MediaFile = {
+  file: File;
+  url: string;
+  type: "video" | "image";
 };
 
-function goHome(){editor.style.display='none'; home.style.display='block'; vid.pause(); vid.src='';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-vid.ontimeupdate=()=>{
-  const c=vid.currentTime||0, d=vid.duration||20;
-  tTxt.textContent=`00:${String(Math.floor(c)).padStart(2,'0')} / 00:${String(Math.floor(d)).padStart(2,'0')}`;
-  document.getElementById('playhead').style.left=(c/d*100)+'%';
-  playBtn.textContent=vid.paused?'▶':'⏸';
+type Page = "home" | "media" | "editor";
+
+export default function App() {
+  const [page, setPage] = useState<Page>("home");
+  const [media, setMedia] = useState<MediaFile[]>([]);
+  const [selected, setSelected] = useState(0);
+  const [playing, setPlaying] = useState(false);
+
+  const fileInput = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  /* =========================
+     SELECT FILES
+  ========================= */
+
+  const chooseFiles = () => {
+    fileInput.current?.click();
+  };
+
+  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    const newMedia: MediaFile[] = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+      type: file.type.startsWith("video") ? "video" : "image",
+    }));
+
+    setMedia(newMedia);
+    setSelected(0);
+  };
+
+  /* =========================
+     OPEN EDITOR
+  ========================= */
+
+  const openEditor = () => {
+    if (media.length === 0) {
+      alert("Please select a photo or video first.");
+      return;
+    }
+
+    setPage("editor");
+  };
+
+  /* =========================
+     PLAY / PAUSE
+  ========================= */
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+
+    if (playing) {
+      videoRef.current.pause();
+      setPlaying(false);
+    } else {
+      videoRef.current.play();
+      setPlaying(true);
+    }
+  };
+
+  /* =========================
+     CLEAN URLS
+  ========================= */
+
+  useEffect(() => {
+    return () => {
+      media.forEach((item) => URL.revokeObjectURL(item.url));
+    };
+  }, [media]);
+
+  /* =========================
+     HOME
+  ========================= */
+
+  if (page === "home") {
+    return (
+      <div style={styles.app}>
+        <div style={styles.home}>
+
+          {/* NEW VIDEO */}
+
+          <button
+            style={styles.newVideo}
+            onClick={() => setPage("media")}
+          >
+            <div style={styles.videoLogoRow}>
+
+              <div style={styles.videoLogo}>
+                <div style={styles.playTriangle}></div>
+              </div>
+
+              <div style={styles.cameraSide}></div>
+
+            </div>
+
+            <div style={styles.newVideoText}>
+              New video <span style={{ color: "#16dfff" }}>+</span>
+            </div>
+          </button>
+
+
+          {/* HOME CARDS */}
+
+          <div style={styles.homeGrid}>
+
+            <div style={styles.smallColumn}>
+
+              <button
+                style={styles.smallCard}
+                onClick={() => alert("AI Generator coming soon")}
+              >
+                <div style={styles.aiIcon}>AI</div>
+                <div style={styles.cardText}>
+                  AI Generator
+                </div>
+              </button>
+
+
+              <button
+                style={styles.smallCard}
+                onClick={() => alert("Space coming soon")}
+              >
+                <div style={styles.cloudIcon}>☁</div>
+                <div style={styles.cardText}>
+                  Space
+                </div>
+              </button>
+
+            </div>
+
+
+            <button
+              style={styles.largeCard}
+              onClick={() => alert("Photo editor coming soon")}
+            >
+              <div style={styles.cameraIcon}>◉</div>
+
+              <div style={styles.largeCardText}>
+                Edit photo
+              </div>
+            </button>
+
+          </div>
+
+
+          {/* PROJECTS */}
+
+          <div style={styles.projectsHeader}>
+            <h1 style={styles.gradientText}>
+              Projects
+            </h1>
+
+            <div style={styles.menu}>☰</div>
+          </div>
+
+
+          {/* BOTTOM NAV */}
+
+          <div style={styles.bottomNav}>
+
+            <button style={styles.navButton}>
+              <div style={styles.navIcon}>✂</div>
+              <span>Edit</span>
+            </button>
+
+            <button style={styles.navButton}>
+              <div style={styles.navIcon}>▣</div>
+              <span>Templates</span>
+            </button>
+
+            <button style={styles.navButton}>
+              <div style={styles.navIcon}>●</div>
+              <span>Me</span>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
+
+  /* =========================
+     MEDIA SELECTION
+  ========================= */
+
+  if (page === "media") {
+    return (
+      <div style={styles.app}>
+
+        <div style={styles.mediaPage}>
+
+          <div style={styles.mediaTop}>
+
+            <button
+              style={styles.closeButton}
+              onClick={() => setPage("home")}
+            >
+              ×
+            </button>
+
+            <h2 style={styles.mediaTitle}>
+              Select media
+            </h2>
+
+            <button
+              style={styles.nextButton}
+              onClick={openEditor}
+            >
+              Next
+            </button>
+
+          </div>
+
+
+          {/* SELECT BOX */}
+
+          <div style={styles.selectBox}>
+
+            <div style={styles.uploadIcon}>
+              ＋
+            </div>
+
+            <h2>
+              Add photos or videos
+            </h2>
+
+            <p style={{ color: "#777" }}>
+              Select one or multiple files
+            </p>
+
+            <button
+              style={styles.selectButton}
+              onClick={chooseFiles}
+            >
+              Select from device
+            </button>
+
+            <input
+              ref={fileInput}
+              type="file"
+              accept="image/*,video/*"
+              multiple
+              style={{ display: "none" }}
+              onChange={handleFiles}
+            />
+
+          </div>
+
+
+          {/* SELECTED FILES */}
+
+          {media.length > 0 && (
+            <div style={styles.mediaGrid}>
+
+              {media.map((item, index) => (
+                <button
+                  key={index}
+                  style={{
+                    ...styles.mediaThumb,
+                    border:
+                      selected === index
+                        ? "3px solid #00d9ff"
+                        : "1px solid #333",
+                  }}
+                  onClick={() => setSelected(index)}
+                >
+                  {item.type === "video" ? (
+                    <video
+                      src={item.url}
+                      muted
+                      style={styles.thumbImage}
+                    />
+                  ) : (
+                    <img
+                      src={item.url}
+                      style={styles.thumbImage}
+                    />
+                  )}
+                </button>
+              ))}
+
+            </div>
+          )}
+
+        </div>
+
+      </div>
+    );
+  }
+
+
+  /* =========================
+     EDITOR
+  ========================= */
+
+  const current = media[selected];
+
+  return (
+    <div style={styles.editor}>
+
+      {/* TOP BAR */}
+
+      <div style={styles.editorTop}>
+
+        <button
+          style={styles.editorButton}
+          onClick={() => setPage("media")}
+        >
+          ×
+        </button>
+
+        <button style={styles.editorButton}>
+          ⌕
+        </button>
+
+        <div style={{ flex: 1 }} />
+
+        <button style={styles.exportButton}>
+          Export
+        </button>
+
+      </div>
+
+
+      {/* PREVIEW */}
+
+      <div style={styles.preview}>
+
+        {current?.type === "video" ? (
+          <video
+            ref={videoRef}
+            src={current.url}
+            style={styles.previewMedia}
+            onEnded={() => setPlaying(false)}
+          />
+        ) : current?.type === "image" ? (
+          <img
+            src={current.url}
+            style={styles.previewMedia}
+          />
+        ) : null}
+
+
+        <button
+          style={styles.playButton}
+          onClick={togglePlay}
+        >
+          {playing ? "Ⅱ" : "▶"}
+        </button>
+
+      </div>
+
+
+      {/* TIMELINE */}
+
+      <div style={styles.timeline}>
+
+        {/* TIME RULER */}
+
+        <div style={styles.ruler}>
+
+          <span>00:00</span>
+          <span>00:01</span>
+          <span>00:02</span>
+          <span>00:03</span>
+          <span>00:04</span>
+          <span>00:05</span>
+          <span>00:06</span>
+          <span>00:07</span>
+          <span>00:08</span>
+
+        </div>
+
+
+        {/* VIDEO TRACK */}
+
+        <div style={styles.trackRow}>
+
+          <div style={styles.trackName}>
+            Video
+          </div>
+
+          <div style={styles.clips}>
+
+            {media.map((item, index) => (
+
+              <button
+                key={index}
+                style={{
+                  ...styles.clip,
+                  border:
+                    selected === index
+                      ? "2px solid #00d9ff"
+                      : "1px solid #444",
+                }}
+                onClick={() => {
+                  setSelected(index);
+                  setPlaying(false);
+                }}
+              >
+
+                {item.type === "video" ? (
+                  <video
+                    src={item.url}
+                    muted
+                    style={styles.clipImage}
+                  />
+                ) : (
+                  <img
+                    src={item.url}
+                    style={styles.clipImage}
+                  />
+                )}
+
+              </button>
+
+            ))}
+
+          </div>
+
+        </div>
+
+
+        {/* AUDIO */}
+
+        <div style={styles.trackRow}>
+
+          <div style={styles.trackName}>
+            Audio
+          </div>
+
+          <button style={styles.addTrack}>
+            ＋ Add audio
+          </button>
+
+        </div>
+
+
+        {/* TEXT */}
+
+        <div style={styles.trackRow}>
+
+          <div style={styles.trackName}>
+            Text
+          </div>
+
+          <button style={styles.addTrack}>
+            ＋ Add text
+          </button>
+
+        </div>
+
+
+        {/* PLAYHEAD */}
+
+        <div style={styles.playhead}></div>
+
+      </div>
+
+
+      {/* TOOLS */}
+
+      <div style={styles.tools}>
+
+        <Tool icon="✂" name="Edit" />
+        <Tool icon="♫" name="Audio" />
+        <Tool icon="T" name="Text" />
+        <Tool icon="☆" name="Effects" />
+        <Tool icon="▧" name="Overlay" />
+        <Tool icon="▤" name="Captions" />
+        <Tool icon="◌" name="Filters" />
+
+      </div>
+
+    </div>
+  );
 }
-function doMute(){vid.muted=!vid.muted; document.getElementById('micIcon').textContent=vid.muted?'🔇':'🔊';}
-function doSplit(){alert('Split at '+tTxt.textContent);}
-function addText(){const t=prompt('Text:'); if(!t) return; const el=document.createElement('div'); el.textContent=t; el.style.cssText='position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);color:white;font-size:28px;font-weight:900;text-shadow:2px 2px 4px black;'; vdText.parentElement.appendChild(el); vdText.style.display='none';}
-function pickAudio(){document.getElementById('audioIn').click();}
-function doExport(){const a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
-</script>
-</body>
-</html>
+
+
+/* =========================
+   TOOL COMPONENT
+========================= */
+
+function Tool({
+  icon,
+  name,
+}: {
+  icon: string;
+  name: string;
+}) {
+  return (
+    <button style={styles.tool}>
+      <div style={styles.toolIcon}>
+        {icon}
+      </div>
+
+      <span>
+        {name}
+      </span>
+    </button>
+  );
+}
+
+
+/* =========================
+   STYLES
+========================= */
+
+const gradient =
+  "linear-gradient(90deg,#00eaff,#159cff,#ff38dc)";
+
+const styles: {
+  [key: string]: React.CSSProperties;
+} = {
+
+  app: {
+    minHeight: "100vh",
+    background: "#000",
+    color: "#fff",
+    fontFamily: "Arial, sans-serif",
+  },
+
+  home: {
+    minHeight: "100vh",
+    padding: "25px 18px 100px",
+    background: "#000",
+  },
+
+  newVideo: {
+    width: "100%",
+    maxWidth: "700px",
+    height: "260px",
+    margin: "0 auto 30px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "16px",
+    border: "none",
+    background:
+      "linear-gradient(135deg,#7020ed,#7920ed,#6d19dc)",
+    boxShadow: "0 0 30px rgba(116,20,255,.35)",
+    cursor: "pointer",
+  },
+
+  videoLogoRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    marginBottom: "22px",
+  },
+
+  videoLogo: {
+    width: "220px",
+    height: "115px",
+    borderRadius: "30px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background:
+      "linear-gradient(145deg,#13eaff,#0878ed 55%,#f400c8)",
+    boxShadow: "0 5px 25px rgba(0,0,0,.35)",
+  },
+
+  playTriangle: {
+    width: 0,
+    height: 0,
+    borderTop: "28px solid transparent",
+    borderBottom: "28px solid transparent",
+    borderLeft: "45px solid white",
+    marginLeft: "10px",
+  },
+
+  cameraSide: {
+    width: "62px",
+    height: "100px",
+    background:
+      "linear-gradient(160deg,#0ceaff,#0079ff,#ff00c8)",
+    clipPath:
+      "polygon(0 25%,100% 0,100% 100%,0 75%)",
+    borderRadius: "10px",
+  },
+
+  newVideoText: {
+    fontSize: "34px",
+    fontWeight: 800,
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  homeGrid: {
+    width: "100%",
+    maxWidth: "700px",
+    margin: "0 auto",
+    display: "grid",
+    gridTemplateColumns: "1fr 1.7fr",
+    gap: "18px",
+  },
+
+  smallColumn: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "18px",
+  },
+
+  smallCard: {
+    height: "145px",
+    position: "relative",
+    borderRadius: "14px",
+    border: "none",
+    background:
+      "linear-gradient(135deg,#7918ed,#6822db)",
+    overflow: "hidden",
+  },
+
+  largeCard: {
+    height: "308px",
+    position: "relative",
+    borderRadius: "14px",
+    border: "none",
+    background:
+      "linear-gradient(135deg,#7918ed,#6822db)",
+  },
+
+  aiIcon: {
+    fontSize: "55px",
+    fontWeight: 900,
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  cloudIcon: {
+    fontSize: "65px",
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  cameraIcon: {
+    fontSize: "120px",
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  cardText: {
+    position: "absolute",
+    bottom: "15px",
+    left: 0,
+    right: 0,
+    fontSize: "17px",
+    fontWeight: 700,
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  largeCardText: {
+    position: "absolute",
+    bottom: "20px",
+    left: 0,
+    right: 0,
+    fontSize: "27px",
+    fontWeight: 800,
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  projectsHeader: {
+    width: "100%",
+    maxWidth: "700px",
+    margin: "45px auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  gradientText: {
+    fontSize: "38px",
+    margin: 0,
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  menu: {
+    fontSize: "35px",
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  bottomNav: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "78px",
+    background: "#050505",
+    borderTop: "1px solid #222",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    zIndex: 20,
+  },
+
+  navButton: {
+    background: "none",
+    border: "none",
+    color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "3px",
+    fontSize: "14px",
+  },
+
+  navIcon: {
+    fontSize: "28px",
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  mediaPage: {
+    minHeight: "100vh",
+    padding: "20px",
+    background: "#000",
+  },
+
+  mediaTop: {
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+    marginBottom: "30px",
+  },
+
+  closeButton: {
+    background: "none",
+    color: "#fff",
+    fontSize: "35px",
+    border: "none",
+  },
+
+  mediaTitle: {
+    flex: 1,
+    textAlign: "center",
+    fontSize: "22px",
+  },
+
+  nextButton: {
+    background: "#10c9e8",
+    color: "#001018",
+    border: "none",
+    borderRadius: "10px",
+    padding: "11px 20px",
+    fontWeight: 700,
+  },
+
+  selectBox: {
+    maxWidth: "700px",
+    minHeight: "330px",
+    margin: "0 auto",
+    border: "2px dashed #333",
+    borderRadius: "20px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "12px",
+    textAlign: "center",
+  },
+
+  uploadIcon: {
+    fontSize: "65px",
+    background: gradient,
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+  },
+
+  selectButton: {
+    background:
+      "linear-gradient(90deg,#711cff,#b000ff)",
+    color: "#fff",
+    border: "none",
+    borderRadius: "12px",
+    padding: "14px 25px",
+    fontWeight: 700,
+    fontSize: "16px",
+  },
+
+  mediaGrid: {
+    maxWidth: "700px",
+    margin: "25px auto",
+    display: "grid",
+    gridTemplateColumns: "repeat(3,1fr)",
+    gap: "10px",
+  },
+
+  mediaThumb: {
+    height: "110px",
+    borderRadius: "10px",
+    overflow: "hidden",
+    background: "#111",
+    padding: 0,
+  },
+
+  thumbImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+
+  editor: {
+    minHeight: "100vh",
+    background: "#111",
+    color: "#fff",
+    overflow: "hidden",
+  },
+
+  editorTop: {
+    height: "68px",
+    display: "flex",
+    alignItems: "center",
+    padding: "0 14px",
+    gap: "18px",
+    background: "#151515",
+  },
+
+  editorButton: {
+    background: "none",
+    color: "#fff",
+    border: "none",
+    fontSize: "27px",
+  },
+
+  exportButton: {
+    background: "#12c9e8",
+    color: "#001018",
+    border: "none",
+    borderRadius: "10px",
+    padding: "11px 20px",
+    fontWeight: 700,
+  },
+
+  preview: {
+    height: "43vh",
+    minHeight: "300px",
+    background: "#111",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
+
+  previewMedia: {
+    maxWidth: "75%",
+    maxHeight: "90%",
+    objectFit: "contain",
+    background: "#000",
+  },
+
+  playButton: {
+    position: "absolute",
+    bottom: "15px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "48px",
+    height: "48px",
+    borderRadius: "50%",
+    background: "#292929",
+    color: "#fff",
+    border: "none",
+    fontSize: "19px",
+  },
+
+  timeline: {
+    height: "230px",
+    background: "#171717",
+    borderTop: "1px solid #292929",
+    overflowX: "auto",
+    position: "relative",
+  },
+
+  ruler: {
+    height: "38px",
+    marginLeft: "70px",
+    minWidth: "750px",
+    display: "flex",
+    alignItems: "center",
+    gap: "50px",
+    color: "#777",
+    fontSize: "11px",
+    borderBottom: "1px solid #282828",
+  },
+
+  trackRow: {
+    minWidth: "850px",
+    height: "58px",
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+  },
+
+  trackName: {
+    width: "70px",
+    color: "#888",
+    fontSize: "12px",
+    textAlign: "center",
+    flexShrink: 0,
+  },
+
+  clips: {
+    display: "flex",
+    gap: "3px",
+    height: "50px",
+  },
+
+  clip: {
+    width: "125px",
+    height: "50px",
+    padding: 0,
+    overflow: "hidden",
+    borderRadius: "5px",
+    background: "#222",
+  },
+
+  clipImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+
+  addTrack: {
+    marginLeft: "0px",
+    width: "500px",
+    height: "42px",
+    background: "#202020",
+    color: "#888",
+    border: "none",
+    borderRadius: "5px",
+    textAlign: "left",
+    paddingLeft: "15px",
+  },
+
+  playhead: {
+    position: "absolute",
+    left: "105px",
+    top: "38px",
+    height: "192px",
+    width: "2px",
+    background: "#fff",
+    pointerEvents: "none",
+  },
+
+  tools: {
+    height: "90px",
+    background: "#111",
+    borderTop: "1px solid #252525",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    overflowX: "auto",
+  },
+
+  tool: {
+    minWidth: "70px",
+    background: "none",
+    color: "#ddd",
+    border: "none",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "6px",
+    fontSize: "12px",
+  },
+
+  toolIcon: {
+    fontSize: "25px",
+  },
+};
