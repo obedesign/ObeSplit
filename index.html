@@ -85,3 +85,55 @@ strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.t
 
 function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
  </script>
+<script>
+const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
+let isDragging=false;
+fileIn.onchange=e=>{
+ const f=e.target.files[0]; if(!f)return;
+ vid.src=URL.createObjectURL(f); vid.muted=true;
+ home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
+ vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,600); };
+ vid.load();
+};
+function makeStrip(){
+ strip.innerHTML=''; strip.style.transform='translateX(0px)';
+ let i=0; const canvas=document.createElement('canvas'); canvas.width=80; canvas.height=50; const ctx=canvas.getContext('2d');
+ function next(){ if(i>=6){ vid.currentTime=0; vid.play(); return; } vid.currentTime=i*(vid.duration/6)+0.1; }
+ vid.addEventListener('seeked', function h(){
+   ctx.drawImage(vid,0,0,80,50);
+   const img=document.createElement('img'); img.src=canvas.toDataURL(); img.className='w-[52px] h-[28px] object-cover rounded-[3px] flex-shrink-0';
+   strip.appendChild(img);
+   i++; if(i<6) next(); else { vid.removeEventListener('seeked',h); vid.currentTime=0; vid.play(); }
+ });
+ next();
+}
+function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
+function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
+// MOVING TIMELINE
+vid.ontimeupdate=()=>{
+ const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||11);
+ if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`;
+ if(!isDragging && d>0){
+   const progress = vid.currentTime / vid.duration;
+   const maxMove = strip.scrollWidth - 200; // how much to scroll
+   strip.style.transform = `translateX(-${progress*maxMove}px)`;
+   strip.style.transition='transform 0.2s linear';
+ }
+};
+// DRAG TO SEEK - touch timeline to move video
+let startX=0, startTX=0;
+strip.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startTX = parseFloat(strip.style.transform.replace(/[^0-9\-\.]/g,''))||0; vid.pause(); playBtn.textContent='▶'; });
+strip.addEventListener('touchmove', e=>{
+ if(!isDragging) return;
+ const dx = e.touches[0].clientX - startX;
+ let newTX = startTX + dx;
+ newTX = Math.min(0, Math.max(newTX, -(strip.scrollWidth-200)));
+ strip.style.transform=`translateX(${newTX}px)`;
+ strip.style.transition='none';
+ const progress = Math.abs(newTX)/(strip.scrollWidth-200);
+ if(vid.duration) vid.currentTime = progress*vid.duration;
+});
+strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.textContent='⏸'; });
+
+function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
+</script>
