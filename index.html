@@ -3,82 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ObeSplit</title>
+<title>Obeedit - Pro Editor</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
-*{ -webkit-tap-highlight-color:transparent; font-family: Inter,sans-serif }
-.glow{background:linear-gradient(90deg,#2EF2FF,#A66CFF,#FF6BFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.card{background:#6F2CFF;box-shadow:0 10px 25px rgba(111,44,255,.4)}
+*{font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
+.glow{background:linear-gradient(90deg,#2EF2FF 0%,#A66CFF 50%,#FF6BFF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.card{background:linear-gradient(135deg,#7A3AFF 0%,#5A20E0 100%);box-shadow:0 12px 30px rgba(122,58,255,.5),inset 0 1px 0 rgba(255,255,255,.25)}
 #home{display:block} #editor{display:none}
+.tool:active{transform:scale(0.88);background:#2A2A2A}
+.clip-thumb{object-fit:cover;width:100%;height:100%}
 </style>
 </head>
-<body class="bg-black m-0">
+<body class="bg-black m-0 overflow-hidden">
 
-<!-- HOME - SHOWS FIRST -->
-<div id="home" class="max-w-[420px] mx-auto min-h-screen bg-black px-4 pt-8 pb-28">
-<div onclick="document.getElementById('fileIn').click()" class="card rounded-[26px] p-8 text-center active:scale-95">
-<div style="font-size:70px">📹</div>
-<div class="text-[28px] font-black glow mt-2">New video +</div>
-</div>
+<!-- HOME -->
+<div id="home" class="max-w-[430px] mx-auto min-h-screen bg-black px-4 pt-8 pb-28 overflow-y-auto h-screen">
+<div onclick="pick()" class="card rounded-[28px] p-8 text-center cursor-pointer active:scale-[0.97] transition"><div class="text-[75px]">📹</div><div class="text-[30px] font-black glow mt-2">New video +</div></div>
 <div class="grid grid-cols-5 gap-3 mt-4">
-<div class="col-span-2 space-y-3">
-<div class="card rounded-[20px] h-[110px] flex flex-col items-center justify-center"><div style="font-size:38px">🌀</div><div class="text-[11px] font-bold glow">Ai generator</div></div>
-<div class="card rounded-[20px] h-[110px] flex flex-col items-center justify-center"><div style="font-size:34px">☁️</div><div class="text-[11px] font-bold glow">Space</div></div>
+<div class="col-span-2 space-y-3"><div class="card rounded-[22px] h-[115px] flex flex-col items-center justify-center"><div class="text-[40px]">🤖</div><div class="text-[11px] font-bold glow">Ai generator</div></div><div class="card rounded-[22px] h-[115px] flex flex-col items-center justify-center"><div class="text-[36px]">🪐</div><div class="text-[11px] font-bold glow">Space</div></div></div>
+<div class="col-span-3 card rounded-[22px] h-[242px] flex flex-col items-center justify-center"><div class="text-[90px]">📸</div><div class="text-[24px] font-bold glow">Edit photo</div></div>
 </div>
-<div class="col-span-3 card rounded-[20px] h-[232px] flex flex-col items-center justify-center"><div style="font-size:85px">📷</div><div class="text-[22px] font-bold glow">Edit photo</div></div>
-</div>
-<div class="flex justify-between items-center mt-8"><h2 class="text-[32px] font-black glow">Projects</h2><div class="flex flex-col gap-1.5"><div class="w-8 h-2 rounded-full bg-cyan-300"></div><div class="w-8 h-2 rounded-full bg-cyan-300"></div><div class="w-8 h-2 rounded-full bg-cyan-300"></div></div></div>
-<p class="text-zinc-600 text-sm mt-4">Tap New video + to start</p>
-<div class="fixed bottom-0 left-0 right-0 bg-black border-t border-zinc-900"><div class="max-w-[420px] mx-auto flex justify-around py-3 text-center"><div><div style="font-size:26px">🎬</div><div class="text-xs font-bold glow">Edit</div></div><div class="opacity-50"><div style="font-size:26px">🗂️</div><div class="text-xs">Templates</div></div><div class="opacity-50"><div style="font-size:26px">👤</div><div class="text-xs">Me</div></div></div></div>
+<div class="flex justify-between items-center mt-9"><h2 class="text-[34px] font-black glow">Projects</h2><div class="opacity-60 text-xl">☰</div></div>
+<div class="mt-4 text-zinc-500 text-sm">Tap New video + to start • Obeedit</div>
+<div class="fixed bottom-0 left-0 right-0 bg-black border-t border-zinc-900"><div class="max-w-[430px] mx-auto flex justify-around py-3"><div class="text-center"><div class="text-[26px]">✂️</div><div class="text-xs font-bold glow">Edit</div></div><div class="text-center opacity-40"><div class="text-[26px]">📑</div><div class="text-xs">Templates</div></div><div class="text-center opacity-40"><div class="text-[26px]">👤</div><div class="text-xs">Me</div></div></div></div>
 </div>
 
-<!-- EDITOR - HIDDEN UNTIL VIDEO PICKED -->
-<div id="editor" class="h-screen w-screen bg-[#121212] flex-col">
-<div class="h-[48px] flex items-center justify-between px-3 bg-[#121212]">
-<div class="flex items-center gap-6"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span>🔍</span></div>
-<div class="flex items-center gap-2"><div class="w-28 h-9 bg-[#2A2A2A] rounded-lg"></div><button onclick="exportV()" class="bg-[#33E5F3] text-black font-bold px-5 py-2 rounded-xl text-sm">Export</button></div>
-</div>
-<div class="flex-1 bg-black relative flex items-center justify-center">
-<video id="vid" class="w-full h-full object-contain bg-black" playsinline muted controls></video>
-<div id="noVid" class="absolute text-zinc-500 text-center"><div style="font-size:50px">🎬</div><div class="text-sm mt-2">Picking video...</div></div>
-<div id="txtOver" class="absolute font-bold text-white text-2xl hidden pointer-events-none"></div>
-</div>
-<div class="h-11 bg-[#1A1A1A] border-y border-[#222] flex items-center justify-between px-4">
-<button class="text-lg">⛶</button>
-<button id="playBtn" onclick="toggle()" class="w-8 h-8 text-xl">▶</button>
-<div class="flex gap-5"><span>⧉ON</span><span>↶</span><span>↷</span></div>
-</div>
-<div class="h-7 bg-[#121212] flex items-center justify-between px-3 text-[11px] text-zinc-500"><span id="tTxt">00:00 / 00:00</span><span>00:00 00:01 00:02 00:03 00:04</span></div>
-<div class="h-[165px] bg-[#121212] flex relative">
-<div id="ph" class="absolute top-0 bottom-0 w-[2px] bg-white z-20 left-[40%]"></div>
-<div class="w-[27%] bg-[#1C1C1C] p-2 space-y-3"><button onclick="mute()" class="w-full bg-[#2A2A2A] rounded-xl py-3 flex flex-col items-center"><span id="mic">🔊</span><span class="text-[10px] mt-1">Mute<br>clip</span></button><button class="w-full bg-[#2A2A2A] rounded-xl py-3 flex flex-col items-center"><span>✎</span><span class="text-[10px] mt-1">Cover</span></button></div>
-<div class="flex-1 p-2"><div class="h-12 bg-[#2A2A2A] rounded-xl flex overflow-hidden"><div class="flex-1 border-r border-black/20 flex items-center justify-center text-[10px]">clip</div><div class="flex-1 border-r border-black/20"></div><div class="flex-1 border-r border-black/20"></div><div class="w-8 bg-white text-black m-1 rounded-md flex items-center justify-center font-bold">+</div></div><div onclick="document.getElementById('audIn').click()" class="mt-2 h-9 bg-[#1C1C1C] rounded-xl flex items-center px-3 text-sm text-zinc-400">+ Add audio</div><div onclick="addTxt()" class="mt-2 h-9 bg-[#1C1C1C] rounded-xl flex items-center px-3 text-sm text-zinc-400">+ Add text</div></div>
-</div>
-<div class="h-[68px] bg-[#121212] border-t border-[#222] flex justify-around items-center text-[11px]"><button onclick="split()" class="flex flex-col items-center">✂️<span>Edit</span></button><button class="flex flex-col items-center">🎵<span>Audio</span></button><button onclick="addTxt()" class="flex flex-col items-center">T<span>Text</span></button><button class="flex flex-col items-center">✨<span>Effects</span></button><button class="flex flex-col items-center">🖼️<span>Overlay</span></button><button class="flex flex-col items-center">📝<span>Captions</span></button><button class="flex flex-col items-center">☁️<span>Filters</span></button></div>
+<!-- EDITOR - POLISHED LIKE YOUR SCREENSHOT -->
+<div id="editor" class="h-screen w-screen bg-[#0F0F0F] flex flex-col">
+<!-- Top bar -->
+<div class="h-[52px] flex items-center justify-between px-4 bg-[#121212] border-b border-[#1F1F1F]">
+<div class="flex items-center gap-6"><button onclick="goHome()" class="text-white text-[26px]">✕</button><span class="text-xl">🔍</span></div>
+<div class="flex items-center gap-3"><div class="w-28 h-9 bg-[#232323] rounded-xl"></div><button onclick="exportV()" class="bg-[#2EF2FF] text-black font-black px-5 py-2.5 rounded-[12px] text-[14px] tracking-wide">Export</button></div>
 </div>
 
-<input type="file" id="fileIn" accept="video/*" hidden>
-<input type="file" id="audIn" accept="audio/*" hidden>
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor');
-fileIn.addEventListener('change',e=>{
- const f=e.target.files[0]; if(!f) return;
- const url=URL.createObjectURL(f);
- vid.src=url; vid.load();
- document.getElementById('noVid').style.display='none';
- home.style.display='none'; editor.style.display='flex';
- vid.onloadeddata=()=>{vid.play(); document.getElementById('playBtn').textContent='⏸'; upd()};
-});
-function goHome(){editor.style.display='none'; home.style.display='block'; vid.pause();}
-function toggle(){vid.paused?vid.play():vid.pause()}
-vid.onplay=()=>{document.getElementById('playBtn').textContent='⏸'}
-vid.onpause=()=>{document.getElementById('playBtn').textContent='▶'}
-vid.ontimeupdate=upd;
-function upd(){let c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||0); document.getElementById('tTxt').textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`; let p=35+(vid.currentTime/(vid.duration||1))*55; document.getElementById('ph').style.left=p+'%';}
-function mute(){vid.muted=!vid.muted; document.getElementById('mic').textContent=vid.muted?'🔇':'🔊';}
-function split(){alert('Split at '+vid.currentTime.toFixed(1)+'s')}
-function addTxt(){let t=prompt('Text:'); if(!t) return; let o=document.getElementById('txtOver'); o.textContent=t; o.style.display='block'; o.style.top='30%';}
-function exportV(){let a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
-</script>
-</body>
-</html>
+<!-- Preview - YOUR SUNSET NOW SHOWS PERFECT -->
+<div class="flex-1 bg-black relative flex items-center justify-center overflow-hidden">
+<video id="vid" class="w-full h-full object-contain bg-black" playsinline muted></video>
+<img id="imgPreview" class="w-full h-full object-contain hidden"/>
+<div id="waterMark" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<p class="text-white text-[36px] font-light tracking-widest" style="font-family:'Dancing Script';text-shadow:0 4px 20px rgba(0,0,0,.8)">PHOTO/VIDEO</p>
+<p class="text-white text-[22px] -mt-2" style="font-family:'Dancing Script';text-shadow:0 2px 10px rgba(0,0,0,.8)">Obeedit</p>
+</div>
+<div id="txtOver" class="absolute font-black text-white text-[26px] hidden text-center px-6 drop-shadow-[0_2px_10px_rgba(0,0,0,.9)]"></div>
+<button id="playBig" onclick="toggle()" class="absolute w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-2xl">▶</button>
+</div>
+
+<!-- Transport -->
+<div class="h-[46px] bg-[#121212] border-y border-[#232323] flex items-center justify-between px-4">
+<div class="flex items-center gap-4"><button class="text-zinc-400 text-[18px]">⛶</button></div>
+<button id="playBtn" onclick="toggle()" class="w-9 h-9 bg-white text-black rounded-full flex items-center justify-center text-[14px] font-black">▶</button
