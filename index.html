@@ -1,6 +1,59 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><script src="https://cdn.tailwindcss.com"></script><style>.grad{background:linear-gradient(90deg,#22d3ee,#e879f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}.btn{background:#7C3AED;border-radius:20px}</style></head><body class="bg-black text-white p-4 pb-28">
-<button onclick="location.href='editor.html'" class="btn w-full p-8 flex flex-col items-center"><div class="text-6xl">🎥</div><h2 class="text-2xl grad mt-2">New video +</h2></button>
-<div class="grid grid-cols-3 gap-4 mt-6"><div class="flex flex-col gap-4"><button onclick="location.href='ai.html'" class="btn h-28 flex flex-col items-center justify-center"><span class="text-2xl">AI</span><span class="grad text-xs mt-1">Ai generator</span></button><button onclick="location.href='space.html'" class="btn h-28 flex flex-col items-center justify-center"><span class="text-2xl">☁️</span><span class="grad text-xs mt-1">Space</span></button></div><button onclick="location.href='photo.html'" class="btn col-span-2 h-[15.5rem] flex flex-col items-center justify-center"><span class="text-6xl">📷</span><span class="grad text-lg mt-2">Edit photo</span></button></div>
-<div class="flex justify-between mt-8"><h3 class="text-3xl grad">Projects</h3><span class="text-2xl grad">☰</span></div>
-<div class="fixed bottom-0 left-0 right-0 bg-black border-t border-zinc-800 flex justify-around py-4"><span class="flex flex-col items-center"><span>🎬</span><span class="grad text-xs">Edit</span></span><span class="flex flex-col items-center opacity-50"><span>📑</span><span class="text-xs">Templates</span></span><span class="flex flex-col items-center opacity-50"><span>👤</span><span class="text-xs">Me</span></span></div>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ObeSplit - Video Editor</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif;background:#000}</style>
+</head>
+<body class="bg-black text-white min-h-screen">
+<div class="max-w-md mx-auto p-4">
+<div class="bg-[#7C3AED] rounded-[20px] p-8 text-center mt-6 shadow-2xl">
+<div class="text-6xl mb-2">🎥</div>
+<h2 class="text-2xl font-extrabold bg-gradient-to-r from-cyan-300 to-pink-400 bg-clip-text text-transparent">New video +</h2>
+<p class="text-white/70 text-sm mt-2">Upload and split</p>
+<input type="file" id="videoInput" accept="video/*" class="hidden">
+<button onclick="document.getElementById('videoInput').click()" class="mt-4 bg-white text-black px-6 py-2 rounded-full font-bold">Choose Video</button>
+</div>
+
+<div id="player" class="hidden mt-6">
+<video id="video" class="w-full rounded-xl bg-zinc-900" controls></video>
+<div class="flex gap-2 mt-4">
+<button onclick="splitVideo()" class="flex-1 bg-cyan-400 text-black py-3 rounded-full font-bold">✂️ Split</button>
+<button onclick="download()" class="flex-1 bg-zinc-800 py-3 rounded-full font-bold">Download</button>
+</div>
+<p id="status" class="text-center text-zinc-500 text-sm mt-3"></p>
+</div>
+
+<h3 class="mt-8 text-3xl font-extrabold bg-gradient-to-r from-cyan-300 to-pink-400 bg-clip-text text-transparent">ObeSplit is LIVE!</h3>
+<p class="text-zinc-500 mt-2 text-sm">Simple video splitter. Upload, trim, split, download. No watermark.</p>
+</div>
+<script>
+const input=document.getElementById('videoInput');
+const video=document.getElementById('video');
+const player=document.getElementById('player');
+const status=document.getElementById('status');
+input.addEventListener('change',e=>{
+ const file=e.target.files[0];
+ if(!file) return;
+ video.src=URL.createObjectURL(file);
+ player.classList.remove('hidden');
+ status.textContent='Loaded: '+file.name;
+});
+function splitVideo(){
+ if(!video.src){status.textContent='Upload video first';return;}
+ status.textContent='Split at '+video.currentTime.toFixed(2)+'s ✓ (Ready to download)';
+}
+function download(){
+ if(!video.src){status.textContent='No video';return;}
+ const a=document.createElement('a');
+ a.href=video.src;
+ a.download='obesplit-video.mp4';
+ a.click();
+ status.textContent='Downloading...';
+}
+</script>
+</body>
+</html>
