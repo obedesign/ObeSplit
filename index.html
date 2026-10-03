@@ -21,31 +21,52 @@
 const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
 fileIn.onchange=e=>{
  const f=e.target.files[0]; if(!f) return;
+ <script>
+const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt');
+
+fileIn.onchange=e=>{
+ const f=e.target.files[0]; if(!f) return;
  vid.src=URL.createObjectURL(f); vid.muted=true;
  home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
- vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; makeStrip(); };
+ vid.onloadeddata=()=>{
+   vid.play(); playBtn.innerHTML='⏸';
+   setTimeout(makeStrip, 500);
+ };
  vid.load();
 };
+
 function makeStrip(){
+ const strip = document.querySelector('#track div.w-\\[82\\%\\]') || document.getElementById('strip') || document.querySelector('.flex.gap-1');
+ if(!strip) return;
  strip.innerHTML='';
- const c=document.createElement('canvas'); const ctx=c.getContext('2d');
- c.width=60; c.height=40;
- let i=0;
- function cap(){
-   if(i>=5) { vid.currentTime=0; vid.play(); return; }
-   vid.currentTime=(i+0.1)*(vid.duration/5);
+ strip.className='flex gap-[2px] w-[82%] h-[28px] overflow-hidden';
+
+ const dur = vid.duration || 11;
+ const canvas = document.createElement('canvas');
+ canvas.width = 80; canvas.height = 40;
+ const ctx = canvas.getContext('2d');
+
+ for(let i=0;i<5;i++){
+   ((index)=>{
+     setTimeout(()=>{
+       try{
+         vid.currentTime = (index+0.5)*(dur/5);
+         setTimeout(()=>{
+           ctx.drawImage(vid,0,0,80,40);
+           const img = document.createElement('img');
+           img.src = canvas.toDataURL();
+           img.className='w-[48px] h-[28px] object-cover rounded-[3px] flex-shrink-0';
+           strip.appendChild(img);
+           if(index===4){ vid.currentTime=0; vid.play(); }
+         },150);
+       }catch(e){}
+     }, index*400);
+   })(i);
  }
- vid.addEventListener('seeked', function h(){
-   ctx.drawImage(vid,0,0,60,40);
-   const im=document.createElement('img'); im.src=c.toDataURL(); im.className='w-[52px] h-[28px] object-cover rounded';
-   strip.appendChild(im);
-   i++;
-   if(i<5) cap(); else { vid.removeEventListener('seeked',h); vid.currentTime=0; vid.play(); }
- });
- cap();
 }
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||20); if(!isNaN(d)) tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:${String(d).padStart(2,'0')}`;}
+
+function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.innerHTML='▶';}
+function toggle(){if(vid.paused){vid.play(); playBtn.innerHTML='⏸';}else{vid.pause(); playBtn.innerHTML='▶';}}
+vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||11); if(!isNaN(d)) tTxt.textContent=`00:${String(c).padStart(2,'0').slice(-2)} / 00:${String(d).padStart(2,'0').slice(-2)}`;}
 function doExport(){if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click();}
-</script></body></html>
+</script>
