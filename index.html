@@ -86,11 +86,12 @@ strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.t
 function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
  </script>
 <script>
+<script>
 const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
-let isDragging=false;
+let isDragging=false, isMuted=true;
 fileIn.onchange=e=>{
  const f=e.target.files[0]; if(!f)return;
- vid.src=URL.createObjectURL(f); vid.muted=true;
+ vid.src=URL.createObjectURL(f); vid.muted=true; vid.volume=1;
  home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
  vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,600); };
  vid.load();
@@ -108,32 +109,35 @@ function makeStrip(){
  next();
 }
 function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-// MOVING TIMELINE
+function toggle(){
+ if(vid.paused){ vid.play(); playBtn.textContent='⏸'; }else{ vid.pause(); playBtn.textContent='▶'; }
+ // UNMUTE ON FIRST PLAY CLICK
+ if(isMuted){ vid.muted=false; isMuted=false; }
+}
+function toggleMute(){
+ isMuted=!isMuted; vid.muted=isMuted;
+ document.querySelector('[onclick="toggleMute()"]')?.classList.toggle('opacity-50');
+}
 vid.ontimeupdate=()=>{
- const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||11);
+ const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13);
  if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`;
  if(!isDragging && d>0){
-   const progress = vid.currentTime / vid.duration;
-   const maxMove = strip.scrollWidth - 200; // how much to scroll
-   strip.style.transform = `translateX(-${progress*maxMove}px)`;
+   const progress=vid.currentTime/vid.duration;
+   const maxMove=strip.scrollWidth-200;
+   strip.style.transform=`translateX(-${progress*maxMove}px)`;
    strip.style.transition='transform 0.2s linear';
  }
 };
-// DRAG TO SEEK - touch timeline to move video
+vid.addEventListener('click', ()=>{ if(isMuted){ vid.muted=false; isMuted=false; } toggle(); });
 let startX=0, startTX=0;
-strip.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startTX = parseFloat(strip.style.transform.replace(/[^0-9\-\.]/g,''))||0; vid.pause(); playBtn.textContent='▶'; });
+strip.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startTX=parseFloat(strip.style.transform.replace(/[^0-9\-\.]/g,''))||0; vid.pause(); playBtn.textContent='▶'; });
 strip.addEventListener('touchmove', e=>{
  if(!isDragging) return;
- const dx = e.touches[0].clientX - startX;
- let newTX = startTX + dx;
- newTX = Math.min(0, Math.max(newTX, -(strip.scrollWidth-200)));
- strip.style.transform=`translateX(${newTX}px)`;
- strip.style.transition='none';
- const progress = Math.abs(newTX)/(strip.scrollWidth-200);
- if(vid.duration) vid.currentTime = progress*vid.duration;
+ const dx=e.touches[0].clientX-startX;
+ let newTX=startTX+dx; newTX=Math.min(0,Math.max(newTX,-(strip.scrollWidth-200)));
+ strip.style.transform=`translateX(${newTX}px)`; strip.style.transition='none';
+ const progress=Math.abs(newTX)/(strip.scrollWidth-200); if(vid.duration) vid.currentTime=progress*vid.duration;
 });
-strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.textContent='⏸'; });
-
+strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.textContent='⏸'; if(isMuted){ vid.muted=false; isMuted=false; } });
 function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
 </script>
