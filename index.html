@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>ObeSplit</title>
 
 <style>
@@ -11,660 +11,629 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-body{
+html,body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
   background:#000;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
 button{
   border:0;
+  outline:0;
   color:white;
-  background:none;
-  font:inherit;
+  font-family:inherit;
   cursor:pointer;
 }
 
-.app{
-  max-width:430px;
-  min-height:100vh;
-  margin:auto;
-  background:#050505;
-  position:relative;
-  overflow:hidden;
-}
-
-/* HOME */
-
-#home{
-  min-height:100vh;
-  padding:22px 18px;
-}
-
-.top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:28px;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-
-.logo span{
-  color:#18e88a;
-}
-
-.profile{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:#171717;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-}
-
-.hero{
-  margin-top:20px;
-  padding:24px;
-  border-radius:22px;
-  background:linear-gradient(145deg,#111,#070707);
-  border:1px solid #202020;
-}
-
-.hero h1{
-  font-size:31px;
-  margin:0 0 8px;
-}
-
-.hero p{
-  color:#888;
-  margin:0;
-  font-size:14px;
-}
-
-.newVideo{
+.screen{
   width:100%;
-  margin-top:25px;
-  padding:19px;
-  border-radius:17px;
-  background:#18e88a;
-  color:#000;
-  font-weight:800;
-  font-size:17px;
-}
-
-.homeTools{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:15px;
-}
-
-.homeTool{
-  padding:20px 12px;
-  border-radius:17px;
-  background:#111;
-  border:1px solid #202020;
-  text-align:center;
-}
-
-.homeTool .icon{
-  font-size:26px;
-  margin-bottom:8px;
-}
-
-.homeTool span{
-  display:block;
-  font-size:13px;
-}
-
-/* EDITOR */
-
-#editor{
-  display:none;
-  min-height:100vh;
-  background:#050505;
-  padding-bottom:110px;
-}
-
-.editorTop{
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  border-bottom:1px solid #191919;
-}
-
-.back{
-  font-size:24px;
-}
-
-.title{
-  font-weight:700;
-}
-
-.export{
-  background:#18e88a;
-  color:#000;
-  padding:9px 14px;
-  border-radius:9px;
-  font-weight:800;
-}
-
-/* PREVIEW */
-
-.previewWrap{
-  padding:12px;
+  height:100vh;
+  overflow-y:auto;
   background:#000;
 }
 
-.preview{
+/* ================= HOME ================= */
+
+#home{
+  display:block;
+  max-width:700px;
+  margin:auto;
+  padding:20px 18px 100px;
+}
+
+.logo{
+  font-size:32px;
+  font-weight:900;
+  margin:10px 0 5px;
+  letter-spacing:-1px;
+}
+
+.subtitle{
+  color:#999;
+  font-size:17px;
+  margin-bottom:28px;
+}
+
+.new-video{
   width:100%;
-  height:300px;
+  height:105px;
+  border-radius:25px;
+  background:#18e58b;
+  color:#000;
+  font-size:27px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 8px 30px rgba(24,229,139,.15);
+}
+
+.new-video:active{
+  transform:scale(.98);
+}
+
+.home-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:20px;
+}
+
+.home-card{
+  min-height:150px;
   background:#111;
-  border-radius:10px;
+  border:1px solid #252525;
+  border-radius:25px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  gap:12px;
+}
+
+.home-card:active{
+  background:#1c1c1c;
+  transform:scale(.98);
+}
+
+.card-icon{
+  font-size:45px;
+}
+
+.projects{
+  margin-top:35px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.projects h2{
+  margin:0;
+  font-size:28px;
+}
+
+.menu{
+  font-size:30px;
+  background:none;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:82px;
+  background:#080808;
+  border-top:1px solid #222;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:20;
+}
+
+.nav-item{
+  background:none;
+  color:#aaa;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  font-size:12px;
+}
+
+.nav-icon{
+  font-size:27px;
+}
+
+.nav-item.active{
+  color:#fff;
+}
+
+/* ================= EDITOR ================= */
+
+#editor{
+  display:none;
+  width:100%;
+  height:100vh;
+  background:#111;
   overflow:hidden;
+}
+
+.editor-top{
+  height:62px;
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  gap:15px;
+  background:#151515;
+}
+
+.top-btn{
+  background:none;
+  font-size:29px;
+  width:42px;
+  height:42px;
+}
+
+.search{
+  font-size:27px;
+}
+
+.spacer{
+  flex:1;
+}
+
+.export{
+  background:#14cde5;
+  color:#001015;
+  font-weight:800;
+  padding:13px 18px;
+  border-radius:12px;
+  font-size:17px;
+}
+
+/* VIDEO */
+
+.preview-area{
+  height:45vh;
+  min-height:300px;
+  background:#111;
   display:flex;
   align-items:center;
   justify-content:center;
   position:relative;
-  transition:.25s;
 }
 
-.preview video,
-.preview img{
-  width:100%;
-  height:100%;
+#videoPreview{
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  background:#000;
   object-fit:contain;
 }
 
-.emptyPreview{
-  text-align:center;
-  color:#777;
-}
-
-.emptyPreview div{
-  font-size:45px;
-  margin-bottom:10px;
-}
-
-#textLayer{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:28px;
-  font-weight:800;
-  text-align:center;
-  display:none;
-  text-shadow:0 2px 7px #000;
-  pointer-events:none;
-  max-width:90%;
-  word-break:break-word;
+.empty-preview{
+  color:#555;
+  font-size:16px;
 }
 
 /* CONTROLS */
 
-.playerControls{
-  height:50px;
+.preview-controls{
+  height:55px;
   display:flex;
   align-items:center;
-  gap:15px;
-  padding:0 15px;
-  background:#080808;
+  justify-content:space-between;
+  padding:0 18px;
+  background:#151515;
 }
 
-.playBtn{
-  font-size:24px;
+.control-left,
+.control-right{
+  display:flex;
+  align-items:center;
+  gap:25px;
 }
 
-.time{
-  color:#aaa;
-  font-size:12px;
+.control-btn{
+  background:none;
+  font-size:26px;
 }
 
-.progress{
-  flex:1;
-  height:4px;
-  background:#292929;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progressBar{
-  height:100%;
-  width:0%;
-  background:#18e88a;
+.play{
+  font-size:32px;
 }
 
 /* TIMELINE */
 
-.timelineSection{
-  background:#090909;
-  padding:12px 10px;
-}
-
-.timelineHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.timelineHeader span{
-  font-size:12px;
-  color:#888;
-}
-
 .timeline{
-  height:105px;
-  background:#111;
-  border-radius:9px;
-  overflow-x:auto;
-  position:relative;
-  padding:10px;
-}
-
-.timelineTrack{
-  min-width:500px;
-  height:65px;
-  position:relative;
-  background:#181818;
-  border-radius:6px;
+  height:235px;
+  background:#1a1a1a;
   overflow:hidden;
-  display:flex;
+  position:relative;
 }
 
-.clip{
-  height:100%;
-  min-width:140px;
-  background:linear-gradient(90deg,#222,#333);
-  border:2px solid transparent;
-  border-radius:5px;
+.time-row{
+  height:35px;
   display:flex;
   align-items:center;
-  justify-content:center;
   color:#aaa;
   font-size:12px;
+  padding-left:10px;
+  white-space:nowrap;
 }
 
-.clip.selected{
-  border-color:#18e88a;
+.time-row span{
+  margin-right:32px;
+}
+
+.timeline-body{
+  height:200px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  position:relative;
+  padding-left:20px;
+}
+
+.timeline-content{
+  min-width:700px;
+  position:relative;
+  padding-top:10px;
+}
+
+.video-track{
+  height:65px;
+  background:#252525;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+  border:2px solid #333;
+}
+
+.video-thumbnail{
+  height:61px;
+  width:90px;
+  object-fit:cover;
+  flex:none;
+  background:#000;
+}
+
+.audio-track,
+.text-track{
+  height:43px;
+  margin-top:8px;
+  background:#242424;
+  border-radius:4px;
+  color:#777;
+  display:flex;
+  align-items:center;
+  padding-left:15px;
+  font-size:14px;
+}
+
+.add{
+  margin-right:8px;
+  font-size:20px;
+  color:#aaa;
 }
 
 .playhead{
   position:absolute;
   top:0;
-  bottom:0;
-  left:25%;
+  left:25px;
   width:2px;
+  height:190px;
   background:#fff;
-  z-index:5;
+  z-index:10;
 }
 
-/* TOOLBAR */
+.playhead:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-5px;
+  width:12px;
+  height:12px;
+  background:#fff;
+  border-radius:50%;
+}
 
-.tools{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(430px,100%);
-  background:#101010;
-  border-top:1px solid #242424;
-  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+/* SIDE TOOLS */
+
+.clip-tools{
+  position:absolute;
+  left:10px;
+  bottom:5px;
   display:flex;
+  gap:8px;
+}
+
+.clip-tool{
+  width:95px;
+  height:70px;
+  background:#202020;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:12px;
+}
+
+.clip-tool span{
+  font-size:25px;
+}
+
+/* BOTTOM TOOLBAR */
+
+.editor-toolbar{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:86px;
+  background:#181818;
+  border-top:1px solid #292929;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
   overflow-x:auto;
-  gap:3px;
-  z-index:20;
+  z-index:30;
 }
 
-.tool{
-  min-width:67px;
-  padding:7px 3px;
-  text-align:center;
-  color:#aaa;
+.editor-tool{
+  min-width:70px;
+  height:75px;
+  background:none;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:12px;
 }
 
-.tool:active{
-  transform:scale(.94);
+.editor-tool span{
+  font-size:27px;
 }
 
-.tool.active{
-  color:#18e88a;
-}
-
-.toolIcon{
-  font-size:21px;
-  margin-bottom:4px;
-}
-
-.toolName{
-  font-size:10px;
+.editor-tool:active{
+  background:#292929;
+  border-radius:10px;
 }
 
 /* MODAL */
 
 .modal{
+  display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
-  display:none;
-  align-items:flex-end;
+  background:rgba(0,0,0,.75);
   z-index:100;
+  align-items:flex-end;
 }
 
-.sheet{
-  width:min(430px,100%);
-  margin:auto;
-  background:#151515;
-  border-radius:20px 20px 0 0;
-  padding:20px;
-  max-height:75vh;
-  overflow:auto;
+.modal-box{
+  width:100%;
+  background:#1b1b1b;
+  border-radius:25px 25px 0 0;
+  padding:25px;
 }
 
-.sheetHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
+.modal-box h3{
+  margin-top:0;
 }
 
-.sheet h3{
-  margin:0;
-}
-
-.close{
-  font-size:25px;
-  color:#aaa;
-}
-
-.optionGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.option{
-  padding:15px 7px;
-  background:#222;
+.modal-button{
+  width:100%;
+  height:55px;
+  margin-top:10px;
+  background:#292929;
   border-radius:12px;
-  text-align:center;
-  color:#ddd;
+  font-size:16px;
 }
 
-.option:active{
-  background:#18e88a;
-  color:#000;
-}
+/* MOBILE */
 
-.slider{
-  width:100%;
-  accent-color:#18e88a;
-}
+@media(max-width:500px){
 
-.textInput{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #333;
-  background:#080808;
-  color:#fff;
-  outline:none;
-  margin-bottom:12px;
-}
+  #home{
+    padding:18px 14px 95px;
+  }
 
-.primary{
-  width:100%;
-  padding:14px;
-  background:#18e88a;
-  color:#000;
-  border-radius:11px;
-  font-weight:800;
-}
+  .logo{
+    font-size:28px;
+  }
 
-/* TOAST */
+  .new-video{
+    height:100px;
+    font-size:24px;
+  }
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%) translateY(20px);
-  background:#fff;
-  color:#000;
-  padding:11px 17px;
-  border-radius:20px;
-  font-size:13px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:200;
-}
+  .home-grid{
+    gap:12px;
+  }
 
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
+  .home-card{
+    min-height:135px;
+  }
 
-input[type=file]{
-  display:none;
+  .preview-area{
+    height:40vh;
+    min-height:260px;
+  }
+
+  .timeline{
+    height:225px;
+  }
+
+  .editor-toolbar{
+    height:82px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<!-- ================= HOME ================= -->
 
-<!-- HOME -->
+<div id="home" class="screen">
 
-<section id="home">
+  <div class="logo">Create. Edit. Split.</div>
 
-  <div class="top">
-    <div class="logo">Obe<span>Split</span></div>
-    <div class="profile">👤</div>
+  <div class="subtitle">
+    Powerful video editing made simple.
   </div>
 
-  <div class="hero">
+  <button class="new-video" onclick="openVideoPicker()">
+    ＋ NEW VIDEO
+  </button>
 
-    <h1>Create. Edit. Split.</h1>
+  <div class="home-grid">
 
-    <p>
-      Powerful video editing made simple.
-    </p>
-
-    <button
-      class="newVideo"
-      onclick="openMediaPicker()">
-      ＋ NEW VIDEO
+    <button class="home-card" onclick="openVideoPicker()">
+      <div class="card-icon">🎬</div>
+      <div>Edit Video</div>
     </button>
 
-  </div>
-
-  <div class="homeTools">
-
-    <button
-      class="homeTool"
-      onclick="openMediaPicker()">
-
-      <div class="icon">🎬</div>
-      <span>Edit Video</span>
-
+    <button class="home-card" onclick="openPhotoPicker()">
+      <div class="card-icon">🖼️</div>
+      <div>Edit Photo</div>
     </button>
 
-    <button
-      class="homeTool"
-      onclick="openImagePicker()">
-
-      <div class="icon">🖼️</div>
-      <span>Edit Photo</span>
-
+    <button class="home-card" onclick="showMessage('Templates are coming soon.')">
+      <div class="card-icon">✨</div>
+      <div>Templates</div>
     </button>
 
-    <button
-      class="homeTool"
-      onclick="showToast('Templates coming soon')">
-
-      <div class="icon">✨</div>
-      <span>Templates</span>
-
-    </button>
-
-    <button
-      class="homeTool"
-      onclick="showToast('Cloud Space coming soon')">
-
-      <div class="icon">☁️</div>
-      <span>Space</span>
-
+    <button class="home-card" onclick="showMessage('Space is coming soon.')">
+      <div class="card-icon">☁️</div>
+      <div>Space</div>
     </button>
 
   </div>
 
-</section>
+  <div class="projects">
+    <h2>Projects</h2>
+    <button class="menu">☰</button>
+  </div>
+
+</div>
 
 
-<!-- EDITOR -->
+<!-- ================= EDITOR ================= -->
 
-<section id="editor">
+<div id="editor">
 
-  <div class="editorTop">
+  <div class="editor-top">
 
-    <button
-      class="back"
-      onclick="goHome()">
-      ‹
-    </button>
+    <button class="top-btn" onclick="goHome()">×</button>
 
-    <div class="title">
-      ObeSplit
-    </div>
+    <button class="top-btn search">⌕</button>
 
-    <button
-      class="export"
-      onclick="exportVideo()">
+    <div class="spacer"></div>
+
+    <button class="export" onclick="exportVideo()">
       Export
     </button>
 
   </div>
 
 
-  <!-- PREVIEW -->
+  <!-- VIDEO PREVIEW -->
 
-  <div class="previewWrap">
+  <div class="preview-area">
 
-    <div
-      class="preview"
-      id="preview">
-
-      <div
-        class="emptyPreview"
-        id="emptyPreview">
-
-        <div>🎬</div>
-        Select a video
-
-      </div>
-
-      <video
-        id="video"
-        playsinline
-        preload="metadata">
-      </video>
-
-      <img
-        id="imagePreview"
-        alt="">
-
-      <div id="textLayer"></div>
-
+    <div class="empty-preview" id="emptyPreview">
+      Select a video to begin
     </div>
+
+    <video
+      id="videoPreview"
+      controls="false"
+      playsinline
+      preload="metadata"
+    ></video>
 
   </div>
 
 
-  <!-- PLAYER -->
+  <!-- PREVIEW CONTROLS -->
 
-  <div class="playerControls">
+  <div class="preview-controls">
 
-    <button
-      class="playBtn"
-      id="playBtn"
-      onclick="togglePlay()">
-      ▶
-    </button>
+    <div class="control-left">
 
-    <span
-      class="time"
-      id="currentTime">
-      00:00
-    </span>
-
-    <div class="progress">
-
-      <div
-        class="progressBar"
-        id="progressBar">
-      </div>
+      <button class="control-btn" onclick="toggleFullscreen()">
+        ⛶
+      </button>
 
     </div>
 
-    <span
-      class="time"
-      id="duration">
-      00:00
-    </span>
-
-    <button
-      onclick="toggleMute()"
-      id="muteBtn">
-      🔊
+    <button class="control-btn play" onclick="togglePlay()">
+      ▶
     </button>
+
+    <div class="control-right">
+
+      <button class="control-btn" onclick="undoAction()">
+        ↶
+      </button>
+
+      <button class="control-btn" onclick="redoAction()">
+        ↷
+      </button>
+
+    </div>
 
   </div>
 
 
   <!-- TIMELINE -->
 
-  <div class="timelineSection">
+  <div class="timeline">
 
-    <div class="timelineHeader">
-
-      <span>
-        Timeline
-      </span>
-
-      <span id="clipInfo">
-        No media
-      </span>
-
+    <div class="time-row">
+      <span>00:00</span>
+      <span>00:01</span>
+      <span>00:02</span>
+      <span>00:03</span>
+      <span>00:04</span>
+      <span>00:05</span>
+      <span>00:06</span>
+      <span>00:07</span>
     </div>
 
-    <div class="timeline">
+    <div class="timeline-body">
 
-      <div
-        class="timelineTrack"
-        id="timelineTrack">
+      <div class="timeline-content">
 
-        <div
-          class="clip selected"
-          id="clip">
-          Your media
+        <div class="playhead"></div>
+
+        <div class="video-track" id="videoTrack">
         </div>
 
-        <div
-          class="playhead"
-          id="playhead">
+        <div class="audio-track">
+          <span class="add">＋</span>
+          Add audio
+        </div>
+
+        <div class="text-track">
+          <span class="add">＋</span>
+          Add text
         </div>
 
       </div>
@@ -674,139 +643,65 @@ input[type=file]{
   </div>
 
 
-  <!-- TOOLBAR -->
+  <!-- CLIP TOOLS -->
 
-  <div class="tools">
+  <div class="clip-tools">
 
-    <button
-      class="tool"
-      onclick="splitClip()">
-
-      <div class="toolIcon">✂️</div>
-      <div class="toolName">Split</div>
-
+    <button class="clip-tool" onclick="muteVideo()">
+      <span>🔊</span>
+      Mute clip
     </button>
 
-    <button
-      class="tool"
-      onclick="openOverlay()">
-
-      <div class="toolIcon">▣</div>
-      <div class="toolName">Overlay</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openCaptions()">
-
-      <div class="toolIcon">CC</div>
-      <div class="toolName">Captions</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openText()">
-
-      <div class="toolIcon">T</div>
-      <div class="toolName">Text</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openAspect()">
-
-      <div class="toolIcon">▣</div>
-      <div class="toolName">Ratio</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="spliceClip()">
-
-      <div class="toolIcon">🔗</div>
-      <div class="toolName">Splice</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="removeBackground()">
-
-      <div class="toolIcon">🧍</div>
-      <div class="toolName">Remove BG</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="addKeyframe()">
-
-      <div class="toolIcon">◆</div>
-      <div class="toolName">Keyframe</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openSpeed()">
-
-      <div class="toolIcon">⚡</div>
-      <div class="toolName">Speed</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openEffects()">
-
-      <div class="toolIcon">✨</div>
-      <div class="toolName">Effects</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openFilters()">
-
-      <div class="toolIcon">🎨</div>
-      <div class="toolName">Filters</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openAnimations()">
-
-      <div class="toolIcon">🎬</div>
-      <div class="toolName">Animation</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="openLayers()">
-
-      <div class="toolIcon">▤</div>
-      <div class="toolName">Layers</div>
-
-    </button>
-
-    <button
-      class="tool"
-      onclick="deleteClip()">
-
-      <div class="toolIcon">🗑️</div>
-      <div class="toolName">Delete</div>
-
+    <button class="clip-tool" onclick="showMessage('Cover editor opened.')">
+      <span>✎</span>
+      Cover
     </button>
 
   </div>
 
-</section>
+
+  <!-- BOTTOM TOOLS -->
+
+  <div class="editor-toolbar">
+
+    <button class="editor-tool" onclick="editTool()">
+      <span>✂</span>
+      Edit
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Audio tools opened.')">
+      <span>♪</span>
+      Audio
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Text tools opened.')">
+      <span>T</span>
+      Text
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Effects opened.')">
+      <span>☆</span>
+      Effects
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Overlay opened.')">
+      <span>▧</span>
+      Overlay
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Captions opened.')">
+      <span>▤</span>
+      Captions
+    </button>
+
+    <button class="editor-tool" onclick="showMessage('Filters opened.')">
+      <span>◌</span>
+      Filters
+    </button>
+
+  </div>
+
+</div>
 
 
 <!-- FILE INPUTS -->
@@ -815,618 +710,267 @@ input[type=file]{
   type="file"
   id="videoInput"
   accept="video/*"
-  onchange="loadVideo(event)">
+  style="display:none"
+  onchange="loadVideo(event)"
+>
 
 <input
   type="file"
-  id="imageInput"
+  id="photoInput"
   accept="image/*"
-  onchange="loadImage(event)">
-
-
-<!-- MODAL -->
-
-<div
-  class="modal"
-  id="modal">
-
-  <div class="sheet">
-
-    <div class="sheetHeader">
-
-      <h3 id="modalTitle">
-        Options
-      </h3>
-
-      <button
-        class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div id="modalContent"></div>
-
-  </div>
-
-</div>
-
-
-<div
-  class="toast"
-  id="toast">
-  Done
-</div>
-
-</div>
+  style="display:none"
+  onchange="loadPhoto(event)"
+>
 
 
 <script>
 
-/* =========================
-   GLOBALS
-========================= */
-
-const video =
-  document.getElementById("video");
-
-const imagePreview =
-  document.getElementById("imagePreview");
-
-const home =
-  document.getElementById("home");
-
-const editor =
-  document.getElementById("editor");
-
-const emptyPreview =
-  document.getElementById("emptyPreview");
-
-const preview =
-  document.getElementById("preview");
-
-let mediaType = null;
-let mediaLoaded = false;
-let currentSpeed = 1;
-let keyframes = [];
+let currentVideoURL = null;
+let video = document.getElementById("videoPreview");
 
 
-/* =========================
-   HOME
-========================= */
+/* ================= FILE PICKERS ================= */
 
-function openMediaPicker(){
+function openVideoPicker(){
 
-  document
-    .getElementById("videoInput")
-    .click();
-
-}
-
-function openImagePicker(){
-
-  document
-    .getElementById("imageInput")
-    .click();
-
-}
-
-function goHome(){
-
-  video.pause();
-
-  editor.style.display = "none";
-  home.style.display = "block";
+  document.getElementById("videoInput").click();
 
 }
 
 
-/* =========================
-   LOAD VIDEO
-========================= */
+function openPhotoPicker(){
+
+  document.getElementById("photoInput").click();
+
+}
+
+
+/* ================= LOAD VIDEO ================= */
 
 function loadVideo(event){
 
-  const file =
-    event.target.files[0];
+  const file = event.target.files[0];
 
-  if(!file) return;
-
-  video.src =
-    URL.createObjectURL(file);
-
-  video.style.display = "block";
-
-  imagePreview.style.display =
-    "none";
-
-  emptyPreview.style.display =
-    "none";
-
-  mediaType = "video";
-  mediaLoaded = true;
-
-  editor.style.display = "block";
-  home.style.display = "none";
-
-  document
-    .getElementById("clipInfo")
-    .textContent = file.name;
-
-  resetTimeline(file.name);
-
-  video.load();
-
-  showToast("Video added");
-
-}
-
-
-/* =========================
-   LOAD IMAGE
-========================= */
-
-function loadImage(event){
-
-  const file =
-    event.target.files[0];
-
-  if(!file) return;
-
-  imagePreview.src =
-    URL.createObjectURL(file);
-
-  imagePreview.style.display =
-    "block";
-
-  video.style.display =
-    "none";
-
-  emptyPreview.style.display =
-    "none";
-
-  mediaType = "image";
-  mediaLoaded = true;
-
-  editor.style.display = "block";
-  home.style.display = "none";
-
-  document
-    .getElementById("clipInfo")
-    .textContent = file.name;
-
-  resetTimeline(file.name);
-
-  showToast("Photo added");
-
-}
-
-
-/* =========================
-   RESET TIMELINE
-========================= */
-
-function resetTimeline(name){
-
-  document
-    .getElementById("timelineTrack")
-    .innerHTML =
-    '<div class="clip selected" id="clip">'
-    + escapeHtml(name) +
-    '</div>' +
-    '<div class="playhead" id="playhead"></div>';
-
-}
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(text){
-
-  return String(text).replace(
-    /[&<>"']/g,
-    function(match){
-
-      const map = {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      };
-
-      return map[match];
-
-    }
-  );
-
-}
-
-
-/* =========================
-   PLAY / PAUSE
-========================= */
-
-function togglePlay(){
-
-  if(!mediaLoaded){
-
-    showToast("Add a video first");
+  if(!file){
     return;
+  }
+
+  if(currentVideoURL){
+    URL.revokeObjectURL(currentVideoURL);
+  }
+
+  currentVideoURL = URL.createObjectURL(file);
+
+  video.src = currentVideoURL;
+
+  document.getElementById("home").style.display = "none";
+
+  document.getElementById("editor").style.display = "block";
+
+  document.getElementById("emptyPreview").style.display = "none";
+
+  createTimelineThumbnail();
+
+}
+
+
+/* ================= TIMELINE ================= */
+
+function createTimelineThumbnail(){
+
+  const track = document.getElementById("videoTrack");
+
+  track.innerHTML = "";
+
+  for(let i=0;i<8;i++){
+
+    const img = document.createElement("img");
+
+    img.className = "video-thumbnail";
+
+    img.src = currentVideoURL;
+
+    track.appendChild(img);
 
   }
 
-  if(mediaType !== "video"){
+}
 
-    showToast("Playback is for videos");
+
+/* ================= PLAY ================= */
+
+function togglePlay(){
+
+  if(!video.src){
     return;
-
   }
 
   if(video.paused){
 
     video.play();
 
-    document
-      .getElementById("playBtn")
-      .textContent = "❚❚";
-
   }else{
 
     video.pause();
 
-    document
-      .getElementById("playBtn")
-      .textContent = "▶";
-
   }
 
 }
 
 
-/* =========================
-   VIDEO EVENTS
-========================= */
+/* ================= MUTE ================= */
 
-video.addEventListener(
-  "loadedmetadata",
-  function(){
+function muteVideo(){
 
-    document
-      .getElementById("duration")
-      .textContent =
-      formatTime(video.duration);
+  video.muted = !video.muted;
 
-  }
-);
-
-
-video.addEventListener(
-  "timeupdate",
-  function(){
-
-    if(!video.duration) return;
-
-    const percent =
-      (video.currentTime /
-       video.duration) * 100;
-
-    document
-      .getElementById("progressBar")
-      .style.width =
-      percent + "%";
-
-    document
-      .getElementById("currentTime")
-      .textContent =
-      formatTime(video.currentTime);
-
-    const playhead =
-      document.getElementById("playhead");
-
-    if(playhead){
-
-      playhead.style.left =
-        percent + "%";
-
-    }
-
-  }
-);
-
-
-video.addEventListener(
-  "ended",
-  function(){
-
-    document
-      .getElementById("playBtn")
-      .textContent = "▶";
-
-  }
-);
-
-
-/* =========================
-   TIME
-========================= */
-
-function formatTime(seconds){
-
-  if(!seconds || isNaN(seconds))
-    return "00:00";
-
-  const mins =
-    Math.floor(seconds / 60);
-
-  const secs =
-    Math.floor(seconds % 60);
-
-  return (
-    String(mins).padStart(2,"0")
-    + ":" +
-    String(secs).padStart(2,"0")
+  showMessage(
+    video.muted ? "Video muted" : "Video sound restored"
   );
 
 }
 
 
-/* =========================
-   MUTE
-========================= */
+/* ================= FULLSCREEN ================= */
 
-function toggleMute(){
+function toggleFullscreen(){
 
-  if(
-    !mediaLoaded ||
-    mediaType !== "video"
-  ){
+  const area = document.querySelector(".preview-area");
 
-    showToast("Add a video first");
-    return;
+  if(!document.fullscreenElement){
+
+    if(area.requestFullscreen){
+      area.requestFullscreen();
+    }
+
+  }else{
+
+    document.exitFullscreen();
 
   }
-
-  video.muted =
-    !video.muted;
-
-  document
-    .getElementById("muteBtn")
-    .textContent =
-    video.muted ? "🔇" : "🔊";
 
 }
 
 
-/* =========================
-   SPLIT
-========================= */
+/* ================= HOME ================= */
 
-function splitClip(){
-
-  if(!mediaLoaded){
-
-    showToast("Add media first");
-    return;
-
-  }
-
-  if(mediaType !== "video"){
-
-    showToast("Split works on videos");
-    return;
-
-  }
-
-  const track =
-    document.getElementById(
-      "timelineTrack"
-    );
-
-  let percent = 50;
-
-  if(video.duration){
-
-    percent =
-      (video.currentTime /
-       video.duration) * 100;
-
-    percent =
-      Math.max(
-        5,
-        Math.min(95,percent)
-      );
-
-  }
-
-  track.innerHTML =
-
-    '<div class="clip selected" ' +
-    'style="width:' +
-    percent +
-    '%">Part 1</div>' +
-
-    '<div class="clip" ' +
-    'style="width:' +
-    (100-percent) +
-    '%">Part 2</div>' +
-
-    '<div class="playhead" ' +
-    'id="playhead"></div>';
-
-  document
-    .getElementById("playhead")
-    .style.left =
-    percent + "%";
-
-  showToast("Clip split");
-
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-function deleteClip(){
-
-  if(!mediaLoaded){
-
-    showToast("Nothing selected");
-    return;
-
-  }
+function goHome(){
 
   video.pause();
 
-  video.removeAttribute("src");
-  video.load();
+  document.getElementById("editor").style.display = "none";
 
-  imagePreview.removeAttribute("src");
-
-  video.style.display =
-    "none";
-
-  imagePreview.style.display =
-    "none";
-
-  emptyPreview.style.display =
-    "block";
-
-  mediaLoaded = false;
-  mediaType = null;
-
-  document
-    .getElementById("clipInfo")
-    .textContent =
-    "No media";
-
-  document
-    .getElementById("timelineTrack")
-    .innerHTML =
-    '<div class="clip" id="clip">' +
-    'Your media</div>' +
-    '<div class="playhead" id="playhead"></div>';
-
-  document
-    .getElementById("progressBar")
-    .style.width =
-    "0%";
-
-  showToast("Media deleted");
+  document.getElementById("home").style.display = "block";
 
 }
 
 
-/* =========================
-   OVERLAY
-========================= */
+/* ================= PHOTO ================= */
 
-function openOverlay(){
+function loadPhoto(event){
 
-  openModal(
-    "Overlay",
-    `
-    <div class="optionGrid">
+  const file = event.target.files[0];
 
-      <button
-        class="option"
-        onclick="openImagePicker();closeModal()">
-        🖼️<br>Add Photo
-      </button>
-
-      <button
-        class="option"
-        onclick="openMediaPicker();closeModal()">
-        🎬<br>Add Video
-      </button>
-
-      <button
-        class="option"
-        onclick="showToast('Overlay layer added');closeModal()">
-        ➕<br>Layer
-      </button>
-
-    </div>
-    `
-  );
-
-}
-
-
-/* =========================
-   TEXT
-========================= */
-
-function openText(){
-
-  openModal(
-    "Add Text",
-    `
-    <input
-      id="textInput"
-      class="textInput"
-      placeholder="Type your text...">
-
-    <button
-      class="primary"
-      onclick="applyText()">
-      Add Text
-    </button>
-    `
-  );
-
-}
-
-
-function applyText(){
-
-  const value =
-    document
-      .getElementById("textInput")
-      .value
-      .trim();
-
-  if(!value){
-
-    showToast("Enter some text");
+  if(!file){
     return;
+  }
+
+  showMessage("Photo selected. Photo editing will be added next.");
+
+}
+
+
+/* ================= BUTTON ACTIONS ================= */
+
+function editTool(){
+
+  showMessage("Edit tools opened.");
+
+}
+
+
+function undoAction(){
+
+  showMessage("Undo");
+
+}
+
+
+function redoAction(){
+
+  showMessage("Redo");
+
+}
+
+
+function exportVideo(){
+
+  showMessage(
+    "Export is ready for the next stage of development."
+  );
+
+}
+
+
+/* ================= MESSAGE ================= */
+
+function showMessage(message){
+
+  const box = document.createElement("div");
+
+  box.innerText = message;
+
+  box.style.position = "fixed";
+  box.style.left = "50%";
+  box.style.bottom = "100px";
+  box.style.transform = "translateX(-50%)";
+  box.style.background = "#222";
+  box.style.color = "#fff";
+  box.style.padding = "13px 20px";
+  box.style.borderRadius = "12px";
+  box.style.zIndex = "9999";
+  box.style.fontSize = "14px";
+  box.style.boxShadow = "0 5px 20px rgba(0,0,0,.5)";
+
+  document.body.appendChild(box);
+
+  setTimeout(function(){
+
+    box.remove();
+
+  },1800);
+
+}
+
+
+/* ================= VIDEO TIME ================= */
+
+video.addEventListener("timeupdate",function(){
+
+  const duration = video.duration;
+
+  if(!duration || !isFinite(duration)){
+    return;
+  }
+
+  const progress = video.currentTime / duration;
+
+  const playhead = document.querySelector(".playhead");
+
+  const timeline = document.querySelector(".timeline-content");
+
+  if(timeline){
+
+    const width = timeline.scrollWidth - 30;
+
+    playhead.style.left =
+      (25 + progress * width) + "px";
 
   }
 
-  const layer =
-    document.getElementById(
-      "textLayer"
-    );
+});
 
-  layer.textContent =
-    value;
+</script>
 
-  layer.style.display =
-    "block";
-
-  closeModal();
-
-  showToast("Text added");
-
-}
-
-
-/* =========================
-   CAPTIONS
-========================= */
-
-function openCaptions(){
-
-  openModal(
-    "Captions",
-    `
-    <div class="optionGrid">
-
-      <button
-        class="option"
-        onclick="showToast('Auto captions selected');closeModal()">
-    
+</body>
+</html>
