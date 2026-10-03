@@ -1,143 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>ObeSplit</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ObeSplit Home</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-*{font-family:Inter,system-ui;-webkit-tap-highlight-color:transparent}
-.purple-card{background:#6B21FF;background:linear-gradient(135deg,#7C3AED,#6D28D9);box-shadow:0 0 20px rgba(124,58,237,.4)}
-.glow-text{background:linear-gradient(90deg,#00E5FF,#FF00E5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+body{background:#000}
+.purple{background:#7A1EFF}
+.glow{background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.icon-glow{filter:drop-shadow(0 0 12px rgba(0,240,255,.8)) drop-shadow(0 0 20px rgba(255,0,255,.5))}
 </style>
 </head>
-<body class="bg-black m-0 p-0 overflow-hidden">
+<body class="max-w-[400px] mx-auto min-h-screen bg-black p-4 flex flex-col">
 
-<!-- =========== HOME - LIKE YOUR 1ST PICTURE =========== -->
-<div id="home" class="w-full max-w-[420px] mx-auto min-h-screen bg-black p-4 flex flex-col">
+<!-- New video + -->
+<div onclick="document.getElementById('file').click()" class="purple rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2 active:scale-95">
+  <div class="text-[64px] icon-glow">📹</div>
+  <div class="glow font-black text-[22px] mt-1">New video +</div>
+</div>
 
-  <!-- New Video Big -->
-  <div onclick="fileIn.click()" class="purple-card rounded-[16px] h-[120px] flex flex-col items-center justify-center active:scale-95 cursor-pointer mt-2">
-    <div class="text-[54px] drop-shadow-[0_0_10px_rgba(0,229,255,.8)]">📹</div>
-    <div class="glow-text font-black text-[24px] tracking-wide mt-1">New video +</div>
-  </div>
-
-  <!-- Middle Grid -->
-  <div class="flex gap-4 mt-4">
-    <div class="flex flex-col gap-4 w-[110px]">
-      <div class="purple-card rounded-[12px] h-[95px] flex flex-col items-center justify-center">
-        <div class="text-[36px]">🅰️</div>
-        <div class="glow-text text-[11px] font-bold">Ai generator</div>
-      </div>
-      <div class="purple-card rounded-[12px] h-[95px] flex flex-col items-center justify-center">
-        <div class="text-[30px]">☁️</div>
-        <div class="glow-text text-[11px] font-bold">Space</div>
-      </div>
+<!-- Middle -->
+<div class="flex gap-4 mt-5">
+  <div class="flex flex-col gap-4">
+    <div class="purple w-[110px] h-[110px] rounded-[14px] flex flex-col items-center justify-center">
+      <div class="text-[42px] icon-glow">🌀</div>
+      <div class="glow text-[12px] font-bold">Ai generator</div>
     </div>
-    <div class="flex-1 purple-card rounded-[12px] flex flex-col items-center justify-center">
-      <div class="text-[70px]">📷</div>
-      <div class="glow-text font-black text-[20px]">Edit photo</div>
+    <div class="purple w-[110px] h-[110px] rounded-[14px] flex flex-col items-center justify-center">
+      <div class="text-[38px] icon-glow">☁️</div>
+      <div class="glow text-[12px] font-bold">Space</div>
     </div>
   </div>
-
-  <!-- Projects -->
-  <div class="flex justify-between items-center mt-8 px-2">
-    <div class="glow-text font-black text-[28px]">Projects</div>
-    <div class="text-[24px]">☰</div>
-  </div>
-  <div class="flex-1"></div>
-
-  <!-- Bottom Nav -->
-  <div class="h-[70px] flex justify-around items-center border-t border-zinc-900 pb-2">
-    <div class="text-center"><div class="text-[28px]">🎬</div><div class="glow-text text-[13px] font-bold">Edit</div></div>
-    <div class="text-center opacity-60"><div class="text-[26px]">📄</div><div class="text-zinc-400 text-[12px]">Templates</div></div>
-    <div class="text-center opacity-60"><div class="text-[26px]">👤</div><div class="text-zinc-400 text-[12px]">Me</div></div>
+  <div class="purple flex-1 rounded-[14px] flex flex-col items-center justify-center">
+    <div class="text-[80px] icon-glow">📷</div>
+    <div class="glow font-black text-[20px]">Edit photo</div>
   </div>
 </div>
 
-<!-- =========== EDITOR - LIKE YOUR 2ND PICTURE =========== -->
-<div id="editor" class="hidden h-[100dvh] w-screen bg-[#0E0E0E] flex-col">
-
-  <!-- Top bar -->
-  <div class="h-[48px] flex items-center justify-between px-3 bg-[#1A1A1A]">
-    <div class="flex gap-4 items-center"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span class="text-white">🔍</span></div>
-    <button onclick="doExport()" class="bg-[#2EE5FF] text-black px-4 py-1.5 rounded-[8px] font-bold text-[14px]">Export</button>
-  </div>
-
-  <!-- Preview - Portrait 9:16 -->
-  <div class="flex-1 bg-[#0E0E0E] flex items-center justify-center relative">
-    <div class="w-[56%] max-w-[260px] aspect-[9/16] bg-black relative overflow-hidden">
-      <video id="vid" class="w-full h-full object-cover" playsinline></video>
-      <div id="place" class="absolute inset-0 flex items-center justify-center text-zinc-600 text-[12px]">No video</div>
-    </div>
-  </div>
-
-  <!-- Controls under preview -->
-  <div class="h-[36px] bg-[#1A1A1A] flex justify-between items-center px-4 text-zinc-300">
-    <span>⛶</span>
-    <button onclick="toggle()" class="text-white text-[18px]">▶</button>
-    <div class="flex gap-4 text-[16px]"><span>🖼️<sup class="text-[8px]">ON</sup></span><span>↩️</span><span>↪️</span></div>
-  </div>
-
-  <!-- Timeline Ruler -->
-  <div class="h-[22px] bg-[#1A1A1A] flex items-center px-3 text-[11px] text-zinc-400 font-mono border-t border-zinc-800">
-    <span id="tTxt">00:00 / 00:13</span>
-    <div class="ml-auto flex gap-3"><span>00:00</span><span>•</span><span>00:01</span><span>•</span><span>00:02</span><span>•</span><span>00:03</span><span>•</span><span>00:04</span></div>
-  </div>
-
-  <!-- Timeline Tracks - EXACT like your picture -->
-  <div class="h-[200px] bg-[#1E1E1E] flex relative border-t border-zinc-800">
-    <!-- Left tools -->
-    <div class="w-[60px] border-r border-zinc-800 flex flex-col items-center py-2 gap-4">
-      <div class="text-center"><div class="text-zinc-300">🔊</div><div class="text-[9px] text-zinc-400 leading-[10px]">Mute<br>clip</div></div>
-    </div>
-    <div class="w-[60px] border-r border-zinc-800 flex flex-col items-center py-2 gap-8">
-      <div class="bg-[#2A2A2A] w-[50px] h-[42px] rounded flex flex-col items-center justify-center"><span class="text-zinc-300">✏️</span><span class="text-[9px] text-zinc-400">Cover</span></div>
-      <div class="bg-[#2A2A2A] w-[36px] h-[28px] rounded flex items-center justify-center text-zinc-500">♫</div>
-      <div class="bg-[#2A2A2A] w-[36px] h-[28px] rounded flex items-center justify-center text-zinc-500">T</div>
-    </div>
-
-    <!-- Right tracks -->
-    <div class="flex-1 relative">
-      <div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-10"></div>
-      <div class="p-2 space-y-2">
-        <div class="flex items-center gap-2">
-          <div class="flex-1 h-[42px] bg-[#2A2A2A] rounded flex"><div class="flex-1 border-r border-black"></div><div class="flex-1"></div></div>
-          <div class="w-[34px] h-[34px] bg-white rounded-lg flex items-center justify-center text-black font-bold text-[20px]">+</div>
-        </div>
-        <div class="h-[34px] bg-[#2A2A2A] rounded flex items-center px-3 text-zinc-500 text-[12px]">+ Add audio</div>
-        <div class="h-[34px] bg-[#2A2A2A] rounded flex items-center px-3 text-zinc-500 text-[12px]">+ Add text</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bottom Tools - EXACT like your picture -->
-  <div class="h-[64px] min-h-[64px] bg-[#1A1A1A] border-t border-zinc-800 flex justify-around items-center">
-    <div class="flex flex-col items-center"><span class="text-[20px]">✂️</span><span class="text-[11px] text-white">Edit</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🎵</span><span class="text-[11px] text-white">Audio</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px] font-bold">T</span><span class="text-[11px] text-white">Text</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">⭐</span><span class="text-[11px] text-zinc-300">Effects</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🖼️</span><span class="text-[11px] text-zinc-300">Overlay</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">📄</span><span class="text-[11px] text-zinc-300">Captions</span></div>
-    <div class="flex flex-col items-center"><span class="text-[18px]">🎨</span><span class="text-[11px] text-zinc-300">Filters</span></div>
-  </div>
-
+<!-- Projects -->
+<div class="flex justify-between items-center mt-10 px-2">
+  <div class="glow font-black text-[30px]">Projects</div>
+  <div class="flex flex-col gap-1"><div class="w-8 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"></div><div class="w-8 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"></div><div class="w-8 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"></div></div>
 </div>
 
-<input type="file" id="fileIn" accept="video/*,image/*" hidden>
+<div class="flex-1"></div>
 
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), tTxt=document.getElementById('tTxt'), place=document.getElementById('place');
-fileIn.onchange=e=>{
-  const f=e.target.files[0]; if(!f) return;
-  vid.src=URL.createObjectURL(f); vid.load();
-  home.classList.add('hidden'); editor.classList.remove('hidden'); editor.classList.add('flex');
-  place.style.display='none'; vid.play();
-};
-function goHome(){editor.classList.add('hidden'); editor.classList.remove('flex'); home.classList.remove('hidden'); vid.pause(); vid.src=''; place.style.display='flex';}
-function toggle(){if(vid.paused){vid.play();}else{vid.pause();}}
-vid.ontimeupdate=()=>{const c=Math.floor(vid.currentTime||0); tTxt.textContent=`00:${String(c).padStart(2,'0')} / 00:13`;}
-function doExport(){const a=document.createElement('a'); a.href=vid.src; a.download='ObeSplit.mp4'; a.click();}
-</script>
+<!-- Bottom Nav -->
+<div class="h-[80px] flex justify-around items-end pb-3 border-t border-zinc-900 mt-6">
+  <div class="text-center"><div class="text-[28px] icon-glow">🎬</div><div class="glow text-[14px] font-bold">Edit</div></div>
+  <div class="text-center opacity-70"><div class="text-[26px]">🗂️</div><div class="glow text-[12px]">Templates</div></div>
+  <div class="text-center opacity-70"><div class="text-[26px]">👤</div><div class="glow text-[12px]">Me</div></div>
+</div>
+
+<input type="file" id="file" hidden accept="video/*,image/*" onchange="alert('Go to editor!')">
+
 </body>
 </html>
