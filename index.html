@@ -1,143 +1,30 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ObeSplit</title><script src="https://cdn.tailwindcss.com"></script><style>body{background:#000;margin:0}#editor{display:none}</style></head><body>
-<div id="home" class="max-w-[420px] mx-auto min-h-screen bg-black p-4 flex flex-col"><div onclick="fileIn.click()" class="bg-[#7A1EFF] rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2"><div class="text-[50px]">📹</div><div class="font-black text-[18px]" style="background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">New video +</div></div><div class="flex gap-4 mt-4"><div class="flex flex-col gap-4"><div class="bg-[#7A1EFF] w-[110px] h-[110px] rounded-[14px] flex flex-col items-center justify-center"><div class="text-[36px]">🌀</div><div class="text-[11px] font-bold" style="background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Ai generator</div></div><div class="bg-[#7A1EFF] w-[110px] h-[110px] rounded-[14px] flex flex-col items-center justify-center"><div class="text-[32px]">☁️</div><div class="text-[11px] font-bold" style="background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Space</div></div></div><div class="bg-[#7A1EFF] flex-1 rounded-[14px] flex flex-col items-center justify-center"><div class="text-[68px]">📷</div><div class="font-black text-[18px]" style="background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Edit photo</div></div></div></div>
-<div id="editor" class="h-[100dvh] w-screen bg-[#0E0E0E] flex-col"><div class="h-[48px] bg-[#1A1A1A] flex items-center justify-between px-4"><div class="flex items-center gap-5"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span class="text-zinc-400">🔍</span></div><button onclick="doExport()" class="bg-[#2EE5FF] text-black px-5 py-1.5 rounded-[8px] font-bold text-[14px]">Export</button></div><div class="flex-1 bg-[#0E0E0E] flex items-center justify-center"><div class="w-[58%] max-w-[280px] aspect-[9/16] bg-black relative overflow-hidden"><video id="vid" class="w-full h-full object-contain block bg-black" playsinline muted></video><div id="ph" class="absolute inset-0 flex items-center justify-center text-zinc-600 text-[12px]">Pick video</div></div></div><div class="h-[38px] bg-[#1A1A1A] flex items-center justify-between px-4 text-zinc-400"><span>⛶</span><button onclick="toggle()" id="playBtn" class="bg-white text-black w-8 h-8 rounded-full">▶</button><div class="flex gap-3 text-[11px]"><span>PIP ON</span><span>↩️</span><span>↪️</span></div></div><div class="h-[24px] bg-[#1A1A1A] border-y border-zinc-800 flex items-center px-3 text-[11px] text-zinc-400"><span id="tTxt">00:00 / 00:11</span></div><div class="h-[180px] bg-[#1E1E1E] flex relative"><div class="w-[56px] border-r border-zinc-800 flex flex-col"><div class="h-[46px] flex flex-col items-center justify-center border-b border-zinc-800"><span>🔊</span><span class="text-[7px] text-zinc-400">Mute clip</span></div><div class="h-[36px] flex flex-col items-center justify-center border-b border-zinc-800"><span class="text-[10px]">✏️</span><span class="text-[7px] text-zinc-400">Cover</span></div></div><div class="flex-1 relative p-2 space-y-2"><div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-20"></div><div class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-1"><div id="strip" class="flex gap-[2px] w-[82%] h-[28px] overflow-hidden"></div><div class="ml-auto w-8 h-8 bg-white rounded flex items-center justify-center text-black font-bold">+</div></div><div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add audio</div><div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add text</div></div></div><div class="h-[66px] bg-[#1A1A1A] border-t border-zinc-800 flex justify-around items-center text-white text-[11px]"><div class="flex flex-col items-center"><span>✂️</span><span>Edit</span></div><div class="flex flex-col items-center"><span>🎵</span><span>Audio</span></div><div class="flex flex-col items-center"><span>T</span><span>Text</span></div><div class="flex flex-col items-center"><span>✨</span><span>Effects</span></div><div class="flex flex-col items-center"><span>🖼️</span><span>Overlay</span></div><div class="flex flex-col items-center"><span>💬</span><span>Captions</span></div><div class="flex flex-col items-center"><span>🎨</span><span>Filters</span></div></div></div>
+<div id="home" class="max-w-[420px] mx-auto min-h-screen bg-black p-4 flex flex-col"><div onclick="fileIn.click()" class="bg-[#7A1EFF] rounded-[14px] h-[130px] flex flex-col items-center justify-center mt-2"><div class="text-[50px]">📹</div><div class="font-black text-[18px]" style="background:linear-gradient(90deg,#00F0FF,#FF00FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">New video +</div></div></div>
+<div id="editor" class="h-[100dvh] w-screen bg-[#0E0E0E] flex-col"><div class="h-[48px] bg-[#1A1A1A] flex items-center justify-between px-4"><div class="flex items-center gap-5"><button onclick="goHome()" class="text-white text-[22px]">✕</button><span>🔍</span></div><button onclick="doExport()" class="bg-[#2EE5FF] text-black px-5 py-1.5 rounded-[8px] font-bold text-[14px]">Export</button></div><div class="flex-1 bg-[#0E0E0E] flex items-center justify-center"><div class="w-[58%] max-w-[280px] aspect-[9/16] bg-black relative overflow-hidden"><video id="vid" class="w-full h-full object-contain block bg-black" playsinline controls></video><div id="ph" class="absolute inset-0 flex items-center justify-center text-zinc-600 text-[12px] pointer-events-none">Pick video</div></div></div><div class="h-[38px] bg-[#1A1A1A] flex items-center justify-between px-4 text-zinc-400"><span>⛶</span><button onclick="toggle()" id="playBtn" class="bg-white text-black w-8 h-8 rounded-full">▶</button><div class="flex gap-3 text-[11px]"><span>PIP ON</span></div></div><div class="h-[24px] bg-[#1A1A1A] border-y border-zinc-800 flex items-center px-3 text-[11px] text-zinc-400"><span id="tTxt">00:00 / 00:13</span></div><div class="h-[180px] bg-[#1E1E1E] flex relative"><div class="w-[56px] border-r border-zinc-800 flex flex-col"><div onclick="toggleMute()" id="muteBtn" class="h-[46px] flex flex-col items-center justify-center border-b border-zinc-800"><span>🔊</span><span class="text-[7px] text-zinc-400">Mute clip</span></div><div class="h-[36px] flex flex-col items-center justify-center border-b border-zinc-800"><span>✏️</span><span class="text-[7px] text-zinc-400">Cover</span></div></div><div class="flex-1 relative p-2 space-y-2"><div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-20"></div><div class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-1"><div id="strip" class="flex gap-[2px] w-[82%] h-[28px] overflow-hidden"></div><div class="ml-auto w-8 h-8 bg-white rounded flex items-center justify-center text-black font-bold">+</div></div><div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add audio</div><div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add text</div></div></div><div class="h-[66px] bg-[#1A1A1A] border-t border-zinc-800 flex justify-around items-center text-white text-[11px]"><div class="flex flex-col items-center"><span>✂️</span><span>Edit</span></div><div class="flex flex-col items-center"><span>🎵</span><span>Audio</span></div><div class="flex flex-col items-center"><span>T</span><span>Text</span></div><div class="flex flex-col items-center"><span>✨</span><span>Effects</span></div></div></div>
 <input type="file" id="fileIn" hidden accept="video/*">
 <script>
 const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
 fileIn.onchange=e=>{
  const f=e.target.files[0]; if(!f)return;
- vid.src=URL.createObjectURL(f); vid.muted=true;
+ vid.src=URL.createObjectURL(f);
  home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
- vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,600); };
+ vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,500); };
  vid.load();
 };
 function makeStrip(){
  strip.innerHTML='';
- let i=0;
- const canvas=document.createElement('canvas'); canvas.width=80; canvas.height=50;
- const ctx=canvas.getContext('2d');
- function next(){
-   if(i>=6){ vid.currentTime=0; vid.play(); return; }
-   vid.currentTime = i*(vid.duration/6)+0.2;
- }
- vid.addEventListener('seeked', function handler(){
+ let i=0; const canvas=document.createElement('canvas'); canvas.width=80; canvas.height=50; const ctx=canvas.getContext('2d');
+ function next(){ if(i>=6){ vid.currentTime=0; return; } vid.currentTime=i*(vid.duration/6)+0.1; }
+ vid.addEventListener('seeked', function h(){
    ctx.drawImage(vid,0,0,80,50);
-   const img=document.createElement('img'); img.src=canvas.toDataURL(); img.className='w-[50px] h-[28px] object-cover rounded-[3px]';
-   strip.appendChild(img);
-   i++; if(i<6) next(); else { vid.removeEventListener('seeked',handler); vid.currentTime=0; vid.play(); }
+   const img=document.createElement('img'); img.src=canvas.toDataURL(); img.className='w-[52px] h-[28px] object-cover rounded-[3px]';
+   strip.appendChild(img); i++; if(i<6) next(); else { vid.removeEventListener('seeked',h); vid.currentTime=0; vid.play(); }
  });
  next();
 }
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-vid.ontimeupdate=()=>{ const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||11); if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`; }
+function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶';}
+function toggle(){ if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';} }
+function toggleMute(){ vid.muted=!vid.muted; document.getElementById('muteBtn').style.opacity=vid.muted?'0.4':'1'; }
+vid.ontimeupdate=()=>{ const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13); if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`; };
 function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
 </script></body></html>
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
-let isDragging=false;
-fileIn.onchange=e=>{
- const f=e.target.files[0]; if(!f)return;
- vid.src=URL.createObjectURL(f); vid.muted=true;
- home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
- vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,600); };
- vid.load();
-};
-function makeStrip(){
- strip.innerHTML=''; strip.style.transform='translateX(0px)';
- let i=0; const canvas=document.createElement('canvas'); canvas.width=80; canvas.height=50; const ctx=canvas.getContext('2d');
- function next(){ if(i>=6){ vid.currentTime=0; vid.play(); return; } vid.currentTime=i*(vid.duration/6)+0.1; }
- vid.addEventListener('seeked', function h(){
-   ctx.drawImage(vid,0,0,80,50);
-   const img=document.createElement('img'); img.src=canvas.toDataURL(); img.className='w-[52px] h-[28px] object-cover rounded-[3px] flex-shrink-0';
-   strip.appendChild(img);
-   i++; if(i<6) next(); else { vid.removeEventListener('seeked',h); vid.currentTime=0; vid.play(); }
- });
- next();
-}
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
-function toggle(){if(vid.paused){vid.play(); playBtn.textContent='⏸';}else{vid.pause(); playBtn.textContent='▶';}}
-// MOVING TIMELINE
-vid.ontimeupdate=()=>{
- const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||11);
- if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`;
- if(!isDragging && d>0){
-   const progress = vid.currentTime / vid.duration;
-   const maxMove = strip.scrollWidth - 200; // how much to scroll
-   strip.style.transform = `translateX(-${progress*maxMove}px)`;
-   strip.style.transition='transform 0.2s linear';
- }
-};
-// DRAG TO SEEK - touch timeline to move video
-let startX=0, startTX=0;
-strip.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startTX = parseFloat(strip.style.transform.replace(/[^0-9\-\.]/g,''))||0; vid.pause(); playBtn.textContent='▶'; });
-strip.addEventListener('touchmove', e=>{
- if(!isDragging) return;
- const dx = e.touches[0].clientX - startX;
- let newTX = startTX + dx;
- newTX = Math.min(0, Math.max(newTX, -(strip.scrollWidth-200)));
- strip.style.transform=`translateX(${newTX}px)`;
- strip.style.transition='none';
- const progress = Math.abs(newTX)/(strip.scrollWidth-200);
- if(vid.duration) vid.currentTime = progress*vid.duration;
-});
-strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.textContent='⏸'; });
-
-function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
- </script>
-<script>
-<script>
-const fileIn=document.getElementById('fileIn'), vid=document.getElementById('vid'), home=document.getElementById('home'), editor=document.getElementById('editor'), ph=document.getElementById('ph'), playBtn=document.getElementById('playBtn'), tTxt=document.getElementById('tTxt'), strip=document.getElementById('strip');
-let isDragging=false, isMuted=true;
-fileIn.onchange=e=>{
- const f=e.target.files[0]; if(!f)return;
- vid.src=URL.createObjectURL(f); vid.muted=true; vid.volume=1;
- home.style.display='none'; editor.style.display='flex'; ph.style.display='none';
- vid.onloadeddata=()=>{ vid.play(); playBtn.textContent='⏸'; setTimeout(makeStrip,600); };
- vid.load();
-};
-function makeStrip(){
- strip.innerHTML=''; strip.style.transform='translateX(0px)';
- let i=0; const canvas=document.createElement('canvas'); canvas.width=80; canvas.height=50; const ctx=canvas.getContext('2d');
- function next(){ if(i>=6){ vid.currentTime=0; vid.play(); return; } vid.currentTime=i*(vid.duration/6)+0.1; }
- vid.addEventListener('seeked', function h(){
-   ctx.drawImage(vid,0,0,80,50);
-   const img=document.createElement('img'); img.src=canvas.toDataURL(); img.className='w-[52px] h-[28px] object-cover rounded-[3px] flex-shrink-0';
-   strip.appendChild(img);
-   i++; if(i<6) next(); else { vid.removeEventListener('seeked',h); vid.currentTime=0; vid.play(); }
- });
- next();
-}
-function goHome(){editor.style.display='none'; home.style.display='flex'; vid.pause(); vid.src=''; ph.style.display='flex'; playBtn.textContent='▶'; strip.innerHTML='';}
-function toggle(){
- if(vid.paused){ vid.play(); playBtn.textContent='⏸'; }else{ vid.pause(); playBtn.textContent='▶'; }
- // UNMUTE ON FIRST PLAY CLICK
- if(isMuted){ vid.muted=false; isMuted=false; }
-}
-function toggleMute(){
- isMuted=!isMuted; vid.muted=isMuted;
- document.querySelector('[onclick="toggleMute()"]')?.classList.toggle('opacity-50');
-}
-vid.ontimeupdate=()=>{
- const c=Math.floor(vid.currentTime||0), d=Math.floor(vid.duration||13);
- if(!isNaN(d)) tTxt.textContent=`00:0${c} / 00:${d}`;
- if(!isDragging && d>0){
-   const progress=vid.currentTime/vid.duration;
-   const maxMove=strip.scrollWidth-200;
-   strip.style.transform=`translateX(-${progress*maxMove}px)`;
-   strip.style.transition='transform 0.2s linear';
- }
-};
-vid.addEventListener('click', ()=>{ if(isMuted){ vid.muted=false; isMuted=false; } toggle(); });
-let startX=0, startTX=0;
-strip.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startTX=parseFloat(strip.style.transform.replace(/[^0-9\-\.]/g,''))||0; vid.pause(); playBtn.textContent='▶'; });
-strip.addEventListener('touchmove', e=>{
- if(!isDragging) return;
- const dx=e.touches[0].clientX-startX;
- let newTX=startTX+dx; newTX=Math.min(0,Math.max(newTX,-(strip.scrollWidth-200)));
- strip.style.transform=`translateX(${newTX}px)`; strip.style.transition='none';
- const progress=Math.abs(newTX)/(strip.scrollWidth-200); if(vid.duration) vid.currentTime=progress*vid.duration;
-});
-strip.addEventListener('touchend', ()=>{ isDragging=false; vid.play(); playBtn.textContent='⏸'; if(isMuted){ vid.muted=false; isMuted=false; } });
-function doExport(){ if(!vid.src) return alert('No video'); const a=document.createElement('a'); a.href=vid.src; a.download='video.mp4'; a.click(); }
-</script>
