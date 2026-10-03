@@ -54,7 +54,10 @@
     <div class="w-[56px] border-r border-zinc-800 flex flex-col"><div class="h-[46px] flex flex-col items-center justify-center border-b border-zinc-800"><span>🔊</span><span class="text-[7px] text-zinc-400">Mute clip</span></div><div class="h-[36px] flex flex-col items-center justify-center border-b border-zinc-800"><span class="text-[10px]">✏️</span><span class="text-[7px] text-zinc-400">Cover</span></div></div>
     <div class="flex-1 relative p-2 space-y-2">
       <div class="absolute top-0 bottom-0 left-[50%] w-[2px] bg-white z-20"><div class="w-2 h-2 bg-white rotate-45 -ml-[3px]"></div></div>
-      <div class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-2"><div class="flex gap-1 w-[80%] h-[26px]"><div class="flex-1 bg-zinc-600 rounded"></div><div class="flex-1 bg-zinc-600 rounded"></div><div class="flex-1 bg-zinc-600 rounded"></div></div><div class="ml-auto w-8 h-8 bg-white rounded flex items-center justify-center text-black font-bold">+</div></div>
+      <div id="track" class="h-[42px] bg-[#2A2A2A] rounded-[8px] flex items-center px-1 overflow-hidden relative">
+  <canvas id="film" class="w-[85%] h-[28px] rounded-[4px]"></canvas>
+  <div class="ml-auto w-8 h-8 bg-white rounded-[8px] flex items-center justify-center text-black font-bold z-10">+</div>
+      </div>
       <div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add audio</div>
       <div class="h-[34px] bg-[#2A2A2A] rounded-[8px] flex items-center px-3 text-[12px] text-zinc-400">+ Add text</div>
     </div>
@@ -91,3 +94,33 @@ function doExport(){ if(!vid.src) return alert('No video'); const a=document.cre
 
 </body>
 </html>
+function makeFilmstrip(){
+  const canvas = document.getElementById('film');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = 300; canvas.height = 60;
+  const dur = vid.duration || 13;
+  let x = 0;
+  const drawFrame = (time) => {
+    vid.currentTime = time;
+  };
+  vid.addEventListener('seeked', function handler(){
+    ctx.drawImage(vid, x, 0, 50, 60);
+    x += 52;
+    if(x < 300 && x/52 < 6){
+      drawFrame((x/52)*(dur/6));
+    } else {
+      vid.removeEventListener('seeked', handler);
+      vid.currentTime = 0;
+      vid.play();
+    }
+  });
+  drawFrame(0.1);
+}
+
+// call it when video loads
+const oldOnLoaded = vid.onloadeddata;
+vid.onloadeddata = () => {
+  oldOnLoaded();
+  setTimeout(makeFilmstrip, 300);
+};
