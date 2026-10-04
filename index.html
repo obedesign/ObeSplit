@@ -660,40 +660,50 @@ input[type="file"]{
 <script>
 
 const video = document.getElementById("video");
-
 let videoURL = null;
-
+let isPickingFile = false;
 
 /* OPEN VIDEO PICKER */
 
 function openVideoPicker(){
-
-  /* Hide navigation BEFORE the file picker opens */
+  isPickingFile = true;
   document.getElementById("homeBottomNav").style.display = "none";
-
   document.getElementById("videoInput").click();
-
 }
 
 
 /* OPEN PHOTO PICKER */
 
 function openPhotoPicker(){
-
+  isPickingFile = true;
   document.getElementById("homeBottomNav").style.display = "none";
-
   document.getElementById("photoInput").click();
-
 }
+
+/* Fallback: if user cancels file dialog on mobile, window regains focus */
+window.addEventListener("focus", function() {
+  if (isPickingFile) {
+    // Short timeout to check if a file was actually chosen or if the editor opened
+    setTimeout(function() {
+      const editorDisplay = document.getElementById("editor").style.display;
+      if (editorDisplay !== "block") {
+        // User cancelled, restore bottom nav on home
+        document.getElementById("homeBottomNav").style.display = "flex";
+      }
+      isPickingFile = false;
+    }, 300);
+  }
+});
 
 
 /* LOAD VIDEO */
 
 function loadVideo(event){
-
+  isPickingFile = false;
   const file = event.target.files[0];
 
   if(!file){
+    document.getElementById("homeBottomNav").style.display = "flex";
     return;
   }
 
@@ -706,175 +716,101 @@ function loadVideo(event){
   video.src = videoURL;
 
   document.getElementById("home").style.display = "none";
-
   document.getElementById("homeBottomNav").style.display = "none";
-
   document.getElementById("editor").style.display = "block";
-
   document.getElementById("videoPlaceholder").style.display = "none";
 
   video.onloadedmetadata = function(){
-
-    document.getElementById("duration").textContent =
-      formatTime(video.duration);
-
+    document.getElementById("duration").textContent = formatTime(video.duration);
     generateThumbnails();
-
   };
-
 }
 
 
 /* GENERATE TIMELINE THUMBNAILS */
 
 function generateThumbnails(){
-
-  const container =
-    document.getElementById("thumbnails");
-
+  const container = document.getElementById("thumbnails");
   container.innerHTML = "";
-
   const count = 8;
 
   for(let i = 0; i < count; i++){
-
     const img = document.createElement("img");
-
     img.className = "thumbnail";
-
     img.src = videoURL;
-
-    img.style.objectPosition =
-      ((i / count) * 100) + "% center";
-
+    img.style.objectPosition = ((i / count) * 100) + "% center";
     container.appendChild(img);
-
   }
-
 }
 
 
 /* PLAY / PAUSE */
 
 function togglePlay(){
-
   if(video.paused){
-
     video.play();
-
   }else{
-
     video.pause();
-
   }
-
 }
 
 
 /* TIME UPDATE */
 
 video.addEventListener("timeupdate", function(){
-
-  document.getElementById("currentTime").textContent =
-    formatTime(video.currentTime);
+  document.getElementById("currentTime").textContent = formatTime(video.currentTime);
 
   if(video.duration){
-
-    const percentage =
-      (video.currentTime / video.duration) * 100;
-
-    document.getElementById("playhead").style.left =
-      percentage + "%";
-
+    const percentage = (video.currentTime / video.duration) * 100;
+    document.getElementById("playhead").style.left = percentage + "%";
   }
-
 });
 
 
 /* MUTE */
 
 function toggleMute(){
-
   video.muted = !video.muted;
-
 }
 
 
 /* SPLIT */
 
 function splitVideo(){
-
   if(!video.src){
-
     showMessage("Select a video first");
-
     return;
-
   }
-
-  showMessage(
-    "Split point: " + formatTime(video.currentTime)
-  );
-
+  showMessage("Split point: " + formatTime(video.currentTime));
 }
 
 
 /* FORMAT TIME */
 
 function formatTime(seconds){
-
   if(!isFinite(seconds)){
     return "00:00";
   }
-
-  const minutes =
-    Math.floor(seconds / 60);
-
-  const secs =
-    Math.floor(seconds % 60);
-
-  return String(minutes).padStart(2,"0")
-    + ":" +
-    String(secs).padStart(2,"0");
-
-}
-
-
-/* FULLSCREEN */
-
-function fullscreen(){
-
-  const area =
-    document.querySelector(".preview-area");
-
-  if(area.requestFullscreen){
-
-    area.requestFullscreen();
-
-  }
-
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return String(minutes).padStart(2,"0") + ":" + String(secs).padStart(2,"0");
 }
 
 
 /* GO HOME */
 
 function goHome(){
-
   video.pause();
-
   document.getElementById("editor").style.display = "none";
-
   document.getElementById("home").style.display = "block";
-
   document.getElementById("homeBottomNav").style.display = "flex";
-
 }
 
 
 /* LOAD PHOTO */
 
 function loadPhoto(event){
-
+  isPickingFile = false;
   const file = event.target.files[0];
 
   if(!file){
@@ -883,67 +819,40 @@ function loadPhoto(event){
   }
 
   showMessage("Photo selected");
-
   document.getElementById("homeBottomNav").style.display = "flex";
-
 }
 
 
-/* UNDO */
+/* UNDO / REDO / EXPORT */
 
 function undo(){
-
   showMessage("Undo");
-
 }
-
-
-/* REDO */
 
 function redo(){
-
   showMessage("Redo");
-
 }
 
-
-/* EXPORT */
-
 function exportVideo(){
-
   if(!video.src){
-
     showMessage("Select a video first");
-
     return;
-
   }
-
   showMessage("Export is ready to be connected");
-
 }
 
 
 /* MESSAGE */
 
 function showMessage(text){
-
-  const message =
-    document.getElementById("message");
-
+  const message = document.getElementById("message");
   message.textContent = text;
-
   message.style.display = "block";
 
   clearTimeout(window.messageTimer);
-
-  window.messageTimer =
-    setTimeout(function(){
-
-      message.style.display = "none";
-
-    },1800);
-
+  window.messageTimer = setTimeout(function(){
+    message.style.display = "none";
+  },1800);
 }
 
 </script>
