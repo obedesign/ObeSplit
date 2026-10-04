@@ -264,8 +264,8 @@ button{
 
 .thumbnail{
   height:100%;
-  width:65px;
-  flex:0 0 65px;
+  width:75px;
+  flex:0 0 75px;
   object-fit:cover;
   border-right:1px solid #222;
 }
@@ -742,7 +742,8 @@ async function generateThumbnails(){
   const duration = video.duration;
   if(!duration || isNaN(duration)) return;
 
-  const count = Math.max(8, Math.floor(duration * 2));
+  // Fixed clean count so thumbnails don't duplicate and cram together
+  const count = 10;
 
   const tempVideo = document.createElement('video');
   tempVideo.src = videoURL;
@@ -891,5 +892,5 @@ function showMessage(text){
 </script>
 
 </body>
-      </html>
-  
+            </html>
+            
