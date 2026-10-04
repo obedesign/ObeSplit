@@ -256,18 +256,52 @@ button{
   display:none;
 }
 
-.thumbnails{
-  height:100%;
-  display:flex;
-  width:max-content;
-}
+/* GENERATE TIMELINE THUMBNAILS WITH STABILIZED SEEKING */
 
-.thumbnail{
-  height:100%;
-  width:75px;
-  flex:0 0 75px;
-  object-fit:cover;
-  border-right:1px solid #222;
+async function generateThumbnails(){
+  const container = document.getElementById("thumbnails");
+  container.innerHTML = "";
+  
+  const duration = video.duration;
+  if(!duration || isNaN(duration)) return;
+
+  const count = 10;
+
+  const tempVideo = document.createElement('video');
+  tempVideo.src = videoURL;
+  tempVideo.muted = true;
+  tempVideo.playsInline = true;
+  tempVideo.preload = "auto";
+
+  await new Promise((resolve) => {
+    tempVideo.onloadedmetadata = resolve;
+  });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 120;
+  canvas.height = 80;
+  const ctx = canvas.getContext('2d');
+
+  for(let i = 0; i < count; i++){
+    const time = (duration / count) * i;
+    tempVideo.currentTime = time;
+
+    // Wait for seeked event AND give it a tiny moment to stabilize the frame
+    await new Promise((resolve) => {
+      tempVideo.onseeked = () => {
+        setTimeout(resolve, 60); // 60ms stabilization delay prevents frame glitching
+      };
+    });
+
+    ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
+
+    const img = document.createElement("img");
+    img.className = "thumbnail";
+    img.src = canvas.toDataURL();
+    container.appendChild(img);
+  }
+  }
+    
 }
 
 .playhead{
