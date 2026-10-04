@@ -33,22 +33,12 @@ button{
   width:100%;
   height:100vh;
   overflow-y:auto;
-  padding:20px 18px 100px;
+  padding:20px 18px 105px;
   max-width:700px;
   margin:auto;
 }
 
-.logo{
-  font-size:32px;
-  font-weight:900;
-  margin:10px 0 5px;
-}
-
-.subtitle{
-  color:#999;
-  font-size:17px;
-  margin-bottom:28px;
-}
+/* ================= HOME ================= */
 
 .new-video{
   width:100%;
@@ -60,15 +50,17 @@ button{
   font-weight:800;
 }
 
+/* NEW HOME GRID */
+
 .home-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
+  grid-template-rows:150px 150px;
   gap:18px;
   margin-top:20px;
 }
 
 .home-card{
-  min-height:150px;
   background:#111;
   border:1px solid #252525;
   border-radius:25px;
@@ -80,8 +72,40 @@ button{
   gap:12px;
 }
 
+.home-card.big{
+  grid-column:2;
+  grid-row:1 / span 2;
+  background:#18e58b;
+  color:#000;
+  border:none;
+}
+
 .card-icon{
-  font-size:45px;
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card-icon svg{
+  width:42px;
+  height:42px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.home-card.big .card-icon{
+  width:65px;
+  height:65px;
+}
+
+.home-card.big .card-icon svg{
+  width:58px;
+  height:58px;
 }
 
 .projects{
@@ -96,7 +120,50 @@ button{
   font-size:28px;
 }
 
-/* EDITOR */
+.projects button{
+  font-size:30px;
+}
+
+/* HOME BOTTOM NAV */
+
+.home-bottom-nav{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:78px;
+  background:#111;
+  border-top:1px solid #252525;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:50;
+}
+
+.home-nav-item{
+  min-width:80px;
+  height:70px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  color:#fff;
+  font-size:12px;
+}
+
+.home-nav-item svg{
+  width:25px;
+  height:25px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+
+/* ================= EDITOR ================= */
 
 #editor{
   display:none;
@@ -341,22 +408,31 @@ button{
   font-size:14px;
   white-space:nowrap;
 }
+
+@media(max-width:500px){
+
+  .home-grid{
+    grid-template-rows:145px 145px;
+    gap:14px;
+  }
+
+  .home-card{
+    border-radius:23px;
+  }
+
+  .new-video{
+    height:105px;
+  }
+
+}
 </style>
 </head>
 
 <body>
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
 
 <div id="home">
-
-  <div class="logo">
-    Create. Edit. Split.
-  </div>
-
-  <div class="subtitle">
-    Powerful video editing made simple.
-  </div>
 
   <button class="new-video" onclick="openVideoPicker()">
     ＋ NEW VIDEO
@@ -364,37 +440,127 @@ button{
 
   <div class="home-grid">
 
-    <button class="home-card" onclick="openVideoPicker()">
-      <div class="card-icon">🎬</div>
-      Edit Video
+    <!-- AI GENERATOR -->
+
+    <button class="home-card"
+      onclick="showMessage('AI Generator coming soon')">
+
+      <div class="card-icon">
+
+        <svg viewBox="0 0 48 48">
+          <path d="M24 5l2.5 10.5L37 18l-10.5 2.5L24 31l-2.5-10.5L11 18l10.5-2.5L24 5z"/>
+          <path d="M39 27l1.5 6L46 34.5l-5.5 1.5L39 42l-1.5-6L32 34.5l5.5-1.5L39 27z"/>
+        </svg>
+
+      </div>
+
+      AI Generator
+
     </button>
 
-    <button class="home-card" onclick="openPhotoPicker()">
-      <div class="card-icon">🖼️</div>
+
+    <!-- EDIT PHOTO - BIG -->
+
+    <button class="home-card big"
+      onclick="openPhotoPicker()">
+
+      <div class="card-icon">
+
+        <svg viewBox="0 0 48 48">
+          <rect x="5" y="7" width="38" height="34" rx="5"/>
+          <circle cx="16" cy="18" r="3"/>
+          <path d="M7 36l11-11 8 8 5-6 10 9"/>
+        </svg>
+
+      </div>
+
       Edit Photo
+
     </button>
 
-    <button class="home-card" onclick="showMessage('Templates coming soon')">
-      <div class="card-icon">✨</div>
-      Templates
-    </button>
 
-    <button class="home-card" onclick="showMessage('Space coming soon')">
-      <div class="card-icon">☁️</div>
+    <!-- SPACE -->
+
+    <button class="home-card"
+      onclick="showMessage('Space coming soon')">
+
+      <div class="card-icon">
+
+        <svg viewBox="0 0 48 48">
+          <path d="M15 36h21a8 8 0 0 0 1-16 13 13 0 0 0-25-2 9 9 0 0 0 3 18z"/>
+          <path d="M17 29l-4 4m18-4l4 4"/>
+        </svg>
+
+      </div>
+
       Space
+
     </button>
 
   </div>
 
+
   <div class="projects">
+
     <h2>Projects</h2>
-    <button style="font-size:30px">☰</button>
+
+    <button>☰</button>
+
   </div>
 
 </div>
 
 
-<!-- EDITOR -->
+<!-- ================= HOME BOTTOM NAV ================= -->
+
+<div class="home-bottom-nav">
+
+  <button class="home-nav-item"
+    onclick="showMessage('Edit')">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M6 4l12 16"/>
+      <path d="M18 4L6 20"/>
+      <path d="M3 4h4v4H3z"/>
+      <path d="M17 16h4v4h-4z"/>
+    </svg>
+
+    Edit
+
+  </button>
+
+
+  <button class="home-nav-item"
+    onclick="showMessage('Templates')">
+
+    <svg viewBox="0 0 24 24">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+
+    Templates
+
+  </button>
+
+
+  <button class="home-nav-item"
+    onclick="showMessage('Me')">
+
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
+    </svg>
+
+    Me
+
+  </button>
+
+</div>
+
+
+<!-- ================= EDITOR ================= -->
 
 <div id="editor">
 
@@ -413,8 +579,6 @@ button{
   </div>
 
 
-  <!-- VIDEO PREVIEW -->
-
   <div class="preview-area">
 
     <video
@@ -425,8 +589,6 @@ button{
 
   </div>
 
-
-  <!-- PLAY CONTROLS -->
 
   <div class="preview-controls">
 
@@ -457,8 +619,6 @@ button{
 
   </div>
 
-
-  <!-- TIMELINE -->
 
   <div class="timeline">
 
@@ -511,8 +671,6 @@ button{
   </div>
 
 
-  <!-- CLIP CONTROLS -->
-
   <div class="clip-tools">
 
     <button
@@ -546,8 +704,6 @@ button{
 
   </div>
 
-
-  <!-- BOTTOM TOOLS -->
 
   <div class="editor-toolbar">
 
@@ -1041,4 +1197,4 @@ function showMessage(text){
 </script>
 
 </body>
-  </html>
+      </html>
