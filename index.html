@@ -25,32 +25,23 @@ html,body{
 button{
   border:0;
   outline:0;
-  color:white;
-  font-family:inherit;
-  cursor:pointer;
+  color:#fff;
+  background:none;
 }
 
-.screen{
+#home{
   width:100%;
   height:100vh;
   overflow-y:auto;
-  background:#000;
-}
-
-/* ================= HOME ================= */
-
-#home{
-  display:block;
+  padding:20px 18px 100px;
   max-width:700px;
   margin:auto;
-  padding:20px 18px 100px;
 }
 
 .logo{
   font-size:32px;
   font-weight:900;
   margin:10px 0 5px;
-  letter-spacing:-1px;
 }
 
 .subtitle{
@@ -67,15 +58,6 @@ button{
   color:#000;
   font-size:27px;
   font-weight:800;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  box-shadow:0 8px 30px rgba(24,229,139,.15);
-}
-
-.new-video:active{
-  transform:scale(.98);
 }
 
 .home-grid{
@@ -98,11 +80,6 @@ button{
   gap:12px;
 }
 
-.home-card:active{
-  background:#1c1c1c;
-  transform:scale(.98);
-}
-
 .card-icon{
   font-size:45px;
 }
@@ -119,44 +96,7 @@ button{
   font-size:28px;
 }
 
-.menu{
-  font-size:30px;
-  background:none;
-}
-
-.bottom-nav{
-  position:fixed;
-  left:0;
-  bottom:0;
-  width:100%;
-  height:82px;
-  background:#080808;
-  border-top:1px solid #222;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:20;
-}
-
-.nav-item{
-  background:none;
-  color:#aaa;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:5px;
-  font-size:12px;
-}
-
-.nav-icon{
-  font-size:27px;
-}
-
-.nav-item.active{
-  color:#fff;
-}
-
-/* ================= EDITOR ================= */
+/* EDITOR */
 
 #editor{
   display:none;
@@ -176,14 +116,9 @@ button{
 }
 
 .top-btn{
-  background:none;
-  font-size:29px;
+  font-size:30px;
   width:42px;
   height:42px;
-}
-
-.search{
-  font-size:27px;
 }
 
 .spacer{
@@ -194,7 +129,7 @@ button{
   background:#14cde5;
   color:#001015;
   font-weight:800;
-  padding:13px 18px;
+  padding:13px 20px;
   border-radius:12px;
   font-size:17px;
 }
@@ -202,13 +137,12 @@ button{
 /* VIDEO */
 
 .preview-area{
-  height:45vh;
-  min-height:300px;
+  height:43vh;
+  min-height:280px;
   background:#111;
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
 }
 
 #videoPreview{
@@ -216,283 +150,209 @@ button{
   max-height:100%;
   width:auto;
   height:auto;
-  background:#000;
   object-fit:contain;
+  background:#000;
 }
 
-.empty-preview{
-  color:#555;
-  font-size:16px;
-}
-
-/* CONTROLS */
+/* CONTROL BAR */
 
 .preview-controls{
   height:55px;
+  background:#151515;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 18px;
-  background:#151515;
-}
-
-.control-left,
-.control-right{
-  display:flex;
-  align-items:center;
-  gap:25px;
+  padding:0 25px;
 }
 
 .control-btn{
-  background:none;
-  font-size:26px;
+  font-size:29px;
 }
 
 .play{
-  font-size:32px;
+  font-size:34px;
 }
 
 /* TIMELINE */
 
 .timeline{
-  height:235px;
-  background:#1a1a1a;
+  height:245px;
+  background:#181818;
   overflow:hidden;
-  position:relative;
 }
 
 .time-row{
-  height:35px;
+  height:38px;
   display:flex;
   align-items:center;
+  gap:37px;
+  padding-left:15px;
   color:#aaa;
-  font-size:12px;
-  padding-left:10px;
+  font-size:13px;
   white-space:nowrap;
 }
 
-.time-row span{
-  margin-right:32px;
-}
-
 .timeline-body{
-  height:200px;
+  height:207px;
   overflow-x:auto;
   overflow-y:hidden;
   position:relative;
-  padding-left:20px;
 }
 
 .timeline-content{
-  min-width:700px;
+  min-width:900px;
   position:relative;
-  padding-top:10px;
+  padding:10px 20px;
 }
+
+/* VIDEO TRACK */
 
 .video-track{
-  height:65px;
-  background:#252525;
-  border-radius:4px;
+  height:70px;
   display:flex;
-  align-items:center;
   overflow:hidden;
+  border:2px solid #555;
+  border-radius:5px;
+  background:#000;
   position:relative;
-  border:2px solid #333;
 }
 
-.video-thumbnail{
-  height:61px;
+.video-thumb{
+  height:66px;
   width:90px;
   object-fit:cover;
   flex:none;
-  background:#000;
+  border-right:1px solid #777;
+  background:#222;
 }
+
+/* AUDIO */
 
 .audio-track,
 .text-track{
-  height:43px;
-  margin-top:8px;
+  height:44px;
+  margin-top:9px;
   background:#242424;
-  border-radius:4px;
-  color:#777;
+  border-radius:5px;
   display:flex;
   align-items:center;
-  padding-left:15px;
-  font-size:14px;
+  padding-left:18px;
+  color:#999;
+  font-size:15px;
 }
 
 .add{
-  margin-right:8px;
-  font-size:20px;
+  font-size:25px;
+  margin-right:12px;
   color:#aaa;
 }
+
+/* PLAYHEAD */
 
 .playhead{
   position:absolute;
   top:0;
-  left:25px;
+  left:20px;
   width:2px;
-  height:190px;
+  height:195px;
   background:#fff;
-  z-index:10;
+  z-index:5;
+  pointer-events:none;
 }
 
 .playhead:before{
   content:"";
   position:absolute;
-  top:0;
+  top:-1px;
   left:-5px;
   width:12px;
   height:12px;
-  background:#fff;
   border-radius:50%;
+  background:#fff;
 }
 
-/* SIDE TOOLS */
+/* CLIP TOOLS */
 
 .clip-tools{
   position:absolute;
-  left:10px;
-  bottom:5px;
+  left:15px;
+  bottom:88px;
   display:flex;
   gap:8px;
+  z-index:10;
 }
 
 .clip-tool{
-  width:95px;
-  height:70px;
-  background:#202020;
+  width:90px;
+  height:65px;
+  background:#222;
   border-radius:10px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
   font-size:12px;
 }
 
 .clip-tool span{
-  font-size:25px;
+  display:block;
+  font-size:24px;
+  margin-bottom:3px;
 }
 
-/* BOTTOM TOOLBAR */
+/* BOTTOM */
 
 .editor-toolbar{
   position:fixed;
-  left:0;
   bottom:0;
+  left:0;
   width:100%;
   height:86px;
   background:#181818;
   border-top:1px solid #292929;
   display:flex;
-  align-items:center;
   justify-content:space-around;
   overflow-x:auto;
   z-index:30;
 }
 
 .editor-tool{
-  min-width:70px;
-  height:75px;
-  background:none;
-  color:#fff;
+  min-width:72px;
+  height:82px;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   gap:6px;
   font-size:12px;
 }
 
 .editor-tool span{
-  font-size:27px;
+  font-size:28px;
 }
 
-.editor-tool:active{
-  background:#292929;
-  border-radius:10px;
-}
+/* MESSAGE */
 
-/* MODAL */
-
-.modal{
-  display:none;
+.message{
   position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  z-index:100;
-  align-items:flex-end;
-}
-
-.modal-box{
-  width:100%;
-  background:#1b1b1b;
-  border-radius:25px 25px 0 0;
-  padding:25px;
-}
-
-.modal-box h3{
-  margin-top:0;
-}
-
-.modal-button{
-  width:100%;
-  height:55px;
-  margin-top:10px;
-  background:#292929;
+  left:50%;
+  bottom:100px;
+  transform:translateX(-50%);
+  background:#252525;
+  padding:13px 20px;
   border-radius:12px;
-  font-size:16px;
-}
-
-/* MOBILE */
-
-@media(max-width:500px){
-
-  #home{
-    padding:18px 14px 95px;
-  }
-
-  .logo{
-    font-size:28px;
-  }
-
-  .new-video{
-    height:100px;
-    font-size:24px;
-  }
-
-  .home-grid{
-    gap:12px;
-  }
-
-  .home-card{
-    min-height:135px;
-  }
-
-  .preview-area{
-    height:40vh;
-    min-height:260px;
-  }
-
-  .timeline{
-    height:225px;
-  }
-
-  .editor-toolbar{
-    height:82px;
-  }
+  z-index:999;
+  font-size:14px;
+  white-space:nowrap;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
-<div id="home" class="screen">
+<div id="home">
 
-  <div class="logo">Create. Edit. Split.</div>
+  <div class="logo">
+    Create. Edit. Split.
+  </div>
 
   <div class="subtitle">
     Powerful video editing made simple.
@@ -506,35 +366,35 @@ button{
 
     <button class="home-card" onclick="openVideoPicker()">
       <div class="card-icon">🎬</div>
-      <div>Edit Video</div>
+      Edit Video
     </button>
 
     <button class="home-card" onclick="openPhotoPicker()">
       <div class="card-icon">🖼️</div>
-      <div>Edit Photo</div>
+      Edit Photo
     </button>
 
-    <button class="home-card" onclick="showMessage('Templates are coming soon.')">
+    <button class="home-card" onclick="showMessage('Templates coming soon')">
       <div class="card-icon">✨</div>
-      <div>Templates</div>
+      Templates
     </button>
 
-    <button class="home-card" onclick="showMessage('Space is coming soon.')">
+    <button class="home-card" onclick="showMessage('Space coming soon')">
       <div class="card-icon">☁️</div>
-      <div>Space</div>
+      Space
     </button>
 
   </div>
 
   <div class="projects">
     <h2>Projects</h2>
-    <button class="menu">☰</button>
+    <button style="font-size:30px">☰</button>
   </div>
 
 </div>
 
 
-<!-- ================= EDITOR ================= -->
+<!-- EDITOR -->
 
 <div id="editor">
 
@@ -542,7 +402,7 @@ button{
 
     <button class="top-btn" onclick="goHome()">×</button>
 
-    <button class="top-btn search">⌕</button>
+    <button class="top-btn">⌕</button>
 
     <div class="spacer"></div>
 
@@ -557,43 +417,39 @@ button{
 
   <div class="preview-area">
 
-    <div class="empty-preview" id="emptyPreview">
-      Select a video to begin
-    </div>
-
     <video
       id="videoPreview"
-      controls="false"
       playsinline
-      preload="metadata"
-    ></video>
+      preload="metadata">
+    </video>
 
   </div>
 
 
-  <!-- PREVIEW CONTROLS -->
+  <!-- PLAY CONTROLS -->
 
   <div class="preview-controls">
 
-    <div class="control-left">
+    <button class="control-btn"
+      onclick="toggleFullscreen()">
+      ⛶
+    </button>
 
-      <button class="control-btn" onclick="toggleFullscreen()">
-        ⛶
-      </button>
-
-    </div>
-
-    <button class="control-btn play" onclick="togglePlay()">
+    <button class="control-btn play"
+      id="playButton"
+      onclick="togglePlay()">
       ▶
     </button>
 
-    <div class="control-right">
+    <div>
 
-      <button class="control-btn" onclick="undoAction()">
+      <button class="control-btn"
+        onclick="undoAction()">
         ↶
       </button>
 
-      <button class="control-btn" onclick="redoAction()">
+      <button class="control-btn"
+        onclick="redoAction()">
         ↷
       </button>
 
@@ -607,6 +463,7 @@ button{
   <div class="timeline">
 
     <div class="time-row">
+
       <span>00:00</span>
       <span>00:01</span>
       <span>00:02</span>
@@ -615,25 +472,36 @@ button{
       <span>00:05</span>
       <span>00:06</span>
       <span>00:07</span>
+      <span>00:08</span>
+
     </div>
+
 
     <div class="timeline-body">
 
       <div class="timeline-content">
 
-        <div class="playhead"></div>
+        <div class="playhead" id="playhead"></div>
 
-        <div class="video-track" id="videoTrack">
+        <div
+          class="video-track"
+          id="videoTrack">
         </div>
+
 
         <div class="audio-track">
+
           <span class="add">＋</span>
           Add audio
+
         </div>
 
+
         <div class="text-track">
+
           <span class="add">＋</span>
           Add text
+
         </div>
 
       </div>
@@ -643,18 +511,37 @@ button{
   </div>
 
 
-  <!-- CLIP TOOLS -->
+  <!-- CLIP CONTROLS -->
 
   <div class="clip-tools">
 
-    <button class="clip-tool" onclick="muteVideo()">
+    <button
+      class="clip-tool"
+      onclick="muteVideo()">
+
       <span>🔊</span>
       Mute clip
+
     </button>
 
-    <button class="clip-tool" onclick="showMessage('Cover editor opened.')">
+
+    <button
+      class="clip-tool"
+      onclick="splitVideo()">
+
+      <span>✂</span>
+      Split
+
+    </button>
+
+
+    <button
+      class="clip-tool"
+      onclick="showMessage('Cover editor opened')">
+
       <span>✎</span>
       Cover
+
     </button>
 
   </div>
@@ -664,39 +551,73 @@ button{
 
   <div class="editor-toolbar">
 
-    <button class="editor-tool" onclick="editTool()">
+    <button
+      class="editor-tool"
+      onclick="showMessage('Edit tools opened')">
+
       <span>✂</span>
       Edit
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Audio tools opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Audio tools opened')">
+
       <span>♪</span>
       Audio
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Text tools opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Text tools opened')">
+
       <span>T</span>
       Text
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Effects opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Effects opened')">
+
       <span>☆</span>
       Effects
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Overlay opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Overlay opened')">
+
       <span>▧</span>
       Overlay
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Captions opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Captions opened')">
+
       <span>▤</span>
       Captions
+
     </button>
 
-    <button class="editor-tool" onclick="showMessage('Filters opened.')">
+
+    <button
+      class="editor-tool"
+      onclick="showMessage('Filters opened')">
+
       <span>◌</span>
       Filters
+
     </button>
 
   </div>
@@ -725,27 +646,35 @@ button{
 
 <script>
 
-let currentVideoURL = null;
-let video = document.getElementById("videoPreview");
+let video =
+  document.getElementById("videoPreview");
+
+let videoURL = null;
 
 
-/* ================= FILE PICKERS ================= */
+/* OPEN VIDEO PICKER */
 
 function openVideoPicker(){
 
-  document.getElementById("videoInput").click();
+  document
+    .getElementById("videoInput")
+    .click();
 
 }
 
+
+/* OPEN PHOTO PICKER */
 
 function openPhotoPicker(){
 
-  document.getElementById("photoInput").click();
+  document
+    .getElementById("photoInput")
+    .click();
 
 }
 
 
-/* ================= LOAD VIDEO ================= */
+/* LOAD VIDEO */
 
 function loadVideo(event){
 
@@ -755,87 +684,254 @@ function loadVideo(event){
     return;
   }
 
-  if(currentVideoURL){
-    URL.revokeObjectURL(currentVideoURL);
+  if(videoURL){
+    URL.revokeObjectURL(videoURL);
   }
 
-  currentVideoURL = URL.createObjectURL(file);
+  videoURL =
+    URL.createObjectURL(file);
 
-  video.src = currentVideoURL;
+  video.src = videoURL;
 
-  document.getElementById("home").style.display = "none";
+  document.getElementById("home").style.display =
+    "none";
 
-  document.getElementById("editor").style.display = "block";
+  document.getElementById("editor").style.display =
+    "block";
 
-  document.getElementById("emptyPreview").style.display = "none";
+  video.onloadedmetadata = function(){
 
-  createTimelineThumbnail();
+    generateThumbnails();
+
+  };
 
 }
 
 
-/* ================= TIMELINE ================= */
+/* GENERATE REAL VIDEO THUMBNAILS */
 
-function createTimelineThumbnail(){
+function generateThumbnails(){
 
-  const track = document.getElementById("videoTrack");
+  const track =
+    document.getElementById("videoTrack");
 
   track.innerHTML = "";
 
-  for(let i=0;i<8;i++){
+  const duration = video.duration;
 
-    const img = document.createElement("img");
-
-    img.className = "video-thumbnail";
-
-    img.src = currentVideoURL;
-
-    track.appendChild(img);
-
-  }
-
-}
-
-
-/* ================= PLAY ================= */
-
-function togglePlay(){
-
-  if(!video.src){
+  if(!duration || !isFinite(duration)){
     return;
   }
 
-  if(video.paused){
+  const count = Math.min(
+    Math.max(Math.ceil(duration),6),
+    20
+  );
 
-    video.play();
+  for(let i=0;i<count;i++){
 
-  }else{
-
-    video.pause();
+    createThumbnail(
+      i,
+      count,
+      duration,
+      track
+    );
 
   }
 
 }
 
 
-/* ================= MUTE ================= */
+/* CREATE ONE THUMBNAIL */
 
-function muteVideo(){
+function createThumbnail(
+  index,
+  count,
+  duration,
+  track
+){
 
-  video.muted = !video.muted;
+  const canvas =
+    document.createElement("canvas");
 
-  showMessage(
-    video.muted ? "Video muted" : "Video sound restored"
+  canvas.width = 180;
+  canvas.height = 110;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  const tempVideo =
+    document.createElement("video");
+
+  tempVideo.src = videoURL;
+
+  tempVideo.muted = true;
+
+  tempVideo.playsInline = true;
+
+  tempVideo.preload = "metadata";
+
+  tempVideo.currentTime =
+    (duration / count) * index;
+
+  tempVideo.addEventListener(
+    "seeked",
+    function(){
+
+      ctx.drawImage(
+        tempVideo,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      const img =
+        document.createElement("img");
+
+      img.className =
+        "video-thumb";
+
+      img.src =
+        canvas.toDataURL("image/jpeg",0.75);
+
+      img.onclick = function(){
+
+        video.currentTime =
+          (duration / count) * index;
+
+      };
+
+      track.appendChild(img);
+
+      tempVideo.remove();
+
+    },
+    {once:true}
   );
 
 }
 
 
-/* ================= FULLSCREEN ================= */
+/* PLAY / PAUSE */
+
+function togglePlay(){
+
+  if(video.paused){
+
+    video.play();
+
+    document.getElementById("playButton")
+      .innerHTML = "❚❚";
+
+  }else{
+
+    video.pause();
+
+    document.getElementById("playButton")
+      .innerHTML = "▶";
+
+  }
+
+}
+
+
+/* VIDEO TIME */
+
+video.addEventListener(
+  "timeupdate",
+  function(){
+
+    if(!video.duration){
+      return;
+    }
+
+    const progress =
+      video.currentTime /
+      video.duration;
+
+    const track =
+      document.getElementById("videoTrack");
+
+    const playhead =
+      document.getElementById("playhead");
+
+    const width =
+      track.offsetWidth;
+
+    playhead.style.left =
+      (20 + progress * width) + "px";
+
+  }
+);
+
+
+/* MUTE */
+
+function muteVideo(){
+
+  video.muted =
+    !video.muted;
+
+  showMessage(
+    video.muted
+      ? "Video muted"
+      : "Sound restored"
+  );
+
+}
+
+
+/* SPLIT */
+
+function splitVideo(){
+
+  if(!video.duration){
+
+    showMessage("Select a video first");
+
+    return;
+
+  }
+
+  const time =
+    video.currentTime;
+
+  showMessage(
+    "Split point: " +
+    formatTime(time)
+  );
+
+}
+
+
+/* FORMAT TIME */
+
+function formatTime(seconds){
+
+  const mins =
+    Math.floor(seconds / 60);
+
+  const secs =
+    Math.floor(seconds % 60);
+
+  return (
+    String(mins).padStart(2,"0")
+    + ":" +
+    String(secs).padStart(2,"0")
+  );
+
+}
+
+
+/* FULLSCREEN */
 
 function toggleFullscreen(){
 
-  const area = document.querySelector(".preview-area");
+  const area =
+    document.querySelector(
+      ".preview-area"
+    );
 
   if(!document.fullscreenElement){
 
@@ -852,42 +948,40 @@ function toggleFullscreen(){
 }
 
 
-/* ================= HOME ================= */
+/* BACK HOME */
 
 function goHome(){
 
   video.pause();
 
-  document.getElementById("editor").style.display = "none";
+  document.getElementById("editor")
+    .style.display = "none";
 
-  document.getElementById("home").style.display = "block";
+  document.getElementById("home")
+    .style.display = "block";
 
 }
 
 
-/* ================= PHOTO ================= */
+/* PHOTO */
 
 function loadPhoto(event){
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if(!file){
     return;
   }
 
-  showMessage("Photo selected. Photo editing will be added next.");
+  showMessage(
+    "Photo editing will be added next"
+  );
 
 }
 
 
-/* ================= BUTTON ACTIONS ================= */
-
-function editTool(){
-
-  showMessage("Edit tools opened.");
-
-}
-
+/* UNDO */
 
 function undoAction(){
 
@@ -896,6 +990,8 @@ function undoAction(){
 }
 
 
+/* REDO */
+
 function redoAction(){
 
   showMessage("Redo");
@@ -903,74 +999,46 @@ function redoAction(){
 }
 
 
+/* EXPORT */
+
 function exportVideo(){
 
   showMessage(
-    "Export is ready for the next stage of development."
+    "Export system will be added next"
   );
 
 }
 
 
-/* ================= MESSAGE ================= */
+/* MESSAGE */
 
-function showMessage(message){
+function showMessage(text){
 
-  const box = document.createElement("div");
+  const message =
+    document.createElement("div");
 
-  box.innerText = message;
+  message.className =
+    "message";
 
-  box.style.position = "fixed";
-  box.style.left = "50%";
-  box.style.bottom = "100px";
-  box.style.transform = "translateX(-50%)";
-  box.style.background = "#222";
-  box.style.color = "#fff";
-  box.style.padding = "13px 20px";
-  box.style.borderRadius = "12px";
-  box.style.zIndex = "9999";
-  box.style.fontSize = "14px";
-  box.style.boxShadow = "0 5px 20px rgba(0,0,0,.5)";
+  message.innerText =
+    text;
 
-  document.body.appendChild(box);
+  document.body.appendChild(
+    message
+  );
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    box.remove();
+      message.remove();
 
-  },1800);
+    },
+    1800
+  );
 
 }
-
-
-/* ================= VIDEO TIME ================= */
-
-video.addEventListener("timeupdate",function(){
-
-  const duration = video.duration;
-
-  if(!duration || !isFinite(duration)){
-    return;
-  }
-
-  const progress = video.currentTime / duration;
-
-  const playhead = document.querySelector(".playhead");
-
-  const timeline = document.querySelector(".timeline-content");
-
-  if(timeline){
-
-    const width = timeline.scrollWidth - 30;
-
-    playhead.style.left =
-      (25 + progress * width) + "px";
-
-  }
-
-});
 
 </script>
 
 </body>
-</html>
+  </html>
