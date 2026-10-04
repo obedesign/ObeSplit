@@ -683,11 +683,9 @@ function openPhotoPicker(){
 /* Fallback: if user cancels file dialog on mobile, window regains focus */
 window.addEventListener("focus", function() {
   if (isPickingFile) {
-    // Short timeout to check if a file was actually chosen or if the editor opened
     setTimeout(function() {
       const editorDisplay = document.getElementById("editor").style.display;
       if (editorDisplay !== "block") {
-        // User cancelled, restore bottom nav on home
         document.getElementById("homeBottomNav").style.display = "flex";
       }
       isPickingFile = false;
@@ -727,20 +725,49 @@ function loadVideo(event){
 }
 
 
-/* GENERATE TIMELINE THUMBNAILS */
+/* GENERATE TIMELINE THUMBNAILS USING CANVAS */
 
 function generateThumbnails(){
   const container = document.getElementById("thumbnails");
   container.innerHTML = "";
+  
   const count = 8;
+  const duration = video.duration;
+  
+  if(!duration || isNaN(duration)) return;
 
-  for(let i = 0; i < count; i++){
+  const tempVideo = document.createElement('video');
+  tempVideo.src = videoURL;
+  tempVideo.muted = true;
+  tempVideo.preload = "auto";
+
+  let currentStep = 0;
+
+  tempVideo.onloadedmetadata = function(){
+    captureNextThumbnail();
+  };
+
+  function captureNextThumbnail(){
+    if(currentStep >= count) return;
+    const time = (duration / count) * currentStep;
+    tempVideo.currentTime = time;
+  }
+
+  tempVideo.onseeked = function(){
+    const canvas = document.createElement('canvas');
+    canvas.width = 120;
+    canvas.height = 80;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
+
     const img = document.createElement("img");
     img.className = "thumbnail";
-    img.src = videoURL;
-    img.style.objectPosition = ((i / count) * 100) + "% center";
+    img.src = canvas.toDataURL();
     container.appendChild(img);
-  }
+
+    currentStep++;
+    captureNextThumbnail();
+  };
 }
 
 
@@ -858,5 +885,4 @@ function showMessage(text){
 </script>
 
 </body>
-  </html>
-  
+</html>
