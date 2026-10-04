@@ -237,39 +237,39 @@ button{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  color:#aaa;
-  font-size:11px;
-  margin-bottom:8px;
+  color:#888;
+  font-size:10px;
+  margin-bottom:6px;
+  padding:0 4px;
 }
 
 .timeline{
   height:78px;
   background:#111;
   border-radius:8px;
-  overflow:hidden;
-  position:relative;
-}
-
-..thumbnails{
-  height:100%;
-  display:flex;
   overflow-x:auto;
   overflow-y:hidden;
+  position:relative;
   scrollbar-width:none;
 }
 
-.thumbnails::-webkit-scrollbar{
+.timeline::-webkit-scrollbar{
   display:none;
+}
+
+.thumbnails{
+  height:100%;
+  display:flex;
+  width:max-content;
 }
 
 .thumbnail{
   height:100%;
-  width:75px;
-  flex:0 0 75px;
+  width:65px;
+  flex:0 0 65px;
   object-fit:cover;
   border-right:1px solid #222;
 }
-  
 
 .playhead{
   position:absolute;
@@ -279,6 +279,7 @@ button{
   background:#18e58b;
   left:0;
   z-index:5;
+  pointer-events:none;
 }
 
 .clip-tools{
@@ -515,7 +516,7 @@ input[type="file"]{
       <span id="duration">00:00</span>
     </div>
 
-    <div class="timeline">
+    <div class="timeline" id="timelineContainer">
 
       <div
         class="thumbnails"
@@ -739,10 +740,11 @@ async function generateThumbnails(){
   const container = document.getElementById("thumbnails");
   container.innerHTML = "";
   
-  const count = 8;
+  // Scale the number of thumbnails dynamically based on video duration (e.g., 4 per second, min 8)
   const duration = video.duration;
-  
   if(!duration || isNaN(duration)) return;
+
+  const count = Math.max(8, Math.floor(duration * 2));
 
   const tempVideo = document.createElement('video');
   tempVideo.src = videoURL;
@@ -795,6 +797,9 @@ video.addEventListener("timeupdate", function(){
 
   if(video.duration){
     const percentage = (video.currentTime / video.duration) * 100;
+    const timelineContainer = document.getElementById("timelineContainer");
+    
+    // Move playhead proportionally and auto-scroll timeline container if needed
     document.getElementById("playhead").style.left = percentage + "%";
   }
 });
@@ -832,7 +837,7 @@ function formatTime(seconds){
 
 /* GO HOME */
 
-function goHome(){
+functiongoHome(){
   video.pause();
   document.getElementById("editor").style.display = "none";
   document.getElementById("home").style.display = "block";
