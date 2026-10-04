@@ -725,9 +725,9 @@ function loadVideo(event){
 }
 
 
-/* GENERATE TIMELINE THUMBNAILS USING CANVAS */
+/* GENERATE TIMELINE THUMBNAILS USING ASYNC/AWAIT CANVAS */
 
-function generateThumbnails(){
+async function generateThumbnails(){
   const container = document.getElementById("thumbnails");
   container.innerHTML = "";
   
@@ -739,35 +739,33 @@ function generateThumbnails(){
   const tempVideo = document.createElement('video');
   tempVideo.src = videoURL;
   tempVideo.muted = true;
+  tempVideo.playsInline = true;
   tempVideo.preload = "auto";
 
-  let currentStep = 0;
+  await new Promise((resolve) => {
+    tempVideo.onloadedmetadata = resolve;
+  });
 
-  tempVideo.onloadedmetadata = function(){
-    captureNextThumbnail();
-  };
+  const canvas = document.createElement('canvas');
+  canvas.width = 120;
+  canvas.height = 80;
+  const ctx = canvas.getContext('2d');
 
-  function captureNextThumbnail(){
-    if(currentStep >= count) return;
-    const time = (duration / count) * currentStep;
+  for(let i = 0; i < count; i++){
+    const time = (duration / count) * i;
     tempVideo.currentTime = time;
-  }
 
-  tempVideo.onseeked = function(){
-    const canvas = document.createElement('canvas');
-    canvas.width = 120;
-    canvas.height = 80;
-    const ctx = canvas.getContext('2d');
+    await new Promise((resolve) => {
+      tempVideo.onseeked = resolve;
+    });
+
     ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
 
     const img = document.createElement("img");
     img.className = "thumbnail";
     img.src = canvas.toDataURL();
     container.appendChild(img);
-
-    currentStep++;
-    captureNextThumbnail();
-  };
+  }
 }
 
 
