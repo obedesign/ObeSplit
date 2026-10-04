@@ -246,19 +246,26 @@ button{
   height:78px;
   background:#111;
   border-radius:8px;
-  overflow:hidden;
+  overflow-x:auto;
+  overflow-y:hidden;
   position:relative;
+  scrollbar-width:none;
+}
+
+.timeline::-webkit-scrollbar{
+  display:none;
 }
 
 .thumbnails{
   height:100%;
   display:flex;
-  overflow:hidden;
+  width:max-content;
 }
 
 .thumbnail{
   height:100%;
-  min-width:75px;
+  width:65px;
+  flex:0 0 65px;
   object-fit:cover;
   border-right:1px solid #222;
 }
@@ -271,6 +278,7 @@ button{
   background:#18e58b;
   left:0;
   z-index:5;
+  pointer-events:none;
 }
 
 .clip-tools{
@@ -507,7 +515,7 @@ input[type="file"]{
       <span id="duration">00:00</span>
     </div>
 
-    <div class="timeline">
+    <div class="timeline" id="timelineContainer">
 
       <div
         class="thumbnails"
@@ -731,10 +739,10 @@ async function generateThumbnails(){
   const container = document.getElementById("thumbnails");
   container.innerHTML = "";
   
-  const count = 8;
   const duration = video.duration;
-  
   if(!duration || isNaN(duration)) return;
+
+  const count = Math.max(8, Math.floor(duration * 2));
 
   const tempVideo = document.createElement('video');
   tempVideo.src = videoURL;
@@ -883,4 +891,5 @@ function showMessage(text){
 </script>
 
 </body>
-</html>
+      </html>
+  
