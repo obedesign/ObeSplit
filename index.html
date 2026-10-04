@@ -513,7 +513,7 @@ button{
 
 <!-- ================= HOME BOTTOM NAV ================= -->
 
-<div class="home-bottom-nav" id="homeBottomNav">
+<div class="home-bottom-nav">
 
   <button class="home-nav-item"
     onclick="showMessage('Edit')">
@@ -852,9 +852,6 @@ function loadVideo(event){
   document.getElementById("home").style.display =
     "none";
 
-  document.getElementById("homeBottomNav").style.display =
-    "none";
-
   document.getElementById("editor").style.display =
     "block";
 
@@ -1119,9 +1116,6 @@ function goHome(){
   document.getElementById("home")
     .style.display = "block";
 
-  document.getElementById("homeBottomNav")
-    .style.display = "flex";
-
 }
 
 
@@ -1203,4 +1197,4 @@ function showMessage(text){
 </script>
 
 </body>
-  </html>
+</html>
