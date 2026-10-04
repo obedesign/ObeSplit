@@ -250,56 +250,17 @@ button{
   position:relative;
 }
 
-./* GENERATE TIMELINE THUMBNAILS USING CANVAS */
+.thumbnails{
+  height:100%;
+  display:flex;
+  overflow:hidden;
+}
 
-function generateThumbnails(){
-  const container = document.getElementById("thumbnails");
-  container.innerHTML = "";
-  
-  const count = 8;
-  const duration = video.duration;
-  
-  if(!duration || isNaN(duration)) return;
-
-  // Create a temporary hidden video element for snapshotting
-  const tempVideo = document.createElement('video');
-  tempVideo.src = videoURL;
-  tempVideo.muted = true;
-  tempVideo.preload = "auto";
-
-  let currentStep = 0;
-
-  tempVideo.onloadedmetadata = function(){
-    captureNextThumbnail();
-  };
-
-  function captureNextThumbnail(){
-    if(currentStep >= count) return;
-    
-    // Calculate time interval for each thumbnail
-    const time = (duration / count) * currentStep;
-    tempVideo.currentTime = time;
-  }
-
-  tempVideo.onseeked = function(){
-    // Draw the current video frame onto a canvas
-    const canvas = document.createElement('canvas');
-    canvas.width = 120;
-    canvas.height = 80;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(tempVideo, 0, 0, canvas.width, canvas.height);
-
-    // Create thumbnail image from canvas data
-    const img = document.createElement("img");
-    img.className = "thumbnail";
-    img.src = canvas.toDataURL();
-    container.appendChild(img);
-
-    currentStep++;
-    captureNextThumbnail();
-  };
-    }
-  
+.thumbnail{
+  height:100%;
+  min-width:75px;
+  object-fit:cover;
+  border-right:1px solid #222;
 }
 
 .playhead{
