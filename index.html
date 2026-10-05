@@ -34,20 +34,39 @@ button{border:0;font-family:inherit;cursor:pointer}
 .top-btn{background:none;color:#fff;font-size:26px;padding:5px}
 .editor-title{display:none}
 
-/* EXPORT = SAME GREEN AS HOME */
 .export-btn{background:#18e58b;color:#000;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700}
 
 .preview-area{height:54vh;min-height:340px;background:#000;display:flex;align-items:center;justify-content:center;position:relative}
 #video{width:100%;height:100%;object-fit:contain;display:block}
 .video-placeholder{color:#555;font-size:14px}
 
-.controls{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#121212}
-.control-btn{background:none;color:#fff;font-size:18px;opacity:.9}
+/* PREVIEW CONTROLS */
+.controls{
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:22px;
+  padding:0 16px;
+  background:#121212;
+}
+
+.control-btn{
+  background:none;
+  color:#fff;
+  font-size:19px;
+  opacity:.9;
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
 /* TIMELINE */
 .timeline-area{
   background:#1c1c1c;
-  padding:8px 0 8px;
+  padding:8px 0 6px;
   position:relative;
   border-top:1px solid #222;
 }
@@ -58,7 +77,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   align-items:center;
   color:#777;
   font-size:10px;
-  padding:0 10px 6px;
+  padding:0 10px 7px;
   font-weight:500;
   letter-spacing:.3px;
   overflow:hidden;
@@ -92,9 +111,9 @@ button{border:0;font-family:inherit;cursor:pointer}
   background:#292929;
   color:#bbb;
   border-radius:7px;
-  width:50px;
-  height:62px;
-  padding:5px 2px;
+  width:48px;
+  height:72px;
+  padding:4px 2px;
   font-size:8px;
   display:flex;
   flex-direction:column;
@@ -120,7 +139,7 @@ button{border:0;font-family:inherit;cursor:pointer}
 
 /* THUMBNAIL STRIP */
 .timeline{
-  height:62px;
+  height:72px;
   background:#000;
   border-radius:7px;
   overflow-x:auto;
@@ -142,16 +161,16 @@ button{border:0;font-family:inherit;cursor:pointer}
 }
 
 .thumbnail{
-  height:62px;
-  width:68px;
-  flex:0 0 68px;
+  height:72px;
+  width:78px;
+  flex:0 0 78px;
   object-fit:cover;
   border-right:1px solid #111;
 }
 
 /* WHITE PLUS AT END */
 .add-clip-btn{
-  height:62px;
+  height:72px;
   width:48px;
   background:#fff;
   color:#000;
@@ -165,11 +184,11 @@ button{border:0;font-family:inherit;cursor:pointer}
   margin-left:3px;
 }
 
-/* LONG WHITE PLAYHEAD */
+/* PLAYHEAD */
 .playhead{
   position:absolute;
-  top:-8px;
-  bottom:-120px;
+  top:-4px;
+  bottom:-4px;
   width:2px;
   background:#fff;
   left:0;
@@ -177,11 +196,23 @@ button{border:0;font-family:inherit;cursor:pointer}
   pointer-events:none;
 }
 
-/* LONG WHITE LINE UNDER TIMELINE */
+.playhead::before{
+  content:"";
+  position:absolute;
+  top:-4px;
+  left:50%;
+  transform:translateX(-50%);
+  width:9px;
+  height:9px;
+  background:#fff;
+  border-radius:50%;
+}
+
+/* WHITE LINE */
 .timeline-line{
   height:2px;
   background:#fff;
-  margin:9px 8px 0;
+  margin:7px 8px 0;
   border-radius:2px;
   position:relative;
 }
@@ -191,15 +222,15 @@ button{border:0;font-family:inherit;cursor:pointer}
   position:absolute;
   left:0;
   top:-4px;
-  width:10px;
-  height:10px;
+  width:9px;
+  height:9px;
   border-radius:50%;
   background:#fff;
 }
 
 /* ADD AUDIO / TEXT */
 .timeline-extra{
-  padding:7px 8px 0;
+  padding:6px 8px 0;
   display:flex;
   gap:6px;
 }
@@ -365,46 +396,48 @@ input[type="file"]{display:none}
 <div id="editor">
 
   <div class="editor-top">
+
     <button class="top-btn" onclick="goHome()">✕</button>
+
     <div class="editor-title">ObeSplit</div>
 
     <button class="export-btn" onclick="exportVideo()">
       Export
     </button>
+
   </div>
 
   <div class="preview-area">
+
     <video id="video" playsinline preload="metadata"></video>
+
     <div class="video-placeholder" id="videoPlaceholder">
       Select a video
     </div>
+
   </div>
 
+  <!-- CONTROLS -->
   <div class="controls">
 
     <button class="control-btn" onclick="showMessage('Fullscreen')">
       ⤢
     </button>
 
+    <!-- NORMAL PLAY BUTTON -->
     <button class="control-btn" onclick="togglePlay()" id="playIcon">
       ▶
     </button>
 
-    <div style="display:flex;gap:16px">
+    <!-- SPEAKER REMOVED -->
 
-      <button class="control-btn" onclick="toggleMute()" id="mainMuteIcon">
-        🔊
-      </button>
+    <button class="control-btn" onclick="undo()">
+      ↩
+    </button>
 
-      <button class="control-btn" onclick="undo()">
-        ↩
-      </button>
-
-      <button class="control-btn" onclick="redo()">
-        ↪
-      </button>
-
-    </div>
+    <button class="control-btn" onclick="redo()">
+      ↪
+    </button>
 
   </div>
 
@@ -540,10 +573,15 @@ input[type="file"]{display:none}
       Captions
     </button>
 
+    <!-- FILTERS -->
     <button class="editor-tool" onclick="showMessage('Filters')">
       <svg viewBox="0 0 24 24">
-        <path d="M12 3c3 3 6 5 6 9a6 6 0 0 1-12 0c0-4 3-6 6-9z"/>
-        <circle cx="12" cy="11" r="2"/>
+        <path d="M4 6h16"/>
+        <path d="M7 12h10"/>
+        <path d="M10 18h4"/>
+        <circle cx="8" cy="6" r="2"/>
+        <circle cx="15" cy="12" r="2"/>
+        <circle cx="12" cy="18" r="2"/>
       </svg>
       Filters
     </button>
@@ -578,25 +616,25 @@ let isPickingFile=false;
 function openVideoPicker(){
   isPickingFile=true;
   document.getElementById("homeBottomNav").style.display="none";
-  document.getElementById("videoInput").click();
+  document.getElementById("videoInput").click()
 }
 
 function openPhotoPicker(){
   isPickingFile=true;
   document.getElementById("homeBottomNav").style.display="none";
-  document.getElementById("photoInput").click();
+  document.getElementById("photoInput").click()
 }
 
 window.addEventListener("focus",function(){
   if(isPickingFile){
     setTimeout(function(){
       if(document.getElementById("editor").style.display!=="block"){
-        document.getElementById("homeBottomNav").style.display="flex";
+        document.getElementById("homeBottomNav").style.display="flex"
       }
-      isPickingFile=false;
-    },300);
+      isPickingFile=false
+    },300)
   }
-});
+})
 
 function loadVideo(event){
 
@@ -606,11 +644,11 @@ function loadVideo(event){
 
   if(!file){
     document.getElementById("homeBottomNav").style.display="flex";
-    return;
+    return
   }
 
   if(videoURL){
-    URL.revokeObjectURL(videoURL);
+    URL.revokeObjectURL(videoURL)
   }
 
   videoURL=URL.createObjectURL(file);
@@ -629,7 +667,7 @@ function loadVideo(event){
     generateRuler(video.duration);
     generateThumbnails();
 
-  };
+  }
 }
 
 function generateRuler(duration){
@@ -655,7 +693,7 @@ function generateRuler(duration){
       dot.textContent=" • ";
       dot.style.opacity="0.4";
 
-      ruler.appendChild(dot);
+      ruler.appendChild(dot)
 
     }
   }
@@ -673,7 +711,7 @@ async function generateThumbnails(){
   const duration=video.duration;
 
   if(!duration || isNaN(duration)){
-    return;
+    return
   }
 
   const count=12;
@@ -686,7 +724,7 @@ async function generateThumbnails(){
   tempVideo.preload="auto";
 
   await new Promise((resolve)=>{
-    tempVideo.onloadedmetadata=resolve;
+    tempVideo.onloadedmetadata=resolve
   });
 
   const canvas=document.createElement("canvas");
@@ -704,8 +742,8 @@ async function generateThumbnails(){
 
     await new Promise((resolve)=>{
       tempVideo.onseeked=()=>{
-        setTimeout(resolve,60);
-      };
+        setTimeout(resolve,60)
+      }
     });
 
     ctx.drawImage(
@@ -721,7 +759,7 @@ async function generateThumbnails(){
     img.className="thumbnail";
     img.src=canvas.toDataURL();
 
-    container.appendChild(img);
+    container.appendChild(img)
   }
 
   const addBtn=document.createElement("button");
@@ -741,13 +779,13 @@ function togglePlay(){
 
     video.play();
 
-    document.getElementById("playIcon").textContent="⏸";
+    document.getElementById("playIcon").textContent="⏸"
 
   }else{
 
     video.pause();
 
-    document.getElementById("playIcon").textContent="▶";
+    document.getElementById("playIcon").textContent="▶"
 
   }
 }
@@ -792,7 +830,7 @@ video.addEventListener("timeupdate",function(){
       container.scrollTo({
         left:targetScroll,
         behavior:"auto"
-      });
+      })
 
     }
   }
@@ -802,22 +840,16 @@ function toggleMute(){
 
   video.muted=!video.muted;
 
-  const mainMuteIcon=
-    document.getElementById("mainMuteIcon");
-
-  if(mainMuteIcon){
-    mainMuteIcon.textContent=
-      video.muted ? "🔇" : "🔊";
-  }
-
   const timelineMuteBtn=
     document.getElementById("timelineMuteBtn");
 
   if(timelineMuteBtn){
+
     timelineMuteBtn.classList.toggle(
       "active",
       video.muted
-    );
+    )
+
   }
 
   showMessage(
@@ -830,7 +862,7 @@ function toggleMute(){
 function formatTime(seconds){
 
   if(!isFinite(seconds)){
-    return"00:00";
+    return"00:00"
   }
 
   const m=Math.floor(seconds/60);
@@ -838,7 +870,7 @@ function formatTime(seconds){
 
   return String(m).padStart(2,"0")+
     ":"+
-    String(s).padStart(2,"0");
+    String(s).padStart(2,"0")
 }
 
 function goHome(){
@@ -860,7 +892,7 @@ function loadPhoto(event){
 
     document.getElementById("homeBottomNav").style.display="flex";
 
-    return;
+    return
   }
 
   showMessage("Photo selected");
@@ -869,11 +901,11 @@ function loadPhoto(event){
 }
 
 function undo(){
-  showMessage("Undo");
+  showMessage("Undo")
 }
 
 function redo(){
-  showMessage("Redo");
+  showMessage("Redo")
 }
 
 function exportVideo(){
@@ -882,10 +914,10 @@ function exportVideo(){
 
     showMessage("Select a video first");
 
-    return;
+    return
   }
 
-  showMessage("Export is ready to be connected");
+  showMessage("Export is ready to be connected")
 }
 
 function showMessage(text){
@@ -900,9 +932,9 @@ function showMessage(text){
 
   window.messageTimer=setTimeout(function(){
 
-    message.style.display="none";
+    message.style.display="none"
 
-  },1800);
+  },1800)
 }
 
 </script>
