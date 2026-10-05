@@ -945,3 +945,202 @@ function showMessage(text){
 
 </body>
   </html>
+<!-- PASTE THIS BELOW YOUR OLD SCRIPT - ALL BUTTONS FIX -->
+
+<div id="panelBox" style="position:fixed;left:0;right:0;bottom:74px;background:#222;border-top:1px solid #333;padding:12px;display:none;z-index:999;max-height:40vh;overflow:auto"></div>
+<div id="textLayer" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:10"></div>
+<input type="file" id="audioInput2" accept="audio/*" style="display:none">
+<input type="file" id="overlayInput2" accept="image/*" style="display:none">
+
+<script>
+let selectedText=null;
+let audios=[];
+
+function closePanel(){document.getElementById("panelBox").style.display="none"}
+
+// EDIT
+function makeEditWork(){
+  let p=document.getElementById("panelBox");
+  p.innerHTML=`<b>Edit - Trim</b><br><br>
+  <button onclick="video.currentTime=Math.max(0,video.currentTime-1)" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">-1s</button>
+  <button onclick="video.currentTime=Math.min(video.duration,video.currentTime+1)" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">+1s</button>
+  <button onclick="video.playbackRate=0.5;showMessage('0.5x')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Slow 0.5x</button>
+  <button onclick="video.playbackRate=1;showMessage('1x')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Normal 1x</button>
+  <button onclick="video.playbackRate=2;showMessage('2x')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Fast 2x</button>
+  `;
+  p.style.display="block";
+}
+
+// AUDIO
+function makeAudioWork(){
+  let p=document.getElementById("panelBox");
+  p.innerHTML=`<b>Audio</b><br><br>
+  <input type="range" min="0" max="100" value="100" oninput="video.volume=this.value/100;showMessage('Volume '+this.value+'%')" style="width:100%"><br><br>
+  <button onclick="document.getElementById('audioInput2').click()" style="background:#18e58b;color:#000;padding:10px 16px;border-radius:8px;font-weight:700;width:100%">+ Add Music Over Video</button><br><br>
+  <button onclick="toggleMute()" style="background:#333;color:#fff;padding:10px;border-radius:8px;width:100%">Mute / Unmute Clip</button>
+  `;
+  p.style.display="block";
+}
+document.getElementById("audioInput2").onchange=function(e){
+  let f=e.target.files[0];if(!f)return;
+  let url=URL.createObjectURL(f);
+  let a=new Audio(url);a.loop=true;a.volume=0.5;a.play();audios.push(a);
+  video.onplay=()=>a.play();video.onpause=()=>a.pause();
+  showMessage("Music added & playing");
+}
+
+// TEXT
+function makeTextWork(){
+  let txt=prompt("Enter text:","Umaredits");
+  if(!txt)return;
+  let layer=document.getElementById("textLayer");
+  // move layer into preview-area if not there
+  let preview=document.querySelector(".preview-area");
+  if(preview && layer.parentElement!==preview) preview.appendChild(layer);
+
+  let div=document.createElement("div");
+  div.textContent=txt;
+  div.style.cssText="position:absolute;left:30%;top:60%;color:#fff;font-size:26px;font-weight:800;text-shadow:2px 2px 4px #000;pointer-events:auto;border:1px dashed #18e58b;padding:4px 8px;cursor:move";
+  div.onclick=()=>{document.querySelectorAll("#textLayer div").forEach(d=>d.style.borderColor="transparent");div.style.borderColor="#18e58b";selectedText=div;}
+  let sx,sy,dx=0,dy=0;
+  div.addEventListener("touchstart",function(ev){let t=ev.touches[0];sx=t.clientX;sy=t.clientY;},{passive:false});
+  div.addEventListener("touchmove",function(ev){ev.preventDefault();let t=ev.touches[0];dx+=t.clientX-sx;dy+=t.clientY-sy;div.style.left=(div.offsetLeft+t.clientX-sx)+"px";div.style.top=(div.offsetTop+t.clientY-sy)+"px";sx=t.clientX;sy=t.clientY;},{passive:false});
+  div.addEventListener("mousedown",function(ev){sx=ev.clientX;sy=ev.clientY;function mv(e){div.style.left=(div.offsetLeft+e.clientX-sx)+"px";div.style.top=(div.offsetTop+e.clientY-sy)+"px";sx=e.clientX;sy=e.clientY;}function up(){document.removeEventListener("mousemove",mv);document.removeEventListener("mouseup",up);}document.addEventListener("mousemove",mv);document.addEventListener("mouseup",up);});
+  layer.appendChild(div);
+  selectedText=div;
+  showMessage("Text added - drag it");
+  // show panel
+  let p=document.getElementById("panelBox");
+  p.innerHTML=`<b>Text Style</b><br><br>
+  <button onclick="selectedText.style.color='#fff'" style="background:#fff;color:#000;padding:8px 12px;border-radius:8px;margin:2px">White</button>
+  <button onclick="selectedText.style.color='#18e58b'" style="background:#18e58b;color:#000;padding:8px 12px;border-radius:8px;margin:2px">Green</button>
+  <button onclick="selectedText.style.color='#ff3b30'" style="background:#ff3b30;color:#fff;padding:8px 12px;border-radius:8px;margin:2px">Red</button>
+  <button onclick="selectedText.style.fontSize=(parseInt(selectedText.style.fontSize)+4)+'px'" style="background:#333;color:#fff;padding:8px 12px;border-radius:8px;margin:2px">A+</button>
+  <button onclick="selectedText.style.fontSize=(parseInt(selectedText.style.fontSize)-4)+'px'" style="background:#333;color:#fff;padding:8px 12px;border-radius:8px;margin:2px">A-</button>
+  <button onclick="selectedText.remove();selectedText=null" style="background:#800;color:#fff;padding:8px 12px;border-radius:8px;margin:2px">Delete</button>
+  `;
+  p.style.display="block";
+}
+
+// EFFECTS
+function makeEffectsWork(){
+  let p=document.getElementById("panelBox");
+  p.innerHTML=`<b>Effects / Filters</b><br><br>
+  <button onclick="video.style.filter='none';showMessage('Normal')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Normal</button>
+  <button onclick="video.style.filter='grayscale(100%)'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">B&W</button>
+  <button onclick="video.style.filter='sepia(100%)'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Sepia</button>
+  <button onclick="video.style.filter='brightness(1.4) contrast(1.2)'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Bright</button>
+  <button onclick="video.style.filter='contrast(1.8)'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Contrast</button>
+  <button onclick="video.style.filter='blur(2px)'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Blur</button>
+  `;
+  p.style.display="block";
+}
+
+// OVERLAY
+function makeOverlayWork(){
+  document.getElementById("overlayInput2").click();
+}
+document.getElementById("overlayInput2").onchange=function(e){
+  let f=e.target.files[0];if(!f)return;
+  let url=URL.createObjectURL(f);
+  let img=document.createElement("img");
+  img.src=url;img.style.cssText="position:absolute;top:10px;right:10px;width:110px;z-index:20;pointer-events:auto;border:1px solid #fff";
+  document.querySelector(".preview-area").appendChild(img);
+  img.onclick=()=>img.remove();
+  showMessage("Overlay added - tap it to remove");
+}
+
+// CAPTIONS
+function makeCaptionsWork(){
+  let txt=prompt("Caption at "+formatTime(video.currentTime)+":");
+  if(!txt)return;
+  let layer=document.getElementById("textLayer");
+  let preview=document.querySelector(".preview-area");
+  if(preview && layer.parentElement!==preview) preview.appendChild(layer);
+  let div=document.createElement("div");
+  div.textContent=txt;
+  div.style.cssText="position:absolute;left:50%;bottom:20%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,0.6);padding:4px 10px;border-radius:6px;font-size:18px;font-weight:700;pointer-events:auto";
+  layer.appendChild(div);
+  setTimeout(()=>div.remove(),3000);
+  showMessage("Caption shown for 3s");
+}
+
+// RATIO
+function makeRatioWork(){
+  let p=document.getElementById("panelBox");
+  p.innerHTML=`<b>Aspect Ratio</b><br><br>
+  <button onclick="video.style.objectFit='contain';document.querySelector('.preview-area').style.aspectRatio='16/9';showMessage('16:9')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">16:9</button>
+  <button onclick="video.style.objectFit='contain';showMessage('9:16')" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">9:16</button>
+  <button onclick="video.style.objectFit='cover'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Fill</button>
+  <button onclick="video.style.objectFit='contain'" style="background:#333;color:#fff;padding:10px;border-radius:8px;margin:3px">Fit</button>
+  `;
+  p.style.display="block";
+}
+
+// ADD AUDIO / TEXT ROW
+function addAudioRow(){makeAudioWork()}
+function addTextRow(){makeTextWork()}
+
+// EXPORT REAL
+function makeExportWork(){
+  if(!video.src){showMessage("Select video first");return;}
+  showMessage("Exporting... please wait");
+  let canvas=document.createElement("canvas");
+  canvas.width=video.videoWidth||720;canvas.height=video.videoHeight||1280;
+  let ctx=canvas.getContext("2d");
+  let stream=canvas.captureStream(30);
+  let recorder=new MediaRecorder(stream,{mimeType:"video/webm"});
+  let chunks=[];
+  recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
+  recorder.onstop=()=>{let blob=new Blob(chunks,{type:"video/webm"});let url=URL.createObjectURL(blob);let a=document.createElement("a");a.href=url;a.download="ObeSplit-"+Date.now()+".webm";a.click();showMessage("Exported! Saved to device");};
+  recorder.start();
+  video.currentTime=0;video.play();
+  (function draw(){
+    if(video.ended||video.paused){recorder.stop();return;}
+    ctx.filter=video.style.filter||"none";
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+    // draw texts
+    document.querySelectorAll("#textLayer div").forEach(el=>{
+      let rect=document.querySelector(".preview-area").getBoundingClientRect();
+      let x=(el.offsetLeft/rect.width)*canvas.width;
+      let y=(el.offsetTop/rect.height)*canvas.height;
+      ctx.font=(parseInt(el.style.fontSize)||26)*(canvas.width/rect.width/3)+"px Arial";
+      ctx.fillStyle=el.style.color||"#fff";
+      ctx.fillText(el.textContent,x,y);
+    });
+    requestAnimationFrame(draw);
+  })();
+  video.onended=()=>recorder.stop();
+}
+
+// RE-BIND ALL TOOLBAR BUTTONS
+setTimeout(()=>{
+  let tools=document.querySelectorAll(".editor-tool");
+  if(tools[0]) tools[0].onclick=makeEditWork;
+  if(tools[1]) tools[1].onclick=makeAudioWork;
+  if(tools[2]) tools[2].onclick=makeTextWork;
+  if(tools[3]) tools[3].onclick=makeEffectsWork;
+  if(tools[4]) tools[4].onclick=makeOverlayWork;
+  if(tools[5]) tools[5].onclick=makeCaptionsWork;
+  if(tools[6]) tools[6].onclick=makeEffectsWork; // Filters same as Effects
+  if(tools[7]) tools[7].onclick=makeRatioWork;
+
+  // Extra rows
+  document.querySelectorAll(".extra-row").forEach(row=>{
+    if(row.textContent.includes("Add audio")) row.onclick=addAudioRow;
+    if(row.textContent.includes("Add text")) row.onclick=addTextRow;
+  });
+
+  // Export button
+  let exp=document.querySelector(".export-btn");
+  if(exp) exp.onclick=makeExportWork;
+
+  // Close panel when tap preview
+  document.querySelector(".preview-area").onclick=(e)=>{
+    if(e.target.tagName==="VIDEO"||e.target.classList.contains("preview-area")) closePanel();
+  };
+
+  showMessage("All buttons activated!");
+},1000);
+</script>
+
