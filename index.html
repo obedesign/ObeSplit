@@ -232,7 +232,7 @@ button{
 
 .timeline-area{
   background:#080808;
-  padding:12px 10px 8px;
+  padding:12px 16px 18px;
 }
 
 .timeline-header{
@@ -241,39 +241,42 @@ button{
   align-items:center;
   color:#aaa;
   font-size:11px;
-  margin-bottom:8px;
+  margin-bottom:12px;
+}
+
+.new-timeline{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+}
+
+.new-timeline::-webkit-scrollbar{
+  display:none;
 }
 
 /* MUTE + COVER */
 
-.timeline-actions{
+.timeline-box{
+  width:43px;
+  height:58px;
+  min-width:43px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:6px;
+  color:#fff;
   display:flex;
   align-items:center;
-  gap:24px;
-  height:42px;
-  margin-bottom:6px;
-  overflow-x:auto;
-  scrollbar-width:none;
+  justify-content:center;
+  padding:0;
 }
 
-.timeline-actions::-webkit-scrollbar{
-  display:none;
-}
-
-.timeline-action{
-  flex:0 0 auto;
-  background:none;
-  color:#ddd;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:11px;
-  padding:4px 0;
-}
-
-.timeline-action svg{
-  width:22px;
-  height:22px;
+.timeline-box svg{
+  width:25px;
+  height:25px;
   fill:none;
   stroke:currentColor;
   stroke-width:1.8;
@@ -281,49 +284,70 @@ button{
   stroke-linejoin:round;
 }
 
-.timeline{
-  height:78px;
-  background:#111;
-  border-radius:8px;
-  overflow-x:auto;
-  overflow-y:hidden;
-  position:relative;
-  scrollbar-width:none;
-}
+/* THUMBNAILS */
 
-.timeline::-webkit-scrollbar{
-  display:none;
-}
-
-.thumbnails{
-  height:100%;
+.timeline-thumbs{
+  height:58px;
   display:flex;
-  width:max-content;
+  flex:0 0 auto;
+  overflow:hidden;
+  border-radius:6px;
+  background:#111;
 }
 
 .thumbnail{
-  height:100%;
-  width:75px;
-  flex:0 0 75px;
+  width:68px;
+  height:58px;
+  min-width:68px;
   object-fit:cover;
+  display:block;
   border-right:1px solid #222;
 }
 
-.playhead{
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:2px;
-  background:#18e58b;
-  left:0;
-  z-index:5;
-  pointer-events:none;
+/* WHITE PLUS BUTTONS */
+
+.plus-box{
+  width:50px;
+  height:58px;
+  min-width:50px;
+  background:#fff;
+  color:#000;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  font-weight:300;
+  padding:0;
 }
 
-/* OLD CLIP TOOLS HIDDEN */
+/* LONG WHITE LINE */
 
-.clip-tools{
-  display:none;
+.white-timeline-line{
+  position:relative;
+  width:100%;
+  height:25px;
+  margin-top:8px;
+}
+
+.white-timeline-line::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:11px;
+  height:2px;
+  background:#fff;
+}
+
+#whitePlayhead{
+  position:absolute;
+  left:0;
+  top:3px;
+  width:2px;
+  height:18px;
+  background:#fff;
+  z-index:5;
 }
 
 /* BOTTOM EDITING TOOLBAR */
