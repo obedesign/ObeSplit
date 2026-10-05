@@ -411,7 +411,7 @@ input[type="file"]{display:none}
 
     <div class="editor-title">ObeSplit</div>
 
-    <button class="export-btn" onclick="exportVideo">
+    <button class="export-btn" onclick="exportVideo()">
       Export
     </button>
 
@@ -430,7 +430,7 @@ input[type="file"]{display:none}
   <!-- CONTROLS -->
   <div class="controls">
 
-    <button class="control-btn" onclick="showMessage('Fullscreen')">
+    <button class="control-btn" onclick="toggleFullscreen()">
       ⤢
     </button>
 
@@ -619,29 +619,48 @@ const video=document.getElementById("video");
 let videoURL=null;
 let isPickingFile=false;
 
+/* OPEN VIDEO PICKER */
 function openVideoPicker(){
+
   isPickingFile=true;
+
   document.getElementById("homeBottomNav").style.display="none";
+
   document.getElementById("videoInput").click();
 }
 
+/* OPEN PHOTO PICKER */
 function openPhotoPicker(){
+
   isPickingFile=true;
+
   document.getElementById("homeBottomNav").style.display="none";
+
   document.getElementById("photoInput").click();
 }
 
+/* FILE PICKER FOCUS */
 window.addEventListener("focus",function(){
+
   if(isPickingFile){
+
     setTimeout(function(){
+
       if(document.getElementById("editor").style.display!=="block"){
+
         document.getElementById("homeBottomNav").style.display="flex";
+
       }
+
       isPickingFile=false;
+
     },300);
+
   }
+
 });
 
+/* LOAD VIDEO */
 function loadVideo(event){
 
   isPickingFile=false;
@@ -649,21 +668,30 @@ function loadVideo(event){
   const file=event.target.files[0];
 
   if(!file){
+
     document.getElementById("homeBottomNav").style.display="flex";
+
     return;
   }
 
   if(videoURL){
+
     URL.revokeObjectURL(videoURL);
+
   }
 
   videoURL=URL.createObjectURL(file);
+
   video.src=videoURL;
+
+  video.load();
 
   document.getElementById("home").style.display="none";
   document.getElementById("homeBottomNav").style.display="none";
   document.getElementById("editor").style.display="block";
   document.getElementById("videoPlaceholder").style.display="none";
+
+  document.getElementById("playIcon").textContent="▶";
 
   video.onloadedmetadata=function(){
 
@@ -671,11 +699,13 @@ function loadVideo(event){
       "00:00 / "+formatTime(video.duration);
 
     generateRuler(video.duration);
+
     generateThumbnails();
 
   };
 }
 
+/* GENERATE RULER */
 function generateRuler(duration){
 
   const ruler=document.getElementById("ruler");
@@ -697,14 +727,18 @@ function generateRuler(duration){
       const dot=document.createElement("span");
 
       dot.textContent=" • ";
+
       dot.style.opacity="0.4";
 
       ruler.appendChild(dot);
 
     }
+
   }
+
 }
 
+/* GENERATE THUMBNAILS */
 async function generateThumbnails(){
 
   const container=document.getElementById("thumbnails");
@@ -712,12 +746,15 @@ async function generateThumbnails(){
   const existingPlayhead=document.getElementById("playhead");
 
   container.innerHTML="";
+
   container.appendChild(existingPlayhead);
 
   const duration=video.duration;
 
   if(!duration || isNaN(duration)){
+
     return;
+
   }
 
   const count=12;
@@ -729,73 +766,152 @@ async function generateThumbnails(){
   tempVideo.playsInline=true;
   tempVideo.preload="auto";
 
-  await new Promise((resolve)=>{
-    tempVideo.onloadedmetadata=resolve;
-  });
+  try{
 
-  const canvas=document.createElement("canvas");
+    await new Promise((resolve,reject)=>{
 
-  canvas.width=120;
-  canvas.height=80;
+      tempVideo.onloadedmetadata=resolve;
 
-  const ctx=canvas.getContext("2d");
+      tempVideo.onerror=reject;
 
-  for(let i=0;i<count;i++){
-
-    const time=(duration/count)*i;
-
-    tempVideo.currentTime=time;
-
-    await new Promise((resolve)=>{
-      tempVideo.onseeked=()=>{
-        setTimeout(resolve,60);
-      };
     });
 
-    ctx.drawImage(
-      tempVideo,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    const canvas=document.createElement("canvas");
 
-    const img=document.createElement("img");
+    canvas.width=120;
+    canvas.height=80;
 
-    img.className="thumbnail";
-    img.src=canvas.toDataURL();
+    const ctx=canvas.getContext("2d");
 
-    container.appendChild(img);
+    for(let i=0;i<count;i++){
+
+      const time=(duration/count)*i;
+
+      tempVideo.currentTime=time;
+
+      await new Promise((resolve)=>{
+
+        let finished=false;
+
+        const finish=function(){
+
+          if(finished)return;
+
+          finished=true;
+
+          tempVideo.onseeked=null;
+
+          resolve();
+
+        };
+
+        tempVideo.onseeked=finish;
+
+        setTimeout(finish,1000);
+
+      });
+
+      try{
+
+        ctx.drawImage(
+          tempVideo,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        const img=document.createElement("img");
+
+        img.className="thumbnail";
+
+        img.src=canvas.toDataURL();
+
+        container.appendChild(img);
+
+      }catch(error){
+
+        /* Continue if one thumbnail fails */
+
+      }
+
+    }
+
+    const addBtn=document.createElement("button");
+
+    addBtn.className="add-clip-btn";
+
+    addBtn.innerHTML="+";
+
+    addBtn.onclick=function(){
+
+      openVideoPicker();
+
+    };
+
+    container.appendChild(addBtn);
+
+    document.getElementById("playhead").style.left="0px";
+
+  }catch(error){
+
+    showMessage("Could not create thumbnails");
+
   }
 
-  const addBtn=document.createElement("button");
+  tempVideo.remove();
 
-  addBtn.className="add-clip-btn";
-  addBtn.innerHTML="+";
-  addBtn.onclick=openVideoPicker;
-
-  container.appendChild(addBtn);
-
-  document.getElementById("playhead").style.left="0px";
 }
 
+/* PLAY / PAUSE */
 function togglePlay(){
+
+  if(!video.src){
+
+    showMessage("Select a video first");
+
+    return;
+
+  }
 
   if(video.paused){
 
-    video.play();
+    video.play().catch(function(){
 
-    document.getElementById("playIcon").textContent="⏸";
+      showMessage("Unable to play video");
+
+    });
 
   }else{
 
     video.pause();
 
-    document.getElementById("playIcon").textContent="▶";
-
   }
+
 }
 
+/* VIDEO PLAY EVENT */
+video.addEventListener("play",function(){
+
+  document.getElementById("playIcon").textContent="⏸";
+
+});
+
+/* VIDEO PAUSE EVENT */
+video.addEventListener("pause",function(){
+
+  document.getElementById("playIcon").textContent="▶";
+
+});
+
+/* VIDEO ENDED EVENT */
+video.addEventListener("ended",function(){
+
+  document.getElementById("playIcon").textContent="▶";
+
+});
+
+/* TIMELINE UPDATE */
 video.addEventListener("timeupdate",function(){
 
   const cur=formatTime(video.currentTime);
@@ -813,19 +929,51 @@ video.addEventListener("timeupdate",function(){
     const thumbs=
       document.getElementById("thumbnails");
 
-    const totalWidth=thumbs.scrollWidth;
+    /*
+      Only count the thumbnail images.
+      Do not include the + button.
+    */
+    const thumbnailCount=
+      thumbs.querySelectorAll(".thumbnail").length;
 
-    const pos=
-      (video.currentTime/video.duration)*totalWidth;
+    const thumbnailWidth=78;
 
-    document.getElementById("playhead").style.left=
+    const contentWidth=
+      thumbnailCount*thumbnailWidth;
+
+    let pos=0;
+
+    if(contentWidth>0){
+
+      pos=
+        (video.currentTime/video.duration)*
+        contentWidth;
+
+    }
+
+    const playhead=
+      document.getElementById("playhead");
+
+    playhead.style.left=
       pos+"px";
 
     const container=
       document.getElementById("timelineContainer");
 
-    const targetScroll=
+    const maxScroll=
+      Math.max(
+        0,
+        container.scrollWidth-container.clientWidth
+      );
+
+    let targetScroll=
       pos-container.clientWidth/2;
+
+    targetScroll=
+      Math.max(
+        0,
+        Math.min(targetScroll,maxScroll)
+      );
 
     if(
       Math.abs(
@@ -839,10 +987,21 @@ video.addEventListener("timeupdate",function(){
       });
 
     }
+
   }
+
 });
 
+/* MUTE */
 function toggleMute(){
+
+  if(!video.src){
+
+    showMessage("Select a video first");
+
+    return;
+
+  }
 
   video.muted=!video.muted;
 
@@ -850,98 +1009,7 @@ function toggleMute(){
     document.getElementById("timelineMuteBtn");
 
   if(timelineMuteBtn){
+
     timelineMuteBtn.classList.toggle(
       "active",
-      video.muted
-    );
-  }
-
-  showMessage(
-    video.muted
-      ? "Clip muted"
-      : "Clip unmuted"
-  );
-}
-
-function formatTime(seconds){
-
-  if(!isFinite(seconds)){
-    return"00:00";
-  }
-
-  const m=Math.floor(seconds/60);
-  const s=Math.floor(seconds%60);
-
-  return String(m).padStart(2,"0")+
-    ":"+
-    String(s).padStart(2,"0");
-}
-
-function goHome(){
-
-  video.pause();
-
-  document.getElementById("editor").style.display="none";
-  document.getElementById("home").style.display="block";
-  document.getElementById("homeBottomNav").style.display="flex";
-}
-
-function loadPhoto(event){
-
-  isPickingFile=false;
-
-  const file=event.target.files[0];
-
-  if(!file){
-
-    document.getElementById("homeBottomNav").style.display="flex";
-
-    return;
-  }
-
-  showMessage("Photo selected");
-
-  document.getElementById("homeBottomNav").style.display="flex";
-}
-
-function undo(){
-  showMessage("Undo");
-}
-
-function redo(){
-  showMessage("Redo");
-}
-
-function exportVideo(){
-
-  if(!video.src){
-
-    showMessage("Select a video first");
-
-    return;
-  }
-
-  showMessage("Export is ready to be connected");
-}
-
-function showMessage(text){
-
-  const message=
-    document.getElementById("message");
-
-  message.textContent=text;
-  message.style.display="block";
-
-  clearTimeout(window.messageTimer);
-
-  window.messageTimer=setTimeout(function(){
-
-    message.style.display="none";
-
-  },1800);
-}
-
-</script>
-
-</body>
-</html>
+      
