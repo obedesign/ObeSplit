@@ -6,33 +6,27 @@
 <title>ObeSplit</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 body{
   margin:0;
   background:#0e0e0e;
   color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial,Helvetica,sans-serif
 }
 
 button{
   border:0;
   font-family:inherit;
-  cursor:pointer;
+  cursor:pointer
 }
 
-/* =========================
-   HOME
-========================= */
-
+/* HOME */
 #home{
   min-height:100vh;
   background:#000;
   padding:18px;
-  padding-bottom:95px;
+  padding-bottom:95px
 }
 
 .home-grid{
@@ -41,7 +35,7 @@ button{
   grid-template-rows:155px 155px;
   gap:12px;
   max-width:520px;
-  margin:0 auto;
+  margin:0 auto
 }
 
 .new-video{
@@ -55,7 +49,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
+  gap:8px
 }
 
 .card{
@@ -67,43 +61,43 @@ button{
   justify-content:center;
   color:#fff;
   font-size:15px;
-  font-weight:600;
+  font-weight:600
 }
 
 .card svg{
   width:38px;
   height:38px;
-  margin-bottom:10px;
+  margin-bottom:10px
 }
 
 .ai-card{
   grid-column:1;
   grid-row:1;
-  margin-top:84px;
+  margin-top:84px
 }
 
 .photo-card{
   grid-column:2;
   grid-row:1 / 3;
   background:#18e58b;
-  color:#000;
+  color:#000
 }
 
 .space-card{
   grid-column:1;
   grid-row:2;
-  margin-top:0;
+  margin-top:0
 }
 
 .projects{
   max-width:520px;
-  margin:24px auto 0;
+  margin:24px auto 0
 }
 
 .projects-title{
   font-size:18px;
   font-weight:700;
-  margin-bottom:14px;
+  margin-bottom:14px
 }
 
 .project-box{
@@ -114,7 +108,7 @@ button{
   align-items:center;
   justify-content:center;
   color:#777;
-  font-size:14px;
+  font-size:14px
 }
 
 .home-bottom-nav{
@@ -128,7 +122,7 @@ button{
   display:flex;
   justify-content:space-around;
   align-items:center;
-  z-index:1000;
+  z-index:1000
 }
 
 .nav-item{
@@ -139,11 +133,11 @@ button{
   align-items:center;
   justify-content:center;
   gap:5px;
-  font-size:11px;
+  font-size:11px
 }
 
 .nav-item.active{
-  color:#fff;
+  color:#fff
 }
 
 .nav-item svg{
@@ -153,80 +147,45 @@ button{
   stroke:currentColor;
   stroke-width:1.8;
   stroke-linecap:round;
-  stroke-linejoin:round;
+  stroke-linejoin:round
 }
 
-
-/* =========================
-   EDITOR
-========================= */
-
+/* EDITOR */
 #editor{
   display:none;
   min-height:100vh;
   background:#121212;
-  padding-bottom:74px;
+  padding-bottom:74px
 }
 
 .editor-top{
-  height:68px;
+  height:54px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 16px;
-  background:#121212;
-}
-
-.top-left{
-  display:flex;
-  align-items:center;
-  gap:22px;
+  padding:0 14px;
+  background:#121212
 }
 
 .top-btn{
   background:none;
   color:#fff;
-  font-size:38px;
-  font-weight:200;
-  line-height:1;
-  padding:0;
-}
-
-.search-btn{
-  background:none;
-  color:#fff;
-  width:32px;
-  height:32px;
-  padding:3px;
-}
-
-.search-btn svg{
-  width:100%;
-  height:100%;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
+  font-size:26px;
+  padding:5px
 }
 
 .editor-title{
-  display:none;
+  display:none
 }
 
-/* GREEN EXPORT */
 .export-btn{
   background:#18e58b;
   color:#000;
-  border-radius:9px;
-  padding:9px 15px;
-  font-size:14px;
-  font-weight:700;
+  border-radius:8px;
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:700
 }
-
-
-/* =========================
-   VIDEO PREVIEW
-========================= */
 
 .preview-area{
   height:54vh;
@@ -235,180 +194,140 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
+  position:relative
 }
 
 #video{
   width:100%;
   height:100%;
   object-fit:contain;
-  display:block;
+  display:block
 }
 
 .video-placeholder{
   color:#555;
-  font-size:14px;
+  font-size:14px
 }
 
-
-/* =========================
-   VIDEO CONTROLS
-========================= */
-
+/* CONTROLS */
 .controls{
-  height:56px;
+  height:42px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 22px;
-  background:#121212;
-}
-
-.control-left{
-  display:flex;
-  align-items:center;
-}
-
-.control-right{
-  display:flex;
-  align-items:center;
-  gap:25px;
+  justify-content:flex-start;
+  gap:24px;
+  padding:0 16px;
+  background:#121212
 }
 
 .control-btn{
   background:none;
   color:#fff;
-  width:32px;
-  height:32px;
-  padding:3px;
+  font-size:18px;
+  opacity:.9;
+  width:30px;
+  height:30px;
   display:flex;
   align-items:center;
-  justify-content:center;
+  justify-content:center
 }
 
-.control-btn svg{
-  width:100%;
-  height:100%;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.7;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.play-btn svg{
-  fill:currentColor;
-  stroke:none;
-}
-
-
-/* =========================
-   TIMELINE
-========================= */
-
+/* TIMELINE */
 .timeline-area{
   background:#1c1c1c;
-  padding:5px 0 7px;
+  padding:8px 0 6px;
   position:relative;
-  border-top:1px solid #222;
+  border-top:1px solid #222
 }
 
 .timeline-header{
-  height:38px;
   display:flex;
+  justify-content:flex-start;
   align-items:center;
-  color:#888;
+  color:#777;
   font-size:10px;
-  padding:0 10px;
+  padding:0 10px 6px;
+  font-weight:500;
+  letter-spacing:.3px;
   overflow:hidden;
-  white-space:nowrap;
+  white-space:nowrap
 }
 
 #currentTime{
-  flex-shrink:0;
-  min-width:82px;
   white-space:nowrap;
-  color:#aaa;
+  flex-shrink:0
 }
 
 .timeline-header-ruler{
   display:flex;
-  gap:15px;
-  margin-left:10px;
+  gap:16px;
+  margin-left:16px;
   overflow:hidden;
   white-space:nowrap;
   color:#888;
-  flex:1;
-  min-width:0;
+  flex:1
 }
-
-
-/* TIMELINE BODY */
 
 .timeline-wrapper{
   display:flex;
-  gap:7px;
+  gap:6px;
   align-items:center;
   position:relative;
-  padding:0 10px;
+  padding:0 8px
 }
 
-
-/* MUTE + COVER */
-
+/* MUTE FIRST / COVER SECOND */
 .track-actions{
   display:flex;
-  gap:7px;
-  flex-shrink:0;
+  gap:5px;
+  flex-shrink:0
 }
 
 .track-btn{
   background:#292929;
-  color:#aaa;
-  border-radius:8px;
-  width:68px;
-  height:82px;
+  color:#bbb;
+  border-radius:7px;
+  width:50px;
+  height:72px;
   padding:5px 2px;
-  font-size:9px;
+  font-size:8px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:8px;
+  gap:5px
 }
 
 .track-btn.active{
-  background:#292929;
-  color:#fff;
+  background:#353535;
+  color:#fff
 }
 
 .track-btn svg{
-  width:22px;
-  height:22px;
+  width:20px;
+  height:20px;
   fill:none;
   stroke:currentColor;
   stroke-width:1.6;
   stroke-linecap:round;
-  stroke-linejoin:round;
+  stroke-linejoin:round
 }
 
-
-/* VIDEO TRACK */
-
+/* THUMBNAIL STRIP */
 .timeline{
-  height:82px;
+  height:72px;
   background:#000;
-  border-radius:3px;
+  border-radius:7px;
   overflow-x:auto;
   overflow-y:hidden;
   position:relative;
   scrollbar-width:none;
   flex:1;
-  min-width:0;
+  min-width:0
 }
 
 .timeline::-webkit-scrollbar{
-  display:none;
+  display:none
 }
 
 .thumbnails{
@@ -416,70 +335,52 @@ button{
   display:flex;
   width:max-content;
   align-items:center;
-  position:relative;
+  position:relative
 }
 
 .thumbnail{
-  height:82px;
-  width:82px;
-  flex:0 0 82px;
+  height:72px;
+  width:78px;
+  flex:0 0 78px;
   object-fit:cover;
-  border-right:1px solid #111;
+  border-right:1px solid #111
 }
 
-
-/* WHITE PLUS */
-
+/* PLUS */
 .add-clip-btn{
-  height:50px;
-  width:50px;
+  height:72px;
+  width:48px;
   background:#fff;
   color:#000;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:30px;
-  flex:0 0 50px;
+  font-size:26px;
+  flex:0 0 48px;
   cursor:pointer;
-  border-radius:7px;
-  margin-left:5px;
+  border-radius:6px;
+  margin-left:3px
 }
 
-
 /* PLAYHEAD */
-
 .playhead{
   position:absolute;
-  top:-8px;
-  bottom:-8px;
-  width:3px;
+  top:-4px;
+  bottom:-4px;
+  width:2px;
   background:#fff;
   left:0;
   z-index:30;
-  pointer-events:none;
+  pointer-events:none
 }
-
-.playhead::before{
-  content:"";
-  position:absolute;
-  top:-2px;
-  left:50%;
-  transform:translateX(-50%);
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#fff;
-}
-
 
 /* WHITE LINE */
-
 .timeline-line{
-  height:3px;
+  height:2px;
   background:#fff;
-  margin:8px 10px 0;
-  border-radius:3px;
-  position:relative;
+  margin:8px 8px 0;
+  border-radius:2px;
+  position:relative
 }
 
 .timeline-line::before{
@@ -487,102 +388,87 @@ button{
   position:absolute;
   left:0;
   top:-4px;
-  width:11px;
-  height:11px;
+  width:10px;
+  height:10px;
   border-radius:50%;
-  background:#fff;
+  background:#fff
 }
 
-
-/* AUDIO / TEXT */
-
+/* ADD AUDIO / TEXT */
 .timeline-extra{
-  padding:8px 10px 0;
+  padding:6px 8px 0;
   display:flex;
-  gap:8px;
+  gap:6px
 }
 
 .extra-row{
-  height:40px;
-  background:#252525;
-  border-radius:7px;
+  height:30px;
+  background:#262626;
+  border-radius:6px;
   display:flex;
   align-items:center;
-  padding:0 12px;
-  color:#999;
-  font-size:12px;
-  gap:7px;
-  flex:1;
+  padding:0 10px;
+  color:#888;
+  font-size:11px;
+  gap:5px;
+  flex:1
 }
 
 .extra-row .plus{
   color:#fff;
-  font-size:20px;
+  font-size:15px
 }
 
-
-/* =========================
-   BOTTOM TOOLBAR
-========================= */
-
+/* EDITOR TOOLBAR */
 .editor-toolbar{
   position:fixed;
   left:0;
   right:0;
   bottom:0;
-  height:82px;
+  height:74px;
   background:#1c1c1c;
   border-top:1px solid #222;
-  display:flex;
-  justify-content:flex-start;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
   align-items:center;
-  overflow-x:auto;
-  padding:5px 7px 8px;
-  z-index:900;
-  scrollbar-width:none;
-}
-
-.editor-toolbar::-webkit-scrollbar{
-  display:none;
+  padding:5px 2px 8px;
+  z-index:900
 }
 
 .editor-tool{
-  min-width:76px;
-  flex:0 0 76px;
+  width:100%;
+  min-width:0;
   background:none;
   color:#aaa;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:5px;
-  font-size:11px;
-  padding:0;
+  gap:4px;
+  font-size:8px;
+  padding:0 1px;
+  text-align:center
 }
 
 .editor-tool svg{
-  width:27px;
-  height:27px;
+  width:21px;
+  height:21px;
   fill:none;
   stroke:currentColor;
   stroke-width:1.6;
   stroke-linecap:round;
   stroke-linejoin:round;
+  flex-shrink:0
 }
 
-
-/* =========================
-   INPUTS / MESSAGE
-========================= */
-
 input[type="file"]{
-  display:none;
+  display:none
 }
 
 .message{
   position:fixed;
   left:50%;
-  bottom:95px;
+  bottom:90px;
   transform:translateX(-50%);
   background:#333;
   color:#fff;
@@ -590,17 +476,14 @@ input[type="file"]{
   border-radius:10px;
   font-size:12px;
   display:none;
-  z-index:2000;
+  z-index:2000
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     HOME
-========================= -->
-
+<!-- HOME -->
 <div id="home">
 
   <div class="home-grid">
@@ -645,9 +528,7 @@ input[type="file"]{
 
 </div>
 
-
 <!-- HOME NAV -->
-
 <div class="home-bottom-nav" id="homeBottomNav">
 
   <button class="nav-item active">
@@ -678,33 +559,14 @@ input[type="file"]{
 
 </div>
 
-
-<!-- =========================
-     EDITOR
-========================= -->
-
+<!-- EDITOR -->
 <div id="editor">
-
-  <!-- TOP BAR -->
 
   <div class="editor-top">
 
-    <div class="top-left">
+    <button class="top-btn" onclick="goHome()">✕</button>
 
-      <button class="top-btn" onclick="goHome()">
-        ×
-      </button>
-
-      <button class="search-btn" onclick="showMessage('Search')">
-
-        <svg viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="7"/>
-          <path d="M16.5 16.5L21 21"/>
-        </svg>
-
-      </button>
-
-    </div>
+    <div class="editor-title">ObeSplit</div>
 
     <button class="export-btn" onclick="exportVideo()">
       Export
@@ -712,102 +574,37 @@ input[type="file"]{
 
   </div>
 
-
-  <!-- PREVIEW -->
-
   <div class="preview-area">
 
-    <video
-      id="video"
-      playsinline
-      preload="metadata">
-    </video>
+    <video id="video" playsinline preload="metadata"></video>
 
-    <div
-      class="video-placeholder"
-      id="videoPlaceholder">
+    <div class="video-placeholder" id="videoPlaceholder">
       Select a video
     </div>
 
   </div>
 
-
-  <!-- CONTROLS -->
-
   <div class="controls">
 
-    <div class="control-left">
+    <button class="control-btn" onclick="showMessage('Fullscreen')">
+      ⤢
+    </button>
 
-      <button
-        class="control-btn"
-        onclick="showMessage('Fullscreen')">
+    <button class="control-btn" onclick="togglePlay()" id="playIcon">
+      ▶
+    </button>
 
-        <svg viewBox="0 0 24 24">
-          <path d="M8 3H3v5"/>
-          <path d="M3 3l6 6"/>
-          <path d="M16 3h5v5"/>
-          <path d="M21 3l-6 6"/>
-          <path d="M8 21H3v-5"/>
-          <path d="M3 21l6-6"/>
-          <path d="M16 21h5v-5"/>
-          <path d="M21 21l-6-6"/>
-        </svg>
+    <button class="control-btn" onclick="undo()">
+      ↩
+    </button>
 
-      </button>
-
-    </div>
-
-
-    <div class="control-right">
-
-      <!-- NORMAL WHITE PLAY ICON -->
-
-      <button
-        class="control-btn play-btn"
-        onclick="togglePlay()"
-        id="playIcon">
-
-        <svg
-          id="playSvg"
-          viewBox="0 0 24 24">
-
-          <path d="M7 4l13 8-13 8z"/>
-
-        </svg>
-
-      </button>
-
-
-      <button
-        class="control-btn"
-        onclick="undo()">
-
-        <svg viewBox="0 0 24 24">
-          <path d="M9 7L4 12l5 5"/>
-          <path d="M4 12h10a6 6 0 0 1 6 6"/>
-        </svg>
-
-      </button>
-
-
-      <button
-        class="control-btn"
-        onclick="redo()">
-
-        <svg viewBox="0 0 24 24">
-          <path d="M15 7l5 5-5 5"/>
-          <path d="M20 12H10a6 6 0 0 0-6 6"/>
-        </svg>
-
-      </button>
-
-    </div>
+    <button class="control-btn" onclick="redo()">
+      ↪
+    </button>
 
   </div>
 
-
   <!-- TIMELINE -->
-
   <div class="timeline-area">
 
     <div class="timeline-header">
@@ -816,42 +613,28 @@ input[type="file"]{
         00:00 / 00:00
       </span>
 
-      <div
-        class="timeline-header-ruler"
-        id="ruler">
-
-        00:00 • 00:01 • 00:02 • 00:03 • 00:04 • 00:05
-
+      <div class="timeline-header-ruler" id="ruler">
+        00:00 • 00:01 • 00:02 • 00:03 • 00:04 • 00:05 • 00:06 • 00:07 • 00:08 • 00:09
       </div>
 
     </div>
 
-
     <div class="timeline-wrapper">
-
-
-      <!-- MUTE / COVER -->
 
       <div class="track-actions">
 
-        <button
-          class="track-btn"
-          onclick="toggleMute()"
-          id="timelineMuteBtn">
+        <button class="track-btn" onclick="toggleMute()" id="timelineMuteBtn">
 
           <svg viewBox="0 0 24 24">
             <path d="M4 10v4h4l5 4V6l-5 4H4z"/>
-            <path d="M16 9l4 6m0-6l-4 6"/>
+            <path d="M13 9l4 6m0-6l-4 6"/>
           </svg>
 
           Mute clip
 
         </button>
 
-
-        <button
-          class="track-btn active"
-          onclick="showMessage('Cover')">
+        <button class="track-btn active" onclick="showMessage('Cover')">
 
           <svg viewBox="0 0 24 24">
             <rect x="3" y="4" width="18" height="16" rx="2"/>
@@ -865,21 +648,11 @@ input[type="file"]{
 
       </div>
 
+      <div class="timeline" id="timelineContainer">
 
-      <!-- VIDEO TRACK -->
+        <div class="thumbnails" id="thumbnails">
 
-      <div
-        class="timeline"
-        id="timelineContainer">
-
-        <div
-          class="thumbnails"
-          id="thumbnails">
-
-          <div
-            class="playhead"
-            id="playhead">
-          </div>
+          <div class="playhead" id="playhead"></div>
 
         </div>
 
@@ -887,149 +660,78 @@ input[type="file"]{
 
     </div>
 
-
-    <!-- WHITE TIMELINE LINE -->
-
     <div class="timeline-line"></div>
-
-
-    <!-- AUDIO / TEXT -->
 
     <div class="timeline-extra">
 
-      <div
-        class="extra-row"
-        onclick="showMessage('Add Audio')">
-
+      <div class="extra-row" onclick="showMessage('Add Audio')">
         <span class="plus">＋</span>
         Add audio
-
       </div>
 
-
-      <div
-        class="extra-row"
-        onclick="showMessage('Add Text')">
-
+      <div class="extra-row" onclick="showMessage('Add Text')">
         <span class="plus">＋</span>
         Add text
-
       </div>
 
     </div>
 
   </div>
 
-
   <!-- BOTTOM TOOLS -->
-
   <div class="editor-toolbar">
 
-
-    <!-- EDIT -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Edit')">
-
+    <button class="editor-tool" onclick="showMessage('Edit')">
       <svg viewBox="0 0 24 24">
         <path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/>
         <path d="M13 6l3 3"/>
       </svg>
-
       Edit
-
     </button>
 
-
-    <!-- AUDIO -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Audio')">
-
+    <button class="editor-tool" onclick="showMessage('Audio')">
       <svg viewBox="0 0 24 24">
         <path d="M9 18V5l12-2v13"/>
         <circle cx="6" cy="18" r="3"/>
         <circle cx="18" cy="16" r="3"/>
       </svg>
-
       Audio
-
     </button>
 
-
-    <!-- TEXT -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Text')">
-
+    <button class="editor-tool" onclick="showMessage('Text')">
       <svg viewBox="0 0 24 24">
-        <path d="M4 6h16"/>
-        <path d="M8 6v12"/>
-        <path d="M6 18h4"/>
+        <path d="M4 6h8"/>
+        <path d="M4 12h12"/>
+        <path d="M4 18h8"/>
       </svg>
-
       Text
-
     </button>
 
-
-    <!-- EFFECTS -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Effects')">
-
+    <button class="editor-tool" onclick="showMessage('Effects')">
       <svg viewBox="0 0 24 24">
         <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z"/>
       </svg>
-
       Effects
-
     </button>
 
-
-    <!-- OVERLAY -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Overlay')">
-
+    <button class="editor-tool" onclick="showMessage('Overlay')">
       <svg viewBox="0 0 24 24">
         <rect x="3" y="3" width="18" height="18" rx="2"/>
         <path d="M3 9h18"/>
         <path d="M9 3v18"/>
       </svg>
-
       Overlay
-
     </button>
 
-
-    <!-- CAPTIONS -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Captions')">
-
+    <button class="editor-tool" onclick="showMessage('Captions')">
       <svg viewBox="0 0 24 24">
         <rect x="2" y="5" width="20" height="14" rx="2"/>
         <path d="M6 9h4M6 13h10"/>
       </svg>
-
       Captions
-
     </button>
 
-
-    <!-- FILTERS -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Filters')">
-
+    <button class="editor-tool" onclick="showMessage('Filters')">
       <svg viewBox="0 0 24 24">
         <path d="M4 6h16"/>
         <path d="M7 12h10"/>
@@ -1038,56 +740,27 @@ input[type="file"]{
         <circle cx="15" cy="12" r="2"/>
         <circle cx="12" cy="18" r="2"/>
       </svg>
-
       Filters
-
     </button>
 
-
-    <!-- ASPECT RATIO
-         INTENTIONALLY OFF SCREEN
-         AND AVAILABLE BY SWIPING -->
-
-    <button
-      class="editor-tool"
-      onclick="showMessage('Aspect Ratio')">
-
+    <button class="editor-tool" onclick="showMessage('Aspect Ratio')">
       <svg viewBox="0 0 24 24">
         <rect x="4" y="6" width="16" height="12" rx="2"/>
         <path d="M8 9h3M8 9v3"/>
         <path d="M16 15h-3M16 15v-3"/>
       </svg>
-
       Aspect Ratio
-
     </button>
-
 
   </div>
 
 </div>
 
-
 <!-- INPUTS -->
+<input type="file" id="videoInput" accept="video/*" onchange="loadVideo(event)">
+<input type="file" id="photoInput" accept="image/*" onchange="loadPhoto(event)">
 
-<input
-  type="file"
-  id="videoInput"
-  accept="video/*"
-  onchange="loadVideo(event)">
-
-<input
-  type="file"
-  id="photoInput"
-  accept="image/*"
-  onchange="loadPhoto(event)">
-
-
-<div
-  class="message"
-  id="message">
-</div>
-
+<div class="message" id="message"></div>
 
 <script>
 
@@ -1096,61 +769,282 @@ const video=document.getElementById("video");
 let videoURL=null;
 let isPickingFile=false;
 
-
-/* =========================
-   FILE PICKER
-========================= */
-
 function openVideoPicker(){
-
   isPickingFile=true;
-
   document.getElementById("homeBottomNav").style.display="none";
-
   document.getElementById("videoInput").click();
-
 }
-
 
 function openPhotoPicker(){
-
   isPickingFile=true;
-
   document.getElementById("homeBottomNav").style.display="none";
-
   document.getElementById("photoInput").click();
-
 }
 
-
 window.addEventListener("focus",function(){
-
   if(isPickingFile){
-
     setTimeout(function(){
-
-      if(
-        document.getElementById("editor").style.display!=="block"
-      ){
-
+      if(document.getElementById("editor").style.display!=="block"){
         document.getElementById("homeBottomNav").style.display="flex";
-
       }
-
       isPickingFile=false;
-
     },300);
-
   }
-
 });
 
-
-/* =========================
-   LOAD VIDEO
-========================= */
-
 function loadVideo(event){
+
+  isPickingFile=false;
+
+  const file=event.target.files[0];
+
+  if(!file){
+    document.getElementById("homeBottomNav").style.display="flex";
+    return;
+  }
+
+  if(videoURL){
+    URL.revokeObjectURL(videoURL);
+  }
+
+  videoURL=URL.createObjectURL(file);
+  video.src=videoURL;
+
+  document.getElementById("home").style.display="none";
+  document.getElementById("homeBottomNav").style.display="none";
+  document.getElementById("editor").style.display="block";
+  document.getElementById("videoPlaceholder").style.display="none";
+
+  video.onloadedmetadata=function(){
+
+    document.getElementById("currentTime").textContent=
+      "00:00 / "+formatTime(video.duration);
+
+    generateRuler(video.duration);
+    generateThumbnails();
+
+  };
+}
+
+function generateRuler(duration){
+
+  const ruler=document.getElementById("ruler");
+
+  ruler.innerHTML="";
+
+  const total=Math.ceil(duration);
+
+  for(let i=0;i<=total;i++){
+
+    const span=document.createElement("span");
+
+    span.textContent=formatTime(i);
+
+    ruler.appendChild(span);
+
+    if(i<total){
+
+      const dot=document.createElement("span");
+
+      dot.textContent=" • ";
+      dot.style.opacity="0.4";
+
+      ruler.appendChild(dot);
+
+    }
+  }
+}
+
+async function generateThumbnails(){
+
+  const container=document.getElementById("thumbnails");
+
+  const existingPlayhead=document.getElementById("playhead");
+
+  container.innerHTML="";
+  container.appendChild(existingPlayhead);
+
+  const duration=video.duration;
+
+  if(!duration || isNaN(duration)){
+    return;
+  }
+
+  const count=12;
+
+  const tempVideo=document.createElement("video");
+
+  tempVideo.src=videoURL;
+  tempVideo.muted=true;
+  tempVideo.playsInline=true;
+  tempVideo.preload="auto";
+
+  await new Promise((resolve)=>{
+    tempVideo.onloadedmetadata=resolve;
+  });
+
+  const canvas=document.createElement("canvas");
+
+  canvas.width=120;
+  canvas.height=80;
+
+  const ctx=canvas.getContext("2d");
+
+  for(let i=0;i<count;i++){
+
+    const time=(duration/count)*i;
+
+    tempVideo.currentTime=time;
+
+    await new Promise((resolve)=>{
+      tempVideo.onseeked=()=>{
+        setTimeout(resolve,60);
+      };
+    });
+
+    ctx.drawImage(
+      tempVideo,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const img=document.createElement("img");
+
+    img.className="thumbnail";
+    img.src=canvas.toDataURL();
+
+    container.appendChild(img);
+  }
+
+  const addBtn=document.createElement("button");
+
+  addBtn.className="add-clip-btn";
+  addBtn.innerHTML="+";
+  addBtn.onclick=openVideoPicker;
+
+  container.appendChild(addBtn);
+
+  document.getElementById("playhead").style.left="0px";
+}
+
+function togglePlay(){
+
+  if(video.paused){
+
+    video.play();
+
+    document.getElementById("playIcon").textContent="⏸";
+
+  }else{
+
+    video.pause();
+
+    document.getElementById("playIcon").textContent="▶";
+
+  }
+}
+
+video.addEventListener("timeupdate",function(){
+
+  const cur=formatTime(video.currentTime);
+
+  const dur=
+    video.duration
+      ? formatTime(video.duration)
+      : "00:00";
+
+  document.getElementById("currentTime").textContent=
+    cur+" / "+dur;
+
+  if(video.duration){
+
+    const thumbs=
+      document.getElementById("thumbnails");
+
+    const totalWidth=thumbs.scrollWidth;
+
+    const pos=
+      (video.currentTime/video.duration)*totalWidth;
+
+    document.getElementById("playhead").style.left=
+      pos+"px";
+
+    const container=
+      document.getElementById("timelineContainer");
+
+    const targetScroll=
+      pos-container.clientWidth/2;
+
+    if(
+      Math.abs(
+        container.scrollLeft-targetScroll
+      )>10
+    ){
+
+      container.scrollTo({
+        left:targetScroll,
+        behavior:"auto"
+      });
+
+    }
+  }
+});
+
+function toggleMute(){
+
+  video.muted=!video.muted;
+
+  const mainMuteIcon=
+    document.getElementById("mainMuteIcon");
+
+  if(mainMuteIcon){
+    mainMuteIcon.textContent=
+      video.muted ? "🔇" : "🔊";
+  }
+
+  const timelineMuteBtn=
+    document.getElementById("timelineMuteBtn");
+
+  if(timelineMuteBtn){
+    timelineMuteBtn.classList.toggle(
+      "active",
+      video.muted
+    );
+  }
+
+  showMessage(
+    video.muted
+      ? "Clip muted"
+      : "Clip unmuted"
+  );
+}
+
+function formatTime(seconds){
+
+  if(!isFinite(seconds)){
+    return"00:00";
+  }
+
+  const m=Math.floor(seconds/60);
+  const s=Math.floor(seconds%60);
+
+  return String(m).padStart(2,"0")+
+    ":"+
+    String(s).padStart(2,"0");
+}
+
+function goHome(){
+
+  video.pause();
+
+  document.getElementById("editor").style.display="none";
+  document.getElementById("home").style.display="block";
+  document.getElementById("homeBottomNav").style.display="flex";
+}
+
+function loadPhoto(event){
 
   isPickingFile=false;
 
@@ -1161,145 +1055,51 @@ function loadVideo(event){
     document.getElementById("homeBottomNav").style.display="flex";
 
     return;
-
   }
 
+  showMessage("Photo selected");
 
-  if(videoURL){
-
-    URL.revokeObjectURL(videoURL);
-
-  }
-
-
-  videoURL=URL.createObjectURL(file);
-
-  video.src=videoURL;
-
-
-  document.getElementById("home").style.display="none";
-
-  document.getElementById("homeBottomNav").style.display="none";
-
-  document.getElementById("editor").style.display="block";
-
-  document.getElementById("videoPlaceholder").style.display="none";
-
-
-  video.onloadedmetadata=function(){
-
-    document.getElementById("currentTime").textContent=
-      "00:00 / "+formatTime(video.duration);
-
-    generateRuler(video.duration);
-
-    generateThumbnails();
-
-  };
-
+  document.getElementById("homeBottomNav").style.display="flex";
 }
 
-
-/* =========================
-   RULER
-========================= */
-
-function generateRuler(duration){
-
-  const ruler=document.getElementById("ruler");
-
-  ruler.innerHTML="";
-
-  const total=Math.ceil(duration);
-
-
-  for(let i=0;i<=total;i++){
-
-    const span=document.createElement("span");
-
-    span.textContent=formatTime(i);
-
-    ruler.appendChild(span);
-
-
-    if(i<total){
-
-      const dot=document.createElement("span");
-
-      dot.textContent=" • ";
-
-      dot.style.opacity="0.4";
-
-      ruler.appendChild(dot);
-
-    }
-
-  }
-
+function undo(){
+  showMessage("Undo");
 }
 
+function redo(){
+  showMessage("Redo");
+}
 
-/* =========================
-   THUMBNAILS
-========================= */
+function exportVideo(){
 
-async function generateThumbnails(){
+  if(!video.src){
 
-  const container=
-    document.getElementById("thumbnails");
-
-  const existingPlayhead=
-    document.getElementById("playhead");
-
-
-  container.innerHTML="";
-
-  container.appendChild(existingPlayhead);
-
-
-  const duration=video.duration;
-
-
-  if(!duration || isNaN(duration)){
+    showMessage("Select a video first");
 
     return;
-
   }
 
+  showMessage("Export is ready to be connected");
+}
 
-  const count=12;
+function showMessage(text){
 
+  const message=
+    document.getElementById("message");
 
-  const tempVideo=document.createElement("video");
+  message.textContent=text;
+  message.style.display="block";
 
-  tempVideo.src=videoURL;
+  clearTimeout(window.messageTimer);
 
-  tempVideo.muted=true;
+  window.messageTimer=setTimeout(function(){
 
-  tempVideo.playsInline=true;
+    message.style.display="none";
 
-  tempVideo.preload="auto";
+  },1800);
+}
 
+</script>
 
-  await new Promise((resolve)=>{
-
-    tempVideo.onloadedmetadata=resolve;
-
-  });
-
-
-  const canvas=document.createElement("canvas");
-
-  canvas.width=120;
-
-  canvas.height=80;
-
-
-  const ctx=canvas.getContext("2d");
-
-
-  for(let i=0;i<count;i++){
-
-    const time=(duration/count)*i;
-
-    tempVideo.currentTi
+</body>
+  </html>
