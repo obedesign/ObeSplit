@@ -26,46 +26,90 @@ button{border:0;font-family:inherit;cursor:pointer}
 #editor{display:none;min-height:100vh;background:#121212;padding-bottom:74px}
 .editor-top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#121212}
 .top-btn{background:none;color:#fff;font-size:26px;padding:5px}
-.editor-title{display:none}
 .export-btn{background:#18e58b;color:#000;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700}
 .preview-area{height:54vh;min-height:340px;background:#000;display:flex;align-items:center;justify-content:center;position:relative}
 #video{width:100%;height:100%;object-fit:contain;display:block}
 .video-placeholder{color:#555;font-size:14px}
 .controls{height:48px;display:flex;align-items:center;justify-content:flex-start;gap:22px;padding:0 16px;background:#121212}
-.control-btn{background:none;color:#fff;font-size:19px;opacity:.9;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
-.timeline-area{background:#1c1c1c;padding:8px 0 6px;position:relative;border-top:1px solid #222}
-.timeline-header{display:flex;justify-content:flex-start;align-items:center;color:#777;font-size:10px;padding:0 10px 7px;font-weight:500;letter-spacing:.3px;overflow:hidden;white-space:nowrap}
-#currentTime{flex-shrink:0;white-space:nowrap;min-width:66px}
-.timeline-header-ruler{display:flex;gap:16px;margin-left:10px;overflow:hidden;white-space:nowrap;color:#888;flex:1;min-width:0}
-.timeline-wrapper{display:flex;gap:6px;align-items:center;position:relative;padding:0 8px}
+.control-btn{background:none;color:#fff;font-size:19px;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.timeline-area{background:#1c1c1c;padding:8px 0 6px;border-top:1px solid #222}
+.timeline-header{display:flex;color:#777;font-size:10px;padding:0 10px 7px;overflow:hidden;white-space:nowrap}
+#currentTime{min-width:66px;flex-shrink:0}
+.timeline-header-ruler{display:flex;gap:16px;margin-left:10px;color:#888;flex:1;overflow:hidden}
+.timeline-wrapper{display:flex;gap:6px;padding:0 8px;align-items:center}
 .track-actions{display:flex;gap:5px;flex-shrink:0}
-.track-btn{background:#292929;color:#bbb;border-radius:7px;width:48px;height:72px;padding:4px 2px;font-size:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.track-btn{background:#292929;color:#bbb;border-radius:7px;width:48px;height:72px;font-size:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
 .track-btn.active{background:#353535;color:#fff}
-.track-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.timeline{height:72px;background:#000;border-radius:7px;overflow-x:auto;overflow-y:hidden;position:relative;scrollbar-width:none;flex:1;min-width:0}
+.timeline{height:72px;background:#000;border-radius:7px;overflow-x:auto;position:relative;flex:1;scrollbar-width:none}
 .timeline::-webkit-scrollbar{display:none}
 .thumbnails{height:100%;display:flex;width:max-content;align-items:center;position:relative}
 .thumbnail{height:72px;width:78px;flex:0 0 78px;object-fit:cover;border-right:1px solid #111}
-.add-clip-btn{height:72px;width:48px;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 48px;cursor:pointer;border-radius:6px;margin-left:3px}
+.add-clip-btn{height:72px;width:48px;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 48px;border-radius:6px;margin-left:3px}
 .playhead{position:absolute;top:-4px;bottom:-4px;width:2px;background:#fff;left:0;z-index:30;pointer-events:none}
 .playhead::before{content:"";position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:9px;height:9px;background:#fff;border-radius:50%}
 .timeline-line{height:2px;background:#fff;margin:7px 8px 0;border-radius:2px;position:relative}
 .timeline-line::before{content:"";position:absolute;left:0;top:-4px;width:9px;height:9px;border-radius:50%;background:#fff}
 .timeline-extra{padding:6px 8px 0;display:flex;gap:6px}
 .extra-row{height:30px;background:#262626;border-radius:6px;display:flex;align-items:center;padding:0 10px;color:#888;font-size:11px;gap:5px;flex:1}
-.extra-row .plus{color:#fff;font-size:15px}
-.editor-toolbar{position:fixed;left:0;right:0;bottom:0;height:74px;background:#1c1c1c;border-top:1px solid #222;display:flex;justify-content:flex-start;align-items:center;overflow-x:auto;padding:6px 2px 10px;z-index:900;scrollbar-width:none}
+.editor-toolbar{position:fixed;left:0;right:0;bottom:0;height:74px;background:#1c1c1c;border-top:1px solid #222;display:flex;overflow-x:auto;padding:6px 2px 10px;z-index:900;scrollbar-width:none}
 .editor-toolbar::-webkit-scrollbar{display:none}
-.editor-tool{min-width:62px;flex:0 0 62px;background:none;color:#aaa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:9px;padding:0}
+.editor-tool{min-width:62px;flex:0 0 62px;background:none;color:#aaa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:9px}
 .editor-tool svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-input[type="file"]{display:none}
+input[type=file]{display:none}
 .message{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:10px;font-size:12px;display:none;z-index:2000}
 </style>
 </head>
 <body>
 <div id="home">
-  <div class="home-grid">
-    <button class="new-video" onclick="openVideoPicker()"><span style="font-size:28px;line-height:1;">＋</span> NEW VIDEO</button>
-    <button class="card ai-card" onclick="showMessage('AI Generator')"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/></svg>AI Generator</button>
-    <button class="card photo-card" onclick="openPhotoPicker()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="M3 17l5-5 4 4 3-3 6 5"/></svg>Edit Photo</button>
-    <button class="card space-card" onclick="showMessage('Space')"><svg viewBox="0 0 24 24">
+<div class="home-grid">
+<button class="new-video" onclick="openVideoPicker()"><span style="font-size:28px">＋</span> NEW VIDEO</button>
+<button class="card ai-card" onclick="showMessage('AI Generator')">AI Generator</button>
+<button class="card photo-card" onclick="openPhotoPicker()">Edit Photo</button>
+<button class="card space-card" onclick="showMessage('Space')">Space</button>
+</div>
+<div class="projects"><div class="projects-title">Projects</div><div class="project-box">No projects yet</div></div>
+</div>
+<div class="home-bottom-nav" id="homeBottomNav">
+<button class="nav-item active">Edit</button><button class="nav-item">Templates</button><button class="nav-item">Me</button>
+</div>
+<div id="editor">
+<div class="editor-top"><button class="top-btn" onclick="goHome()">✕</button><button class="export-btn" onclick="exportVideo()">Export</button></div>
+<div class="preview-area"><video id="video" playsinline preload="metadata"></video><div class="video-placeholder" id="videoPlaceholder">Select a video</div></div>
+<div class="controls"><button class="control-btn" onclick="togglePlay()" id="playIcon">▶</button><button class="control-btn" onclick="undo()">↩</button><button class="control-btn" onclick="redo()">↪</button></div>
+<div class="timeline-area">
+<div class="timeline-header"><span id="currentTime">00:00 / 00:00</span><div class="timeline-header-ruler" id="ruler">00:00 • 00:01 • 00:02 • 00:03 • 00:04 • 00:05</div></div>
+<div class="timeline-wrapper">
+<div class="track-actions">
+<button class="track-btn" onclick="toggleMute()" id="timelineMuteBtn">🔊<span>Mute clip</span></button>
+<button class="track-btn active" onclick="showMessage('Cover')">✎<span>Cover</span></button>
+</div>
+<div class="timeline" id="timelineContainer"><div class="thumbnails" id="thumbnails"><div class="playhead" id="playhead"></div></div></div>
+</div>
+<div class="timeline-line"></div>
+<div class="timeline-extra">
+<div class="extra-row" onclick="showMessage('Add Audio')">＋ Add audio</div>
+<div class="extra-row" onclick="showMessage('Add Text')">＋ Add text</div>
+</div>
+</div>
+<div class="editor-toolbar">
+<button class="editor-tool" onclick="showMessage('Edit')">Edit</button>
+<button class="editor-tool" onclick="showMessage('Audio')">Audio</button>
+<button class="editor-tool" onclick="showMessage('Text')">Text</button>
+<button class="editor-tool" onclick="showMessage('Effects')">Effects</button>
+<button class="editor-tool" onclick="showMessage('Overlay')">Overlay</button>
+<button class="editor-tool" onclick="showMessage('Captions')">Captions</button>
+<button class="editor-tool" onclick="showMessage('Filters')">Filters</button>
+<button class="editor-tool" onclick="showMessage('Ratio')">Ratio</button>
+</div>
+</div>
+<input type="file" id="videoInput" accept="video/*" onchange="loadVideo(event)">
+<input type="file" id="photoInput" accept="image/*" onchange="loadPhoto(event)">
+<div class="message" id="message"></div>
+<script>
+const video=document.getElementById("video");
+let videoURL=null;let isPickingFile=false;
+function openVideoPicker(){isPickingFile=true;document.getElementById("homeBottomNav").style.display="none";document.getElementById("videoInput").click()}
+function openPhotoPicker(){isPickingFile=true;document.getElementById("homeBottomNav").style.display="none";document.getElementById("photoInput").click()}
+window.addEventListener("focus",()=>{if(isPickingFile){setTimeout(()=>{if(document.getElementById("editor").style.display!=="block"){document.getElementById("homeBottomNav").style.display="flex"}isPickingFile=false},300)}});
+function loadVideo(e){
+isPickingFile=false;const
