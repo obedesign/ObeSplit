@@ -11,16 +11,11 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+body{
   margin:0;
-  padding:0;
   background:#0e0e0e;
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  overflow-x:hidden;
 }
 
 button{
@@ -193,9 +188,8 @@ button{
 .top-btn{
   background:none;
   color:#fff;
-  font-size:30px;
+  font-size:26px;
   padding:5px;
-  line-height:1;
 }
 
 .editor-title{
@@ -206,14 +200,12 @@ button{
   background:#18e58b;
   color:#000;
   border-radius:8px;
-  padding:9px 15px;
+  padding:8px 14px;
   font-size:13px;
   font-weight:700;
 }
 
-/* =========================
-   PREVIEW
-========================= */
+/* PREVIEW */
 
 .preview-area{
   height:54vh;
@@ -223,7 +215,6 @@ button{
   align-items:center;
   justify-content:center;
   position:relative;
-  overflow:hidden;
 }
 
 #video{
@@ -234,15 +225,11 @@ button{
 }
 
 .video-placeholder{
-  position:absolute;
   color:#555;
   font-size:14px;
-  pointer-events:none;
 }
 
-/* =========================
-   CONTROLS
-========================= */
+/* CONTROLS */
 
 .controls{
   height:48px;
@@ -272,45 +259,48 @@ button{
 
 .timeline-area{
   background:#1c1c1c;
-  padding:8px 0 7px;
+  padding:8px 0 6px;
   position:relative;
   border-top:1px solid #222;
 }
 
 .timeline-header{
   display:flex;
+  justify-content:flex-start;
   align-items:center;
   color:#777;
   font-size:10px;
   padding:0 10px 7px;
   font-weight:500;
   letter-spacing:.3px;
+  overflow:hidden;
+  white-space:nowrap;
 }
 
 #currentTime{
-  color:#fff;
-  font-weight:600;
-  min-width:76px;
   flex-shrink:0;
   white-space:nowrap;
+  min-width:66px;
+  color:#fff;
+  font-weight:bold;
 }
 
-/* Small ruler above timeline */
-
 .timeline-header-ruler{
-  flex:1;
-  min-width:0;
+  display:flex;
+  gap:16px;
+  margin-left:10px;
   overflow:hidden;
   white-space:nowrap;
-  color:#777;
-  font-size:10px;
+  color:#888;
+  flex:1;
+  min-width:0;
 }
 
 .timeline-header-ruler span{
-  margin-right:15px;
+  flex-shrink:0;
 }
 
-/* Timeline wrapper */
+/* MAIN TIMELINE */
 
 .timeline-wrapper{
   display:flex;
@@ -359,7 +349,7 @@ button{
 }
 
 /* =========================
-   TIMELINE VIEWPORT
+   VIDEO TIMELINE
 ========================= */
 
 .timeline{
@@ -372,7 +362,7 @@ button{
   scrollbar-width:none;
   flex:1;
   min-width:0;
-  scroll-behavior:auto;
+  overscroll-behavior-x:none;
 }
 
 .timeline::-webkit-scrollbar{
@@ -380,29 +370,17 @@ button{
 }
 
 /*
-  The actual content is wider than the visible timeline.
-  Padding on both sides lets the first and last frame
-  reach the center playhead.
+   This is the actual timeline strip.
+   It is wider than the visible area.
 */
 
 .thumbnails{
   height:72px;
   display:flex;
+  width:max-content;
   align-items:center;
   position:relative;
-  width:max-content;
-  min-width:100%;
 }
-
-/* Space before first thumbnail */
-
-.timeline-spacer{
-  width:0;
-  height:1px;
-  flex-shrink:0;
-}
-
-/* THUMBNAILS */
 
 .thumbnail{
   height:72px;
@@ -431,36 +409,41 @@ button{
 }
 
 /* =========================
-   FIXED CENTER PLAYHEAD
+   FIXED PLAYHEAD
 ========================= */
 
-.timeline-playhead{
+/*
+   IMPORTANT:
+   The playhead stays at the LEFT EDGE
+   of the video thumbnails.
+
+   The thumbnails move underneath it.
+*/
+
+.playhead{
   position:absolute;
-  top:0;
-  bottom:0;
-  left:50%;
+  top:-4px;
+  bottom:-4px;
+  left:0;
   width:2px;
   background:#fff;
-  z-index:50;
+  z-index:30;
   pointer-events:none;
-  transform:translateX(-50%);
 }
 
-.timeline-playhead::before{
+.playhead::before{
   content:"";
   position:absolute;
   top:-4px;
   left:50%;
   transform:translateX(-50%);
-  width:10px;
-  height:10px;
+  width:9px;
+  height:9px;
   background:#fff;
   border-radius:50%;
 }
 
-/* =========================
-   TIMELINE WHITE TRACK LINE
-========================= */
+/* WHITE LINE */
 
 .timeline-line{
   height:2px;
@@ -481,9 +464,7 @@ button{
   background:#fff;
 }
 
-/* =========================
-   EXTRA ROW
-========================= */
+/* EXTRA ROW */
 
 .timeline-extra{
   padding:6px 8px 0;
@@ -558,17 +539,9 @@ button{
   stroke-linejoin:round;
 }
 
-/* =========================
-   FILE INPUT
-========================= */
-
 input[type="file"]{
   display:none;
 }
-
-/* =========================
-   MESSAGE
-========================= */
 
 .message{
   position:fixed;
@@ -677,19 +650,15 @@ input[type="file"]{
 
   <div class="editor-top">
 
-    <button class="top-btn" onclick="goHome()">×</button>
+    <button class="top-btn" onclick="goHome()">✕</button>
 
     <div class="editor-title">ObeSplit</div>
-
-    <!-- FIXED: exportVideo() -->
 
     <button class="export-btn" onclick="exportVideo()">
       Export
     </button>
 
   </div>
-
-  <!-- PREVIEW -->
 
   <div class="preview-area">
 
@@ -699,7 +668,9 @@ input[type="file"]{
       preload="metadata">
     </video>
 
-    <div class="video-placeholder" id="videoPlaceholder">
+    <div
+      class="video-placeholder"
+      id="videoPlaceholder">
       Select a video
     </div>
 
@@ -709,19 +680,28 @@ input[type="file"]{
 
   <div class="controls">
 
-    <button class="control-btn" onclick="toggleFullscreen()">
+    <button
+      class="control-btn"
+      onclick="toggleFullscreen()">
       ⤢
     </button>
 
-    <button class="control-btn" onclick="togglePlay()" id="playIcon">
+    <button
+      class="control-btn"
+      onclick="togglePlay()"
+      id="playIcon">
       ▶
     </button>
 
-    <button class="control-btn" onclick="undo()">
+    <button
+      class="control-btn"
+      onclick="undo()">
       ↩
     </button>
 
-    <button class="control-btn" onclick="redo()">
+    <button
+      class="control-btn"
+      onclick="redo()">
       ↪
     </button>
 
@@ -739,13 +719,16 @@ input[type="file"]{
         00:00 / 00:00
       </span>
 
-      <div class="timeline-header-ruler" id="ruler"></div>
+      <div
+        class="timeline-header-ruler"
+        id="ruler">
+      </div>
 
     </div>
 
     <div class="timeline-wrapper">
 
-      <!-- ACTIONS -->
+      <!-- MUTE / COVER -->
 
       <div class="track-actions">
 
@@ -789,14 +772,12 @@ input[type="file"]{
           class="thumbnails"
           id="thumbnails">
 
-          <!-- thumbnails inserted by JavaScript -->
-
         </div>
 
-        <!-- FIXED CENTER PLAYHEAD -->
+        <!-- FIXED LEFT PLAYHEAD -->
 
         <div
-          class="timeline-playhead"
+          class="playhead"
           id="playhead">
         </div>
 
@@ -808,7 +789,7 @@ input[type="file"]{
 
     <div class="timeline-line"></div>
 
-    <!-- ADD AUDIO / TEXT -->
+    <!-- AUDIO / TEXT -->
 
     <div class="timeline-extra">
 
@@ -834,9 +815,7 @@ input[type="file"]{
 
   </div>
 
-  <!-- =========================
-       BOTTOM TOOLS
-  ========================= -->
+  <!-- BOTTOM TOOLS -->
 
   <div class="editor-toolbar">
 
@@ -850,7 +829,6 @@ input[type="file"]{
       </svg>
 
       Edit
-
     </button>
 
     <button
@@ -864,7 +842,6 @@ input[type="file"]{
       </svg>
 
       Audio
-
     </button>
 
     <button
@@ -878,7 +855,6 @@ input[type="file"]{
       </svg>
 
       Text
-
     </button>
 
     <button
@@ -890,7 +866,6 @@ input[type="file"]{
       </svg>
 
       Effects
-
     </button>
 
     <button
@@ -904,7 +879,6 @@ input[type="file"]{
       </svg>
 
       Overlay
-
     </button>
 
     <button
@@ -917,7 +891,6 @@ input[type="file"]{
       </svg>
 
       Captions
-
     </button>
 
     <button
@@ -934,7 +907,6 @@ input[type="file"]{
       </svg>
 
       Filters
-
     </button>
 
     <button
@@ -948,7 +920,6 @@ input[type="file"]{
       </svg>
 
       Aspect Ratio
-
     </button>
 
   </div>
@@ -980,11 +951,18 @@ input[type="file"]{
    VARIABLES
 ========================= */
 
-const video = document.getElementById("video");
+const video =
+  document.getElementById("video");
 
 let videoURL = null;
 let isPickingFile = false;
-let isDraggingTimeline = false;
+
+/*
+   Width of one thumbnail.
+   This is used to calculate
+   the correct timeline position.
+*/
+const THUMB_WIDTH = 78;
 
 /* =========================
    FILE PICKERS
@@ -994,46 +972,65 @@ function openVideoPicker(){
 
   isPickingFile = true;
 
-  document.getElementById("homeBottomNav").style.display = "none";
+  document.getElementById(
+    "homeBottomNav"
+  ).style.display = "none";
 
-  document.getElementById("videoInput").click();
+  document.getElementById(
+    "videoInput"
+  ).click();
+
 }
 
 function openPhotoPicker(){
 
   isPickingFile = true;
 
-  document.getElementById("homeBottomNav").style.display = "none";
+  document.getElementById(
+    "homeBottomNav"
+  ).style.display = "none";
 
-  document.getElementById("photoInput").click();
+  document.getElementById(
+    "photoInput"
+  ).click();
+
 }
 
 /* =========================
-   FILE PICKER RETURN
+   FILE PICKER FOCUS
 ========================= */
 
-window.addEventListener("focus",function(){
+window.addEventListener(
+  "focus",
+  function(){
 
-  if(isPickingFile){
+    if(isPickingFile){
 
-    setTimeout(function(){
+      setTimeout(
+        function(){
 
-      if(
-        document.getElementById("editor").style.display !== "block"
-      ){
+          if(
+            document.getElementById(
+              "editor"
+            ).style.display !== "block"
+          ){
 
-        document.getElementById("homeBottomNav").style.display =
-          "flex";
+            document.getElementById(
+              "homeBottomNav"
+            ).style.display = "flex";
 
-      }
+          }
 
-      isPickingFile = false;
+          isPickingFile = false;
 
-    },500);
+        },
+        400
+      );
+
+    }
 
   }
-
-});
+);
 
 /* =========================
    LOAD VIDEO
@@ -1043,62 +1040,66 @@ function loadVideo(event){
 
   isPickingFile = false;
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if(!file){
 
-    document.getElementById("homeBottomNav").style.display =
-      "flex";
+    document.getElementById(
+      "homeBottomNav"
+    ).style.display = "flex";
 
     return;
+
   }
 
   if(videoURL){
 
-    URL.revokeObjectURL(videoURL);
+    URL.revokeObjectURL(
+      videoURL
+    );
 
   }
 
-  videoURL = URL.createObjectURL(file);
+  videoURL =
+    URL.createObjectURL(file);
 
   video.src = videoURL;
 
-  document.getElementById("home").style.display = "none";
+  document.getElementById(
+    "home"
+  ).style.display = "none";
 
-  document.getElementById("homeBottomNav").style.display =
-    "none";
+  document.getElementById(
+    "homeBottomNav"
+  ).style.display = "none";
 
-  document.getElementById("editor").style.display = "block";
+  document.getElementById(
+    "editor"
+  ).style.display = "block";
 
-  document.getElementById("videoPlaceholder").style.display =
-    "none";
+  document.getElementById(
+    "videoPlaceholder"
+  ).style.display = "none";
 
-  video.currentTime = 0;
+  video.onloadedmetadata =
+    function(){
 
-  video.onloadedmetadata = function(){
+      video.currentTime = 0;
 
-    const duration = video.duration;
+      document.getElementById(
+        "currentTime"
+      ).textContent =
+        "00:00 / " +
+        formatTime(video.duration);
 
-    document.getElementById("currentTime").textContent =
-      "00:00 / " + formatTime(duration);
+      generateRuler(
+        video.duration
+      );
 
-    generateRuler(duration);
+      generateThumbnails();
 
-    generateThumbnails();
-
-    /*
-      Wait until timeline has its real width.
-    */
-
-    setTimeout(function(){
-
-      prepareTimeline();
-
-      updateTimelinePosition();
-
-    },100);
-
-  };
+    };
 
 }
 
@@ -1108,17 +1109,29 @@ function loadVideo(event){
 
 function generateRuler(duration){
 
-  const ruler = document.getElementById("ruler");
+  const ruler =
+    document.getElementById(
+      "ruler"
+    );
 
   ruler.innerHTML = "";
 
-  const total = Math.ceil(duration);
+  const total =
+    Math.ceil(duration);
 
-  for(let i = 0; i <= total; i++){
+  for(
+    let i = 0;
+    i <= total;
+    i++
+  ){
 
-    const span = document.createElement("span");
+    const span =
+      document.createElement(
+        "span"
+      );
 
-    span.textContent = formatTime(i);
+    span.textContent =
+      formatTime(i);
 
     ruler.appendChild(span);
 
@@ -1133,20 +1146,31 @@ function generateRuler(duration){
 async function generateThumbnails(){
 
   const container =
-    document.getElementById("thumbnails");
+    document.getElementById(
+      "thumbnails"
+    );
 
   container.innerHTML = "";
 
-  const duration = video.duration;
+  const duration =
+    video.duration;
 
-  if(!duration || !isFinite(duration)){
+  if(
+    !duration ||
+    !isFinite(duration)
+  ){
 
     return;
+
   }
 
-  const tempVideo = document.createElement("video");
+  const tempVideo =
+    document.createElement(
+      "video"
+    );
 
-  tempVideo.src = videoURL;
+  tempVideo.src =
+    videoURL;
 
   tempVideo.muted = true;
 
@@ -1154,36 +1178,44 @@ async function generateThumbnails(){
 
   tempVideo.preload = "auto";
 
-  await new Promise(function(resolve){
+  await new Promise(
+    function(resolve){
 
-    tempVideo.onloadedmetadata = function(){
+      tempVideo.onloadedmetadata =
+        resolve;
 
-      resolve();
-
-    };
-
-    tempVideo.onerror = function(){
-
-      resolve();
-
-    };
-
-  });
-
-  const canvas = document.createElement("canvas");
-
-  canvas.width = 156;
-
-  canvas.height = 88;
-
-  const ctx = canvas.getContext("2d");
-
-  const count = Math.max(
-    8,
-    Math.min(30, Math.ceil(duration / 2))
+    }
   );
 
-  for(let i = 0; i < count; i++){
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+  canvas.width = 156;
+  canvas.height = 88;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  /*
+     About one thumbnail
+     every 2 seconds.
+  */
+
+  const count =
+    Math.max(
+      8,
+      Math.ceil(
+        duration / 2
+      )
+    );
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
 
     const time =
       Math.min(
@@ -1191,36 +1223,69 @@ async function generateThumbnails(){
         (duration / count) * i
       );
 
-    try{
+    tempVideo.currentTime =
+      Math.max(0,time);
 
-      tempVideo.currentTime = Math.max(0,time);
+    await new Promise(
+      function(resolve){
 
-      await new Promise(function(resolve){
+        let done = false;
 
-        let finished = false;
+        function finish(){
 
-        function done(){
+          if(done) return;
 
-          if(finished) return;
-
-          finished = true;
+          done = true;
 
           resolve();
 
         }
 
-        tempVideo.addEventListener(
-          "seeked",
-          done,
-          {once:true}
+        tempVideo.onseeked =
+          finish;
+
+        setTimeout(
+          finish,
+          500
         );
 
-        setTimeout(done,500);
+      }
+    );
 
-      });
+    try{
 
-      ctx.clearRect(
+      ctx.drawImage(
+        tempVideo,
         0,
         0,
         canvas.width,
-        
+        canvas.height
+      );
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+      img.className =
+        "thumbnail";
+
+      img.src =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.8
+        );
+
+      container.appendChild(
+        img
+      );
+
+    }catch(error){
+
+      console.log(
+        error
+      );
+
+    }
+
+  }
