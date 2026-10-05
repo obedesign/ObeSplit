@@ -10,7 +10,7 @@
 body{margin:0;background:#0e0e0e;color:#fff;font-family:Arial,Helvetica,sans-serif}
 button{border:0;font-family:inherit;cursor:pointer}
 
-/* HOME */
+/* HOME STYLE */
 #home{min-height:100vh;background:#000;padding:18px;padding-bottom:95px}
 .home-grid{display:grid;grid-template-columns:1fr 1.35fr;grid-template-rows:155px 155px;gap:12px;max-width:520px;margin:0 auto}
 .new-video{grid-column:1 / 3;height:72px;background:#18e58b;color:#000;border-radius:18px;font-size:21px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
@@ -28,7 +28,7 @@ button{border:0;font-family:inherit;cursor:pointer}
 .nav-item.active{color:#fff}
 .nav-item svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* EDITOR */
+/* EDITOR STYLE */
 #editor{display:none;min-height:100vh;background:#121212;padding-bottom:74px}
 .editor-top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#121212}
 .top-btn{background:none;color:#fff;font-size:26px;padding:5px}
@@ -39,7 +39,7 @@ button{border:0;font-family:inherit;cursor:pointer}
 #video{width:100%;height:100%;object-fit:contain;display:block}
 .video-placeholder{color:#555;font-size:14px}
 
-/* CONTROLS */
+/* PLAY BUTTONS & CONTROLS */
 .controls{
   height:48px;
   display:flex;
@@ -61,7 +61,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   justify-content:center;
 }
 
-/* TIMELINE AREA */
+/* TIMELINE BOX SCREEN UI */
 .timeline-area{
   background:#1c1c1c;
   padding:8px 0 12px;
@@ -83,7 +83,6 @@ button{border:0;font-family:inherit;cursor:pointer}
   color:#fff;
 }
 
-/* HORIZONTAL WORKSPACE */
 .timeline-workspace-wrapper {
   display: flex;
   position: relative;
@@ -127,7 +126,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   color:#fff;
 }
 
-/* FIXED PLAYHEAD */
+/* TIMELINE PLAYHEAD CENTER LINE */
 .center-playhead{
   position:absolute;
   top:24px;
@@ -151,7 +150,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   border-radius:50%;
 }
 
-/* SCROLL ENGINE */
+/* TIMELINE MAIN SCROLLING PLATFORM */
 .timeline-scroll-container{
   position:relative;
   width:100%;
@@ -167,7 +166,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   position:relative;
 }
 
-/* RULER */
+/* TRACK RULER MARKS */
 .timeline-ruler{
   height:24px;
   position:relative;
@@ -180,7 +179,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   white-space:nowrap;
 }
 
-/* TRACK LANES */
+/* LAYERS DESIGN CODES */
 .track-lane{
   height:72px;
   position:relative;
@@ -223,7 +222,7 @@ button{border:0;font-family:inherit;cursor:pointer}
   border:1px dashed #444;
 }
 
-/* TOOLBAR */
+/* BOTTOM TOOLBAR */
 .editor-toolbar{
   position:fixed;
   left:0;
@@ -306,14 +305,14 @@ input[type="file"]{display:none}
   </div>
 </div>
 
-<!-- HOME NAV -->
+<!-- HOME BOTTOM BAR -->
 <div class="home-bottom-nav" id="homeBottomNav">
   <button class="nav-item active"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>Edit</button>
   <button class="nav-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/><path d="M7 12h6"/><path d="M7 16h8"/></svg>Templates</button>
   <button class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.2-6 8-6s6.5 2 8 6"/></svg>Me</button>
 </div>
 
-<!-- EDITOR -->
+<!-- MAIN EDITOR ENGINE INTERFACE -->
 <div id="editor">
   <div class="editor-top">
     <button class="top-btn" onclick="goHome()">✕</button>
@@ -326,7 +325,7 @@ input[type="file"]{display:none}
     <div class="video-placeholder" id="videoPlaceholder">Select a video</div>
   </div>
 
-  <!-- CONTROLS -->
+  <!-- CONTROL ACTIONS -->
   <div class="controls">
     <button class="control-btn" onclick="showMessage('Fullscreen')">⤢</button>
     <button class="control-btn" onclick="togglePlay()" id="playIcon">▶</button>
@@ -334,14 +333,13 @@ input[type="file"]{display:none}
     <button class="control-btn" onclick="redo()">↪</button>
   </div>
 
-  <!-- TIMELINE -->
+  <!-- WORKSPACE TIMELINE CONTROLLER -->
   <div class="timeline-area">
     <div class="timeline-header">
       <span id="currentTime">00:00 / 00:00</span>
     </div>
 
     <div class="timeline-workspace-wrapper">
-      <!-- SIDEBAR ACTIONS -->
       <div class="sidebar-actions">
         <button class="sidebar-btn" id="timelineMuteBtn" onclick="toggleMute()">
           <svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="M13 9l4 6m0-6l-4 6"/></svg>
@@ -351,15 +349,12 @@ input[type="file"]{display:none}
         <button class="sidebar-btn small-action" onclick="showMessage('Add Text')">Text</button>
       </div>
 
-      <!-- CENTER STATIC PLAYHEAD -->
       <div class="center-playhead"></div>
 
-      <!-- TIMELINE TRACK CANVAS -->
+      <!-- MAIN HORIZONTAL CANVAS CHANNELS -->
       <div class="timeline-scroll-container" id="timelineContainer">
         <div class="tracks-canvas" id="tracksCanvas">
           
-          <!-- TIME MARKS TRACK -->
           <div class="timeline-ruler" id="ruler"></div>
 
-          <!-- VIDEO TRACK LANE -->
           
