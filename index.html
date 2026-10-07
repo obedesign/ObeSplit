@@ -1,1 +1,133 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>ObeSplit PRO V3</title><style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0F0F0F;color:#fff;font-family:system-ui;height:100dvh;display:flex;flex-direction:column;overflow:hidden}#top{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#1A1A1A;border-bottom:1px solid #2A2A2A;flex-shrink:0}#stage{flex:1;background:#000;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}#phone{width:215px;height:382px;background:#111;position:relative;border-radius:14px;overflow:hidden;box-shadow:0 0 30px rgba(0,0,0,0.8)}video{width:100%;height:100%;object-fit:contain;background:#000}#overlay{position:absolute;left:24px;top:24px;width:80px;height:110px;border:1.8px dashed #A855F7;display:none;z-index:20;background:#000;touch-action:none;border-radius:8px;overflow:hidden;box-shadow:0 4px 15px rgba(168,85,247,0.4)}#overlay video,#overlay img{width:100%;height:100%;object-fit:cover}#txtBox{position:absolute;left:20px;top:50%;color:#fff;font-weight:800;font-size:18px;text-shadow:2px 2px 4px #000;z-index:15;display:none;touch-action:none;padding:4px 8px;border:1px dashed #fff0}#controls{height:92px;background:#1A1A1A;border-top:1px solid #2A2A2A;display:flex;flex-direction:column;flex-shrink:0}#row1{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;scrollbar-width:none}#row1::-webkit-scrollbar{display:none}#row1 button{background:#2A2A2A;border:1px solid #3A3A3A;color:#fff;padding:7px 11px;border-radius:20px;font-size:11px;white-space:nowrap;flex-shrink:0}#row1 button:active{background:#A855F7}#row2{height:36px;display:flex;align-items:center;gap:8px;padding:0 10px;font-size:11px}#timeline{height:78px;background:#121212;border-top:1px solid #2A2A2A;position:relative;overflow:hidden;flex-shrink:0}#strip{display:flex;gap:2px;padding:6px;height:100%;align-items:center}#strip canvas,#strip.clip{width:54px;height:54px;background:#222;border-radius:6px;flex-shrink:0;border:1px solid #333}.clip{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:#A855F7!important;color:#fff}#playhead{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff;z-index:5;box-shadow:0 0 4px #fff}#playhead::after{content:'';position:absolute;top:0;left:-4px;width:10px;height:10px;background:#fff;border-radius:50%}</style></head><body><div id=top><b style=letter-spacing:1px>ObeSplit PRO</b><button onclick=exp() style=background:#A855F7;color:#fff;border:none;padding:7px 16px;border-radius:20px;font-weight:800;font-size:12px>Export</button></div><div id=stage><div id=phone><video id=v playsinline></video><div id=overlay><video id=o autoplay muted loop playsinline></video></div><div id=txtBox contenteditable=true>Obeedit</div><div style=position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.7);padding:2px 6px;border-radius:4px;font-size:9px;z-index:6>© Obeedit</div></div></div><div id=controls><div id=row1><button onclick=pick()>📁 Video</button><button onclick=playPause()>▶️ Play</button><button onclick=split()>✂️ Split</button><button onclick=pickO()>🖼️ Overlay</button><button onclick=addText()>🔤 Text</button><button onclick=filter('none')>Normal</button><button onclick=filter('grayscale(1)')>B/W</button><button onclick=filter('sepia(1)')>Vintage</button><button onclick=speed(0.5)>0.5x</button><button onclick=speed(1)>1x</button><button onclick=speed(2)>2x</button><button onclick=rem()>❌ Remove</button></div><div id=row2><span>🔊</span><input type=range id=vol min=0 max=1 step=0.1 value=1 style=width:80px><span id=info style=color:#888;margin-left:auto>Ready</span><span id=clipInfo style=background:#A855F7;padding:2px 8px;border-radius:10px;margin-left:8px>CLIP 1</span></div></div><div id=timeline><div id=strip></div><div id=playhead></div></div><script>const v=document.getElementById('v'),o=document.getElementById('o'),ov=document.getElementById('overlay'),txt=document.getElementById('txtBox'),strip=document.getElementById('strip'),info=document.getElementById('info');let clipCount=1;function pick(){let i=document.createElement('input');i.type='file';i.accept='video/*';i.onchange=()=>{v.src=URL.createObjectURL(i.files[0]);v.muted=false;v.volume=1;info.textContent='Loading...';setTimeout(genThumbs,500);};i.click()}function pickO(){let i=document.createElement('input');i.type='file';i.accept='video/*,image/*';i.onchange=()=>{let f=i.files[0];let url=URL.createObjectURL(f);if(f.type.startsWith('image')){ov.innerHTML=`<img src="${url}">`;ov.style.display='block';}else{o.src=url;ov.innerHTML='';ov.appendChild(o);ov.style.display='block';}};i.click()}function playPause(){if(v.paused){v.play();v.muted=false;info.textContent='Playing';}else{v.pause();info.textContent='Paused';}}function split(){clipCount++;let d=document.createElement('div');d.className='clip';d.textContent='C'+clipCount;strip.appendChild(d);document.getElementById('clipInfo').textContent='CLIP '+clipCount;let ch=document.createElement('span');ch.style.cssText='background:#A855F7;padding:2px 6px;border-radius:10px;margin:2px;font-size:10px';ch.textContent='CLIP '+clipCount;document.getElementById('row1').appendChild(ch);}function addText(){txt.style.display='block';txt.textContent='Obeedit 🔥';txt.focus();}function filter(f){v.style.filter=f;info.textContent='Filter: '+f;}function speed(s){v.playbackRate=s;info.textContent=s+'x speed';}function rem(){ov.style.display='none';txt.style.display='none';}function genThumbs(){strip.innerHTML='';let c=document.createElement('canvas');c.width=54;c.height=54;c.getContext('2d').fillText='Film',10,10;for(let i=0;i<8;i++){let cv=document.createElement('canvas');cv.width=54;cv.height=54;let ctx=cv.getContext('2d');ctx.fillStyle='#1F1F1F';ctx.fillRect(0,0,54,54);ctx.drawImage(v,0,0,54,54);strip.appendChild(cv);}v.addEventListener('timeupdate',()=>{if(v.duration){let p=v.currentTime/v.duration* (strip.scrollWidth-200);strip.style.transform=`translateX(${-p}px)`;info.textContent=Math.floor(v.currentTime)+'s / '+Math.floor(v.duration)+'s';}});}function exp(){if(!v.src){alert('Pick video first');return;}let a=document.createElement('a');a.href=v.src;a.download='ObeSplit-PRO-V3.mp4';a.click();info.textContent='Exported!';}let dragT=null,dx,dy,sx,sy;function makeDrag(el){el.addEventListener('touchstart',e=>{dragT=el;dx=e.touches[0].clientX-el.offsetLeft;dy=e.touches[0].clientY-el.offsetTop;});el.addEventListener('mousedown',e=>{dragT=el;dx=e.clientX-el.offsetLeft;dy=e.clientY-el.offsetTop;});}makeDrag(ov);makeDrag(txt);window.addEventListener('touchmove',e=>{if(!dragT)return;e.preventDefault();dragT.style.left=e.touches[0].clientX-dx+'px';dragT.style.top=e.touches[0].clientY-dy+'px';},{passive:false});window.addEventListener('mousemove',e=>{if(!dragT)return;dragT.style.left=e.clientX-dx+'px';dragT.style.top=e.clientY-dy+'px';});window.addEventListener('touchend',()=>dragT=null);window.addEventListener('mouseup',()=>dragT=null);document.getElementById('vol').oninput=e=>{v.volume=e.target.value;v.muted=false;};v.addEventListener('click',()=>{v.muted=false;});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ObeSplit - CapCut Style</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #0e0e0e;
+      color: #ffffff;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      height: 45px;
+      background: #181818;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      border-bottom: 1px solid #282828;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .export-btn {
+      background: #00FFCC;
+      color: #000;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Video Preview Screen */
+    .preview-container {
+      flex: 1;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .video-placeholder {
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* Timeline Track Area (Now positioned right below preview) */
+    .timeline {
+      background: #121212;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid #282828;
+    }
+    .track-row {
+      height: 40px;
+      background: #1f1f1f;
+      border-radius: 6px;
+      border: 1px dashed #333;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* Action Toolbar (Now positioned at the very bottom) */
+    .toolbar {
+      height: 60px;
+      background: #181818;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-top: 1px solid #282828;
+    }
+    .tool-btn {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .tool-btn:hover {
+      color: #00FFCC;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span>ObeSplit Editor</span>
+    <button class="export-btn">Export</button>
+  </div>
+
+  <!-- Preview Area -->
+  <div class="preview-container">
+    <div class="video-placeholder">Video Preview Player</div>
+  </div>
+
+  <!-- Timeline Tracks (Moved Up) -->
+  <div class="timeline">
+    <div class="track-row">Video Track 1</div>
+    <div class="track-row">Audio Track 2</div>
+  </div>
+
+  <!-- Action Toolbar (Moved Down to bottom) -->
+  <div class="toolbar">
+    <button class="tool-btn">✂️ Split</button>
+    <button class="tool-btn">➕ Add Clip</button>
+    <button class="tool-btn">🎵 Audio</button>
+    <button class="tool-btn">💬 Text</button>
+    <button class="tool-btn">✨ Effects</button>
+  </div>
+
+</body>
+</html>
