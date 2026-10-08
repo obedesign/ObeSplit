@@ -1221,7 +1221,55 @@ else if(c.type.startsWith('image')){
 
     const im=document.createElement('img');
 
-    im.src=c.url;
+        im.src=c.url;
+
+    im.className=
+      'h-full w-full object-cover pointer-events-none';
+
+    thumbs.appendChild(im);
+
+  }
+
+  else{
+
+    const ph=document.createElement('div');
+
+    ph.className=
+      'w-full h-full bg-[#111]';
+
+    thumbs.appendChild(ph);
+
+  }
+
+  wrap.appendChild(thumbs);
+
+
+  const dur=document.createElement('div');
+
+  dur.className=
+    'absolute bottom-0 right-0 bg-black/70 text-[9px] px-1 rounded-tl';
+
+  dur.textContent=fmt(c.duration);
+
+  wrap.appendChild(dur);
+
+
+  wrap.addEventListener(
+    'click',
+    ()=>{
+
+      let acc=0;
+
+      for(let cl of clips){
+
+        if(cl.id===c.id)break;
+
+        acc+=cl.duration;
+
+      }
+
+      seekGlobal(acc+0.01);
+      
   
           
     
