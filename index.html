@@ -1268,7 +1268,52 @@ else if(c.type.startsWith('image')){
 
       }
 
-      seekGlobal(acc+0.01);
+              seekGlobal(acc+0.01);
+
+    }
+);
+
+clipsContainer.appendChild(wrap);
+
+});
+
+calcTotal();
+
+}
+
+/*
+======================================================================
+THUMBNAILS
+====================================================================== */
+
+async function generateThumbsForClip(clip){
+
+    if(!clip.type.startsWith('video'))return;
+
+    const v=document.createElement('video');
+
+    v.src=clip.url;
+    v.muted=true;
+    v.playsInline=true;
+
+    await new Promise(
+        res=>v.onloadedmetadata=()=>res()
+    );
+
+    clip.duration=v.duration||3;
+
+    const count=
+        Math.max(
+            1,
+            Math.min(
+                10,
+                Math.floor(clip.duration)
+            )
+        );
+
+    clip.thumbs=[];
+
+    for(let i=0;i<count;i++){
       
   
           
