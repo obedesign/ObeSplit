@@ -1129,7 +1129,55 @@ function showClip(clip,localTime){
     if(clip.type.startsWith('video')){
 
         photoPreview.classList.add('hidden');
-        video.classList.remove('hidden');
-      
+
+video.classList.remove('hidden');
+
+if(video.src!==clip.url){
+    video.src=clip.url;
+}
+
+if(
+  Math.abs(video.currentTime-localTime)>0.4
+){
+
+    try{
+        video.currentTime=localTime;
+    }catch(e){}
+
+}
+
+}else{
+
+    video.classList.add('hidden');
+
+    video.pause();
+
+    photoPreview.classList.remove('hidden');
+
+    photoPreview.src=clip.url;
+
+}
+
+}
+
+/*
+======================================================
+     RENDER CLIPS
+======================================================
+===== */
+
+function renderClips(){
+
+    clipsContainer.innerHTML='';
+
+    clips.forEach(c=>{
+
+        const wrap=document.createElement('div');
+
+        wrap.dataset.id=c.id;
+
+        wrap.className=
+          
+    
   
   
