@@ -940,6 +940,52 @@ no-scrollbar">
 const video=document.getElementById('video');
 const photoPreview=document.getElementById('photoPreview');
 const mediaInput=document.getElementById('mediaInput');
-const clipsContainer=document.getElementById('clipsContainer');
 const 
+clipsContainer=document.getElementById('clipsContain
+er');
+const 
+addMediaBtn=document.getElementById('addMediaBtn');
+const 
+timeLabel=document.getElementById('timeLabel');
+const ruler=document.getElementById('ruler');
+const playhead=document.getElementById('playhead');
+const 
+timelineScroll=document.getElementById('timelineScro
+ll');
+const playBtn=document.getElementById('playBtn');
+const playIcon=document.getElementById('playIcon');
+const 
+pauseIcon=document.getElementById('pauseIcon');
+const 
+exportBtn=document.getElementById('exportBtn');
+const 
+exportPanel=document.getElementById('exportPanel');
+const aiUhdBtn=document.getElementById('aiUhdBtn');
+
+let clips=[];
+let totalDuration=0;
+let globalTime=0;
+let isPlaying=false;
+let raf=null;
+
+let currentRes='1080p';
+let currentFps=30;
+let currentBitrate=20;
+let isAiUhd=true;
+let isGif=false;
+let watermark=false;
+let selectedClipId=null;
+
+const PX_PER_SEC=60;
+
+/*
+======================================================
+=====
+ TIME
+======================================================
+===== */
+
+function fmt(s){
+
+(!isFinite(s)) s=0;
   
