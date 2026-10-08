@@ -1408,7 +1408,57 @@ async function addFiles(files){
                 f.type.startsWith('image')
                 ?3
                 :1,
-          
+thumbs: [],
+cover:null,
+volume:1,
+opacity:1,
+speed:1,
+muted:false
+};
+
+clips.push(clip);
+
+if(f.type.startsWith('video')){
+   await generateThumbsForClip(clip);
+}
+
+}
+
+renderClips();
+
+if(
+   totalDuration>0 &&
+   globalTime===0
+){
+
+   seekGlobal(0.01);
+
+}
+
+}
+
+
+/*
+=========================================================
+=====
+     SEEK
+=========================================================
+===== */
+
+function seekGlobal(t){
+
+   globalTime=
+   Math.max(
+      0,
+      Math.min(
+         t,
+         totalDuration
+      )
+   );
+
+   const info=
+   getClipAtTime(globalTime);
+  
       
       
   
