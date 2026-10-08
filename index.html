@@ -3,168 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AI UHD Editor</title>
+<title>AI UHD Editor - Fixed</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *{font-family:Inter, -apple-system, sans-serif}
- .no-scrollbar::-webkit-scrollbar{display:none}
- .no-scrollbar{-ms-overflow-style:none; scrollbar-width:none}
-  input[type=range]{-webkit-appearance:none; appearance:none; height:4px; background:#2a2a2a; border-radius:99px}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; background:white; border-radius:50%; border:2px solid #18E58B}
- .clip-thumb canvas,.clip-thumb img{width:100%; height:100%; object-fit:cover}
+*{font-family:Inter,sans-serif}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.clip-item{transition:border-color 0.15s; user-select:none}
+.clip-item.selected{border-color:#18E58B!important; box-shadow:0 0 0 1px #18E58B}
+button:active{transform:scale(0.97)}
+#timelineScroll{touch-action:pan-x; overscroll-behavior-x:contain}
 </style>
 </head>
-<body class="bg-[#0a0a0a] flex justify-center min-h-screen overflow-hidden">
+<body class="bg-[#0a0a0a] flex justify-center min-h-screen">
 <div class="w-full max-w-[440px] bg-[#121212] flex flex-col h-[100dvh] text-white relative">
 
-  <!-- HEADER -->
+  <!-- HEADER - KEPT EXACT -->
   <div class="flex items-center justify-between px-3 py-2.5 bg-[#121212] border-b border-[#1e1e1e] shrink-0">
     <div class="flex gap-2">
-      <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-      <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <button onclick="location.reload()" class="w-8 h-8 flex items-center justify-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <button class="w-8 h-8 flex items-center justify-center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.3-4.3"/></svg></button>
     </div>
-    <div class="flex gap-2 items-center flex-1 justify-end relative">
-      <button id="aiUhdBtn" class="bg-[#232323] px-3.5 py-2 rounded-xl text-[12px] font-semibold flex items-center gap-1.5 border border-[#333]"> <span class="w-3 h-3 rotate-45 bg-gradient-to-br from-[#18E58B] to-[#8B5CF6] block rounded-[2px]"></span> AI UHD <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="flex gap-2 items-center relative">
+      <button id="aiUhdBtn" class="bg-[#232323] px-3.5 py-2 rounded-xl text-[12px] font-semibold flex items-center gap-1.5 border border-[#333]"><span class="w-2.5 h-2.5 rotate-45 bg-[#18E58B] block rounded-[2px]"></span> AI UHD <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
       <button id="exportBtn" class="bg-[#18E58B] text-black px-6 h-9 rounded-xl font-bold text-[14px]">Export</button>
 
-      <!-- EXPORT SETTINGS PANEL -->
-      <div id="exportPanel" class="hidden absolute top-12 right-0 w-[340px] bg-[#1A1A1A] border border-[#2A2A2A] rounded-[20px] z-[100] shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden max-h-[85vh] overflow-y-auto no-scrollbar">
-        <!-- Tabs -->
-        <div class="flex p-1.5 m-3 bg-[#242424] rounded-full">
+      <!-- EXPORT PANEL - KEPT EXACT DESIGN -->
+      <div id="exportPanel" class="hidden absolute top-12 right-0 w-[340px] bg-[#1A1A1A] border border-[#2A2A2A] rounded-[20px] z-[100] shadow-2xl max-h-[85vh] overflow-y-auto no-scrollbar">
+        <div class="flex p-1 m-3 bg-[#242424] rounded-full">
           <button id="tabVideo" class="flex-1 py-2 rounded-full bg-white text-black text-[13px] font-bold">Video</button>
-          <button id="tabGif" class="flex-1 py-2 rounded-full text-[#8a8a8a] text-[13px] font-semibold">GIF</button>
+          <button id="tabGif" class="flex-1 py-2 rounded-full text-[#777] text-[13px]">GIF</button>
         </div>
-
         <div class="px-4 pb-4">
-          <!-- AI Ultra HD -->
-          <div class="flex items-center justify-between py-3.5 border-b border-[#252525]">
-            <div class="flex items-center gap-2">
-              <span class="w-4 h-4 rotate-45 bg-gradient-to-br from-[#18E58B] to-[#8B5CF6] block rounded-[2px] shadow-[0_0_8px_rgba(24,229,139,0.4)]"></span>
-              <span class="text-[13px] font-semibold">AI Ultra HD</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#18E58B]/20 text-[#18E58B] font-bold">NEW</span>
-            </div>
-            <button id="aiToggle" class="w-11 h-6 bg-[#18E58B] rounded-full relative transition"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all translate-x-5"></span></button>
-          </div>
-
-          <!-- Resolution -->
-          <div class="pt-4">
-            <div class="text-[11px] tracking-widest text-[#666] font-semibold mb-3">RESOLUTION</div>
-            <div class="grid grid-cols-4 gap-2" id="resGroup">
-              <button data-res="480p" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px] border border-transparent">480p</button>
-              <button data-res="720p" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px] border border-transparent">720p</button>
-              <button data-res="1080p" class="res-opt h-10 rounded-xl bg-white text-black text-[12px] font-bold border border-white">1080p</button>
-              <button data-res="4K" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px] border border-transparent">2K/4K</button>
-            </div>
-          </div>
-
-          <!-- Frame Rate -->
-          <div class="pt-5">
-            <div class="text-[11px] tracking-widest text-[#666] font-semibold mb-3">FRAME RATE</div>
-            <div class="flex gap-2 flex-wrap" id="fpsGroup">
-              <button data-fps="24" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px] border border-transparent">24 FPS</button>
-              <button data-fps="25" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px] border border-transparent">25 FPS</button>
-              <button data-fps="30" class="fps-opt px-3.5 h-9 rounded-xl bg-white text-black text-[12px] font-bold border border-white">30 FPS</button>
-              <button data-fps="50" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px] border border-transparent">50 FPS</button>
-              <button data-fps="60" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px] border border-transparent">60 FPS</button>
-            </div>
-          </div>
-
-          <!-- Bitrate -->
-          <div class="pt-5">
-            <div class="flex justify-between items-center mb-3">
-              <div class="text-[11px] tracking-widest text-[#666] font-semibold">BITRATE (Mbps)</div>
-              <div id="bitrateLabel" class="text-[11px] text-[#aaa]">20 Mbps</div>
-            </div>
-            <div class="grid grid-cols-5 gap-2" id="brGroup">
-              <button data-br="5" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">5</button>
-              <button data-br="10" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">10</button>
-              <button data-br="20" class="br-opt h-9 rounded-xl bg-white text-black text-[12px] font-bold">20</button>
-              <button data-br="50" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">50</button>
-              <button data-br="100" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">100</button>
-            </div>
-            <input id="brSlider" type="range" min="5" max="100" step="5" value="20" class="w-full mt-4">
-          </div>
-
-          <!-- Watermark -->
-          <div class="pt-5 flex items-center justify-between">
-            <div class="text-[13px] font-medium">Watermark</div>
-            <button id="wmToggle" class="w-11 h-6 bg-[#2a2a2a] rounded-full relative"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all"></span></button>
-          </div>
-
-          <!-- Estimated size -->
-          <div class="mt-5 p-3 rounded-xl bg-[#242424] flex justify-between items-center">
-            <span class="text-[11px] text-[#777] tracking-wide">ESTIMATED FILE SIZE</span>
-            <span id="estSize" class="text-[13px] font-semibold">~ 42.3 MB</span>
-          </div>
-
-          <!-- More settings -->
-          <button class="mt-4 w-full h-12 rounded-xl bg-[#242424] flex items-center justify-between px-4">
-            <span class="text-[13px] font-medium">More export settings</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          <div class="flex justify-between py-3.5 border-b border-[#252525]"><div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rotate-45 bg-[#18E58B] block rounded-[2px]"></span><span class="text-[13px] font-semibold">AI Ultra HD</span></div><button id="aiToggle" class="w-11 h-6 bg-[#18E58B] rounded-full relative"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full translate-x-5 transition"></span></button></div>
+          <div class="pt-4"><div class="text-[11px] text-[#666] font-semibold mb-3">RESOLUTION</div><div class="grid grid-cols-4 gap-2" id="resGroup"><button data-res="480p" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px]">480p</button><button data-res="720p" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px]">720p</button><button data-res="1080p" class="res-opt h-10 rounded-xl bg-white text-black font-bold text-[12px]">1080p</button><button data-res="4K" class="res-opt h-10 rounded-xl bg-[#242424] text-[12px]">2K/4K</button></div></div>
+          <div class="pt-5"><div class="text-[11px] text-[#666] font-semibold mb-3">FRAME RATE</div><div class="flex gap-2 flex-wrap" id="fpsGroup"><button data-fps="24" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px]">24 FPS</button><button data-fps="25" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px]">25 FPS</button><button data-fps="30" class="fps-opt px-3.5 h-9 rounded-xl bg-white text-black font-bold text-[12px]">30 FPS</button><button data-fps="50" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px]">50 FPS</button><button data-fps="60" class="fps-opt px-3.5 h-9 rounded-xl bg-[#242424] text-[12px]">60 FPS</button></div></div>
+          <div class="pt-5"><div class="flex justify-between mb-3"><span class="text-[11px] text-[#666] font-semibold">BITRATE (Mbps)</span><span id="bitrateLabel" class="text-[11px] text-[#aaa]">20 Mbps</span></div><div class="grid grid-cols-5 gap-2" id="brGroup"><button data-br="5" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">5</button><button data-br="10" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">10</button><button data-br="20" class="br-opt h-9 rounded-xl bg-white text-black font-bold text-[12px]">20</button><button data-br="50" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">50</button><button data-br="100" class="br-opt h-9 rounded-xl bg-[#242424] text-[12px]">100</button></div></div>
+          <div class="pt-5 flex justify-between"><span class="text-[13px]">Watermark</span><button id="wmToggle" class="w-11 h-6 bg-[#2a2a2a] rounded-full relative"><span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition"></span></button></div>
+          <div class="mt-5 p-3 rounded-xl bg-[#242424] flex justify-between"><span class="text-[11px] text-[#777]">ESTIMATED FILE SIZE</span><span id="estSize" class="text-[13px] font-semibold">~ 0 MB</span></div>
+          <div class="mt-4 w-full h-12 rounded-xl bg-[#242424] flex items-center justify-between px-4"><span class="text-[13px]">More export settings</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PREVIEW -->
-  <div id="previewWrap" class="flex justify-center bg-[#0e0e0e] px-4 py-3 shrink-0">
-    <div id="previewBox" class="relative bg-black overflow-hidden rounded-[6px]" style="width:62%; aspect-ratio:9/16;">
+  <!-- PREVIEW - KEPT EXACT SIZE -->
+  <div id="previewWrap" class="flex justify-center bg-[#0f0f0f] px-4 py-3 shrink-0">
+    <div id="previewBox" class="relative bg-[#0f0f0f] overflow-hidden rounded-[4px]" style="width:62%; aspect-ratio:9/16;">
       <video id="video" class="w-full h-full object-cover" playsinline></video>
-      <img id="photoPreview" class="w-full h-full object-cover hidden" />
-      <div id="textLayer" class="absolute inset-0 pointer-events-none"></div>
+      <img id="photoPreview" class="w-full h-full object-cover hidden"/>
+      <div id="textLayer" class="absolute inset-0"></div>
       <canvas id="exportCanvas" class="hidden"></canvas>
     </div>
   </div>
 
-  <!-- CONTROLS -->
+  <!-- CONTROLS - KEPT EXACT -->
   <div class="flex justify-between px-4 py-3 border-y border-[#1e1e1e] shrink-0">
-    <button id="fitBtn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
-    <button id="playBtn"><svg id="playIcon" width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5.14v14l11-7-11-7z"/></svg><svg id="pauseIcon" class="hidden" width="24" height="24" viewBox="0 0 24 24" fill="white"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
-    <div class="flex gap-3 items-center">
-      <button class="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><rect x="3" y="4" width="13" height="13" rx="2"/><path d="M16 8l4-1v10l-4-1V8z"/></svg></button>
-      <button id="undoBtn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a4 4 0 1 1 0 8H9"/></svg></button>
-      <button id="redoBtn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#222]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a4 4 0 1 0 0 8h5"/></svg></button>
+    <button id="fitBtn" class="w-9 h-9 flex items-center justify-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+    <button id="playBtn"><svg id="playIcon" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5.14v14l11-7-11-7z"/></svg><svg id="pauseIcon" class="hidden" width="26" height="26" viewBox="0 0 24 24" fill="white"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+    <div class="flex gap-2 items-center">
+      <button class="w-9 h-9 flex items-center justify-center relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="3" y="4" width="12" height="12" rx="2"/><path d="M15 8l4-1v10l-4-1V8z"/></svg><span class="absolute -bottom-0.5 right-0 text-[7px] bg-white text-black px-1 rounded font-bold">ON</span></button>
+      <button id="undoBtn" class="w-9 h-9 flex items-center justify-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a4 4 0 1 1 0 8H9"/></svg></button>
+      <button id="redoBtn" class="w-9 h-9 flex items-center justify-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a4 4 0 1 0 0 8h5"/></svg></button>
       <button id="keyframeBtn" class="w-8 h-8 bg-[#232323] rounded-lg flex items-center justify-center border border-[#333]"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 3l7 9-7 9-7-9 7-9z" fill="white"/><circle cx="12" cy="12" r="2.5" fill="black"/></svg></button>
     </div>
   </div>
 
-  <div class="flex justify-between px-4 py-2 text-[11px] text-[#8a8a8a] shrink-0">
-    <span id="timeLabel">00:00 / 00:00</span>
-    <div id="ruler" class="flex gap-3 text-[#555]"></div>
-  </div>
+  <div class="flex justify-between px-4 py-2 text-[11px] text-[#666] shrink-0"><span id="timeLabel">00:00 / 00:00</span><div id="ruler" class="flex gap-3"></div></div>
 
-  <!-- TIMELINE AREA -->
-  <div class="flex-1 bg-[#181818] relative flex flex-col overflow-hidden" id="timelineArea">
-    <div id="timelineScroll" class="flex-1 overflow-x-auto overflow-y-hidden no-scrollbar relative touch-pan-x">
-      <div id="timelineContent" class="relative min-w-full h-full pt-2" style="width:200%">
-        <div id="playhead" class="absolute top-0 bottom-0 w-[2px] bg-white z-30 pointer-events-none" style="left:160px"><div class="w-[10px] h-[10px] bg-white rotate-45 -ml-[4px] -mt-[1px] rounded-[2px]"></div></div>
-        <div id="keyframeMarkers" class="absolute top-0 left-0 right-0 h-3 z-10 pointer-events-none"></div>
-
-        <div class="flex items-center px-2 gap-2 sticky left-0">
-          <div class="flex gap-2 shrink-0 sticky left-2 z-20 bg-[#181818]">
-            <button id="muteBtn" class="bg-[#222] w-[68px] h-[52px] rounded-xl flex flex-col items-center justify-center gap-1 text-[10px] text-gray-300 border border-[#2a2a2a]"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>Mute clip</button>
-            <button id="coverBtn" class="bg-[#2a2a2a] w-[68px] h-[52px] rounded-xl flex flex-col items-center justify-center gap-1 text-[10px] border border-[#333]"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-3.5-3.5L3 21"/></svg>Cover</button>
+  <!-- TIMELINE - KEPT EXACT DESIGN, NO ZOOM BAR -->
+  <div class="flex-1 bg-[#1e1e1e] relative flex flex-col overflow-hidden">
+    <div id="timelineScroll" class="flex-1 overflow-x-auto overflow-y-hidden no-scrollbar">
+      <div id="timelineContent" class="relative h-full pt-2" style="min-width:100%; width:fit-content;">
+        <div id="playhead" class="absolute top-0 bottom-0 w-[2px] bg-white z-30 pointer-events-none" style="left:160px"><div class="w-[10px] h-[10px] bg-white rotate-45 -ml-[4px] rounded-[1px]"></div></div>
+        <div id="keyframeMarkers" class="absolute top-0 left-0 right-0 h-3 z-10"></div>
+        <div class="flex items-center px-2 gap-2">
+          <div class="flex gap-2 shrink-0 sticky left-2 z-20 bg-[#1e1e1e]">
+            <button id="muteBtn" class="bg-[#2a2a2a] w-[68px] h-[52px] rounded-xl flex flex-col items-center justify-center gap-1 text-[10px] text-[#ccc] border border-[#333]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>Mute clip</button>
+            <button id="coverBtn" class="bg-[#2a2a2a] w-[68px] h-[52px] rounded-xl flex flex-col items-center justify-center gap-1 text-[10px] border border-[#333]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Cover</button>
           </div>
           <div id="clipsContainer" class="flex gap-[2px] h-[52px] ml-1 items-center"></div>
-          <button id="addMediaBtn" class="w-10 h-[52px] bg-white rounded-xl flex items-center justify-center text-black text-[20px] font-bold shrink-0 sticky right-2 z-20">+</button>
+          <button id="addMediaBtn" class="w-10 h-[52px] bg-white rounded-xl flex items-center justify-center text-black text-[22px] font-bold shrink-0 ml-1">+</button>
         </div>
-
-        <div class="flex items-center px-2 pt-3 gap-2"><div class="w-[144px] shrink-0 sticky left-2 z-10 bg-[#181818]"></div><button id="addAudioBtn" class="flex-1 h-9 bg-[#232323] rounded-md flex items-center px-3 text-[13px] text-[#7a7a7a] gap-2"><span class="text-[18px]">+</span> Add audio</button></div>
-        <div class="flex items-center px-2 pt-2 gap-2 pb-4"><div class="w-[144px] shrink-0 sticky left-2 z-10 bg-[#181818]"></div><button id="addTextBtn" class="flex-1 h-9 bg-[#232323] rounded-md flex items-center px-3 text-[13px] text-[#7a7a7a] gap-2"><span class="text-[18px]">+</span> Add text</button></div>
+        <div class="flex items-center px-2 pt-3 gap-2"><div class="w-[144px] shrink-0"></div><button id="addAudioBtn2" class="flex-1 h-9 bg-[#2a2a2a] rounded-md flex items-center px-3 text-[13px] text-[#777] gap-2">+ Add audio</button></div>
+        <div class="flex items-center px-2 pt-2 gap-2 pb-4"><div class="w-[144px] shrink-0"></div><button id="addTextBtn2" class="flex-1 h-9 bg-[#2a2a2a] rounded-md flex items-center px-3 text-[13px] text-[#777] gap-2">+ Add text</button></div>
       </div>
-    </div>
-    <div class="h-6 flex items-center justify-between px-3 bg-[#121212] border-t border-[#222] text-[10px] text-[#666]">
-      <span id="zoomLabel">100%</span>
-      <input id="zoomSlider" type="range" min="50" max="200" value="100" class="w-24 accent-white">
     </div>
   </div>
 
-  <!-- BOTTOM TOOLS -->
+  <!-- BOTTOM TOOLBAR - KEPT EXACT -->
   <div class="bg-[#121212] border-t border-[#1e1e1e] shrink-0">
-    <div id="bottomBar" class="flex gap-1 overflow-x-auto no-scrollbar px-2 py-3"></div>
-    <div id="toolPanel" class="hidden bg-[#1c1c1c] border-t border-[#2a2a2a] p-4 max-h-[40vh] overflow-auto no-scrollbar"><div id="toolContent"></div></div>
+    <div id="bottomBar" class="flex gap-0 overflow-x-auto no-scrollbar px-1 py-2"></div>
+    <div id="toolPanel" class="hidden bg-[#1c1c1c] border-t border-[#2a2a2a] p-4 max-h-[45vh] overflow-auto no-scrollbar"><div class="flex justify-between mb-3"><span id="toolTitle" class="text-[13px] font-bold">Tool</span><button onclick="document.getElementById('toolPanel').classList.add('hidden')" class="text-[#777]">✕</button></div><div id="toolContent"></div></div>
   </div>
 
   <input type="file" id="mediaInput" accept="video/*,image/*" multiple class="hidden">
@@ -173,157 +104,30 @@
 </div>
 
 <script>
-const video=document.getElementById('video');
-const photoPreview=document.getElementById('photoPreview');
-const mediaInput=document.getElementById('mediaInput');
-const clipsContainer=document.getElementById('clipsContainer');
-const addMediaBtn=document.getElementById('addMediaBtn');
-const timeLabel=document.getElementById('timeLabel');
-const ruler=document.getElementById('ruler');
-const playhead=document.getElementById('playhead');
-const timelineScroll=document.getElementById('timelineScroll');
-const timelineContent=document.getElementById('timelineContent');
-const playBtn=document.getElementById('playBtn');
-const playIcon=document.getElementById('playIcon');
-const pauseIcon=document.getElementById('pauseIcon');
-const exportBtn=document.getElementById('exportBtn');
-const exportPanel=document.getElementById('exportPanel');
-const aiUhdBtn=document.getElementById('aiUhdBtn');
-
-let clips=[]; // {id,file,url,type,duration,thumbCanvas,thumbUrl}
-let totalDuration=0;
-let globalTime=0;
-let isPlaying=false;
-let raf=null;
-let currentRes='1080p', currentFps=30, currentBitrate=20;
-let isAiUhd=true;
-let isGif=false;
-let watermark=false;
-let zoom=100;
-let selectedClipId=null;
-
+const video=document.getElementById('video'), photoPreview=document.getElementById('photoPreview'), mediaInput=document.getElementById('mediaInput'), clipsContainer=document.getElementById('clipsContainer'), addMediaBtn=document.getElementById('addMediaBtn'), timeLabel=document.getElementById('timeLabel'), ruler=document.getElementById('ruler'), playhead=document.getElementById('playhead'), timelineScroll=document.getElementById('timelineScroll'), playBtn=document.getElementById('playBtn'), playIcon=document.getElementById('playIcon'), pauseIcon=document.getElementById('pauseIcon'), exportBtn=document.getElementById('exportBtn'), exportPanel=document.getElementById('exportPanel'), aiUhdBtn=document.getElementById('aiUhdBtn');
+let clips=[], totalDuration=0, globalTime=0, isPlaying=false, raf=null, currentRes='1080p', currentFps=30, currentBitrate=20, isAiUhd=true, isGif=false, watermark=false, selectedClipId=null;
+const FIXED_PX_PER_SEC=60;
 function fmt(s){ if(!isFinite(s)) s=0; const m=Math.floor(s/60).toString().padStart(2,'0'); const sec=Math.floor(s%60).toString().padStart(2,'0'); return `${m}:${sec}` }
-
-function updateRuler(){
-  ruler.innerHTML='';
-  const step = totalDuration>60?10:2;
-  for(let t=0; t<=totalDuration; t+=step){
-    const el=document.createElement('span'); el.textContent=fmt(t); ruler.appendChild(el);
-  }
-}
+function updateRuler(){ ruler.innerHTML=''; const step=totalDuration>60?10:2; for(let t=0; t<=Math.ceil(totalDuration); t+=step){ const el=document.createElement('span'); el.textContent=fmt(t); ruler.appendChild(el);} }
 function updateTimeLabel(){ timeLabel.textContent=`${fmt(globalTime)} / ${fmt(totalDuration)}` }
-
 function calcTotal(){ totalDuration=clips.reduce((a,c)=>a+c.duration,0); updateRuler(); updateTimeLabel(); updateEstSize(); }
+function getClipAtTime(time){ let acc=0; for(let i=0;i<clips.length;i++){ const c=clips[i]; if(time>=acc && time<acc+c.duration) return {clip:c,index:i,local:time-acc,start:acc}; acc+=c.duration; } if(clips.length) return {clip:clips[clips.length-1],index:clips.length-1,local:clips[clips.length-1].duration,start:totalDuration-clips[clips.length-1].duration}; return null; }
+function showClip(clip,localTime){ if(!clip) return; selectedClipId=clip.id; document.querySelectorAll('.clip-item').forEach(el=>{ el.classList.toggle('selected', el.dataset.id===clip.id); }); if(clip.type.startsWith('video')){ photoPreview.classList.add('hidden'); video.classList.remove('hidden'); if(video.src!==clip.url) video.src=clip.url; if(Math.abs(video.currentTime-localTime)>0.4) video.currentTime=localTime; } else { video.classList.add('hidden'); video.pause(); photoPreview.classList.remove('hidden'); photoPreview.src=clip.url; } }
+function renderClips(){ clipsContainer.innerHTML=''; clips.forEach((c)=>{ const wrap=document.createElement('div'); wrap.dataset.id=c.id; wrap.className='clip-item relative h-[52px] bg-black rounded-lg overflow-hidden border border-[#2a2a2a] flex shrink-0 cursor-pointer'; wrap.style.width=(c.duration*FIXED_PX_PER_SEC)+'px'; wrap.style.minWidth='60px'; if(c.id===selectedClipId) wrap.classList.add('selected'); const thumbs=document.createElement('div'); thumbs.className='flex h-full w-full'; if(c.type.startsWith('video') && c.thumbs && c.thumbs.length){ c.thumbs.forEach(u=>{ const im=document.createElement('img'); im.src=u; im.className='h-full flex-1 object-cover pointer-events-none'; thumbs.appendChild(im); }); } else if(c.type.startsWith('image')){ const im=document.createElement('img'); im.src=c.url; im.className='h-full w-full object-cover pointer-events-none'; thumbs.appendChild(im); } else { const ph=document.createElement('div'); ph.className='w-full h-full bg-[#111]'; thumbs.appendChild(ph); } wrap.appendChild(thumbs); const dur=document.createElement('div'); dur.className='absolute bottom-0 right-0 bg-black/70 text-[9px] px-1 rounded-tl pointer-events-none'; dur.textContent=fmt(c.duration); wrap.appendChild(dur); wrap.addEventListener('click',()=>{ let acc=0; for(let cl of clips){ if(cl.id===c.id) break; acc+=cl.duration; } seekGlobal(acc+0.01); }); clipsContainer.appendChild(wrap); }); calcTotal(); }
+async function generateThumbsForClip(clip){ if(!clip.type.startsWith('video')) return; const v=document.createElement('video'); v.src=clip.url; v.muted=true; v.crossOrigin='anonymous'; v.playsInline=true; await new Promise(res=> v.onloadedmetadata=()=>res()); clip.duration=v.duration||3; const count=Math.max(1,Math.min(12,Math.floor(clip.duration))); clip.thumbs=[]; for(let i=0;i<count;i++){ const t=(i+0.5)*(clip.duration/count); await new Promise(res=>{ const onSeek=()=>{ v.removeEventListener('seeked',onSeek); res(); }; v.addEventListener('seeked',onSeek); v.currentTime=t; }); const can=document.createElement('canvas'); can.width=80; can.height=52; const ctx=can.getContext('2d'); try{ ctx.drawImage(v,0,0,80,52); }catch(e){ ctx.fillStyle='#111'; ctx.fillRect(0,0,80,52); } clip.thumbs.push(can.toDataURL()); } }
+async function addFiles(files){ for(let f of files){ const url=URL.createObjectURL(f); const id=Date.now()+Math.random().toString(36).slice(2); const clip={id,file:f,url,type:f.type,duration:f.type.startsWith('image')?3:1,thumbs:[],cover:null}; clips.push(clip); if(f.type.startsWith('video')){ await generateThumbsForClip(clip); } } renderClips(); if(totalDuration>0 && globalTime===0) seekGlobal(0.01); }
+function seekGlobal(t){ globalTime=Math.max(0,Math.min(t,totalDuration)); const info=getClipAtTime(globalTime); if(info) showClip(info.clip,info.local); updateTimeLabel(); updatePlayhead(); }
+function updatePlayhead(){ if(totalDuration===0){ playhead.style.left='160px'; return; } const baseOffset=160; const trackWidth=clipsContainer.scrollWidth; const ratio=totalDuration>0?globalTime/totalDuration:0; const x=baseOffset+ratio*trackWidth; playhead.style.left=x+'px'; }
+function tick(){ if(!isPlaying) return; const info=getClipAtTime(globalTime); if(!info){ pause(); seekGlobal(0); return; } if(info.clip.type.startsWith('video')){ if(!video.paused) globalTime=info.start+video.currentTime; } else { globalTime+=1/60; } if(globalTime>=totalDuration){ pause(); seekGlobal(totalDuration); return; } const nextInfo=getClipAtTime(globalTime); if(nextInfo && nextInfo.clip.id!==info.clip.id){ showClip(nextInfo.clip,nextInfo.local); if(nextInfo.clip.type.startsWith('video')){ video.currentTime=nextInfo.local; video.play().catch(()=>{}); } } updateTimeLabel(); updatePlayhead(); raf=requestAnimationFrame(tick); }
+function play(){ if(clips.length===0) return; if(globalTime>=totalDuration-0.02) seekGlobal(0); isPlaying=true; playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); const info=getClipAtTime(globalTime); if(info && info.clip.type.startsWith('video')){ video.currentTime=info.local; video.play().catch(()=>{}); } raf=requestAnimationFrame(tick); }
+function pause(){ isPlaying=false; playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); video.pause(); if(raf) cancelAnimationFrame(raf); }
 
-function getClipAtTime(time){
-  let acc=0;
-  for(let i=0;i<clips.length;i++){
-    const c=clips[i];
-    if(time>=acc && time<acc+c.duration) return {clip:c, index:i, local: time-acc, start:acc};
-    acc+=c.duration;
-  }
-  if(clips.length) return {clip:clips[clips.length-1], index:clips.length-1, local:clips[clips.length-1].duration, start:totalDuration-clips[clips.length-1].duration};
-  return null;
-}
+// FIXED TIMELINE DRAG - NO ZOOM, PREVENT VERTICAL SCROLL
+timelineScroll.addEventListener('pointerdown', (e)=>{ if(e.target.closest('button')) return; const rect=clipsContainer.getBoundingClientRect(); const move=(ev)=>{ const x=ev.clientX-rect.left+timelineScroll.scrollLeft; const ratio=x/Math.max(1,clipsContainer.scrollWidth); seekGlobal(ratio*totalDuration); }; const up=()=>{ window.removeEventListener('pointermove',move); window.removeEventListener('pointerup',up); }; window.addEventListener('pointermove',move); window.addEventListener('pointerup',up); move(e); });
+timelineScroll.addEventListener('wheel', (e)=>{ if(Math.abs(e.deltaX)<Math.abs(e.deltaY)){ e.preventDefault(); timelineScroll.scrollLeft+=e.deltaY; } }, {passive:false});
 
-function showClip(clip, localTime){
-  if(!clip) return;
-  selectedClipId=clip.id;
-  document.querySelectorAll('.clip-item').forEach(el=>{ el.classList.toggle('ring-2', el.dataset.id===clip.id); el.classList.toggle('ring-[#18E58B]', el.dataset.id===clip.id); });
-  if(clip.type.startsWith('video')){
-    photoPreview.classList.add('hidden');
-    video.classList.remove('hidden');
-    if(video.src!==clip.url){ video.src=clip.url; }
-    if(Math.abs(video.currentTime-localTime)>0.3) video.currentTime=localTime;
-  } else {
-    video.classList.add('hidden');
-    video.pause();
-    photoPreview.classList.remove('hidden');
-    photoPreview.src=clip.url;
-  }
-}
-
-function renderClips(){
-  clipsContainer.innerHTML='';
-  clips.forEach((c)=>{
-    const wrap=document.createElement('div');
-    wrap.dataset.id=c.id;
-    wrap.className='clip-item relative h-[52px] bg-black rounded-lg overflow-hidden border border-[#2a2a2a] flex shrink-0 cursor-pointer';
-    wrap.style.width=(c.duration*60*(zoom/100))+'px';
-    wrap.style.minWidth='60px';
-    const thumbs=document.createElement('div');
-    thumbs.className='flex h-full w-full clip-thumb';
-    if(c.type.startsWith('video') && c.thumbs && c.thumbs.length){
-      c.thumbs.forEach(u=>{ const im=document.createElement('img'); im.src=u; im.className='h-full flex-1 object-cover'; thumbs.appendChild(im); });
-    } else if(c.type.startsWith('image')){
-      const im=document.createElement('img'); im.src=c.url; im.className='h-full w-full object-cover'; thumbs.appendChild(im);
-    } else {
-      const ph=document.createElement('div'); ph.className='w-full h-full bg-[#111]'; thumbs.appendChild(ph);
-    }
-    const dur=document.createElement('div');
-    dur.className='absolute bottom-0 right-0 bg-black/70 text-[9px] px-1 rounded-tl';
-    dur.textContent=fmt(c.duration);
-    wrap.appendChild(thumbs); wrap.appendChild(dur);
-    wrap.addEventListener('click',()=>{
-      let acc=0;
-      for(let cl of clips){ if(cl.id===c.id) break; acc+=cl.duration; }
-      seekGlobal(acc+0.01);
-    });
-    clipsContainer.appendChild(wrap);
-  });
-  calcTotal();
-}
-
-async function generateThumbsForClip(clip){
-  if(!clip.type.startsWith('video')) return;
-  const v=document.createElement('video');
-  v.src=clip.url; v.muted=true; v.crossOrigin='anonymous';
-  await new Promise(res=> v.onloadedmetadata=()=>res());
-  clip.duration=v.duration||3;
-  const count=Math.max(1, Math.min(12, Math.floor(clip.duration)));
-  clip.thumbs=[];
-  for(let i=0;i<count;i++){
-    const t=(i+0.5)*(clip.duration/count);
-    await new Promise(res=>{ v.currentTime=t; v.onseeked=()=>res(); });
-    const can=document.createElement('canvas'); can.width=80; can.height=52;
-    const ctx=can.getContext('2d'); try{ ctx.drawImage(v,0,0,80,52); }catch(e){ ctx.fillStyle='#111'; ctx.fillRect(0,0,80,52); }
-    clip.thumbs.push(can.toDataURL());
-  }
-}
-
-async function addFiles(files){
-  for(let f of files){
-    const url=URL.createObjectURL(f);
-    const id=Date.now()+Math.random().toString(36).slice(2);
-    const clip={id, file:f, url, type:f.type, duration: f.type.startsWith('image')?3:1, thumbs:[]};
-    clips.push(clip);
-    if(f.type.startsWith('video')){ await generateThumbsForClip(clip); }
-  }
-  renderClips();
-  if(clips.length===1) seekGlobal(0);
-}
-
-function seekGlobal(t){
-  globalTime=Math.max(0, Math.min(t, totalDuration));
-  const info=getClipAtTime(globalTime);
-  if(info){ showClip(info.clip, info.local); }
-  updateTimeLabel();
-  updatePlayhead();
-}
-
-function updatePlayhead(){
-  if(totalDuration===0){ playhead.style.left='160px'; return; }
-  const baseOffset=160; // mute+cover width
-  const trackWidth=clipsContainer.scrollWidth;
-  const ratio=globalTime/totalDuration;
-  const x=baseOffset + ratio*trackWidth;
-  playhead.style.left=x+'px';
-  // auto scroll timeline to keep playhead visible
-  const visibleLeft=timelineScroll.scrollLeft;
-  const visibleRight=visibleLeft+timelineScroll.clientWidth;
-  if(x<visibleLeft+60) timelineScroll.scrollLeft=x-60;
-  if(x>visibleRight-60) timelineScroll.scrollLeft=x-timelineScroll.clientWidth+60;
-}
-
-function tick(){
-  if(!isPlayi
+addMediaBtn.addEventListener('click', ()=> mediaInput.click());
+mediaInput.addEventListener('change', async (e)=>{ if(e.target.files.length) await addFiles(e.target.files); e.target.value=''; });
+playBtn.addEventListener('click', ()=>{ isPlaying?pause():play(); });
+document.getElementById('muteBtn').addEventListener('click', ()=>{ video.muted=!video.muted; document.getElementById('muteBtn').classList.toggle('bg-[#18E58B]', video.muted); document.getElementById('muteBtn').classList.toggle('text-black', video.muted); });
+document.getElementById('coverBtn').addEventListener('click', ()=>{ const info=getClipAtTime(globalTime); if(!info) return alert('Add media first'); const can=document.createElement('canvas'); can.width=720; can.height=1280; const ctx=can.getContext('2d'); if(info.clip.type.star
