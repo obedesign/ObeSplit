@@ -1314,6 +1314,54 @@ async function generateThumbsForClip(clip){
     clip.thumbs=[];
 
     for(let i=0;i<count;i++){
+
+    const t=
+    (i+0.5)*
+    (clip.duration/count);
+
+    await new Promise(res=>{
+
+        const onSeek=()=>{
+
+            v.removeEventListener(
+                'seeked',
+                onSeek
+            );
+
+            res();
+
+        };
+
+        v.addEventListener(
+            'seeked',
+            onSeek
+        );
+
+        v.currentTime=t;
+
+    });
+
+    const can=document.createElement('canvas');
+
+    can.width=80;
+    can.height=52;
+
+    const ctx=can.getContext('2d');
+
+    try{
+
+        ctx.drawImage(
+            v,
+            0,
+            0,
+            80,
+            52
+        );
+
+    }catch(e){
+
+        ctx.fillStyle='#111';
+      
       
   
           
