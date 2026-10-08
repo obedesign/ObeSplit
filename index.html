@@ -1034,6 +1034,55 @@ function updateEstSize(){
   const mb=(seconds*currentBitrate/8);
   
   document.getElementById('estSize').textContent=
-    `~ ${mb.toFixed(1)} MB`;
+`~ ${mb.toFixed(1)} MB`;
+
+}
+
+function calcTotal(){
+
+totalDuration=
+clips.reduce(
+(a,c)=>a+c.duration,
+0
+);
+
+updateRuler();
+updateTimeLabel();
+updateEstSize();
+
+}
+
+/*
+==================================================
+=====
+CLIP FINDING
+==================================================
+===== */
+
+function getClipAtTime(time){
+
+let acc=0;
+
+for(let i=0;i<clips.length;i++){
+
+const c=clips[i];
+
+if(
+time>=acc &&
+time<acc+c.duration
+){
+
+return{
+clip:c,
+index:i,
+local:time-acc,
+start:acc
+};
+
+};
+
+}
+
+acc+=c.duration;
   
   
