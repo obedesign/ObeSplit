@@ -988,4 +988,52 @@ const PX_PER_SEC=60;
 function fmt(s){
 
 (!isFinite(s)) s=0;
+
+  const m=Math.floor(s/60)
+  .toString()
+  .padStart(2,'0');
+
+const sec=Math.floor(s%60)
+  .toString()
+  .padStart(2,'0');
+
+return `${m}:${sec}`;
+}
+
+function updateRuler(){
+  
+  ruler.innerHTML='';
+  
+  const step=totalDuration>60?10:2;
+  
+  for(
+    let t=0;
+    t<=Math.ceil(totalDuration);
+    t+=step
+  ){
+    
+    const el=document.createElement('span');
+    
+    el.textContent=fmt(t);
+    
+    ruler.appendChild(el);
+  }
+}
+
+function updateTimeLabel(){
+  
+  timeLabel.textContent=
+    `${fmt(globalTime)} / ${fmt(totalDuration)}`;
+    
+}
+
+function updateEstSize(){
+  
+  const seconds=Math.max(totalDuration,0);
+  
+  const mb=(seconds*currentBitrate/8);
+  
+  document.getElementById('estSize').textContent=
+    `~ ${mb.toFixed(1)} MB`;
+  
   
