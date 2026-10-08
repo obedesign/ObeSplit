@@ -1360,7 +1360,55 @@ async function generateThumbsForClip(clip){
 
     }catch(e){
 
-        ctx.fillStyle='#111';
+    ctx.fillStyle='#111';
+
+    ctx.fillRect(
+        0,
+        0,
+        80,
+        52
+    );
+
+}
+
+clip.thumbs.push(
+    can.toDataURL()
+);
+
+}
+
+}
+
+/*
+============================================================
+=====
+     ADD MEDIA
+============================================================
+===== */
+
+async function addFiles(files){
+
+    for(let f of files){
+
+        const url=
+        URL.createObjectURL(f);
+
+        const id=
+        Date.now()+
+        Math.random()
+            .toString(36)
+            .slice(2);
+
+        const clip={
+            id,
+            file:f,
+            url,
+            type:f.type,
+            duration:
+                f.type.startsWith('image')
+                ?3
+                :1,
+          
       
       
   
