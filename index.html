@@ -1083,6 +1083,53 @@ start:acc
 
 }
 
-acc+=c.duration;
+        acc+=c.duration;
+    }
+
+    if(clips.length){
+
+        const last=clips[clips.length-1];
+
+        return{
+            clip:last,
+            index:clips.length-1,
+            local:last.duration,
+            start:totalDuration-last.duration
+        };
+
+    }
+
+    return null;
+}
+
+
+/*
+=====================================================
+     SHOW CLIP
+===================================================== */
+
+function showClip(clip,localTime){
+
+    if(!clip)return;
+
+    selectedClipId=clip.id;
+
+    document
+        .querySelectorAll('.clip-item')
+        .forEach(el=>{
+
+            el.classList.toggle(
+                'selected',
+                el.dataset.id===clip.id
+            );
+
+        });
+
+
+    if(clip.type.startsWith('video')){
+
+        photoPreview.classList.add('hidden');
+        video.classList.remove('hidden');
+      
   
   
