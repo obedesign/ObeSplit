@@ -900,8 +900,46 @@ button:active{
       </button>
     </div>
 
-    <div 
-      id="toolContent" 
-      class="p-4 max-h-[45vh] overflow-auto no-scrollbar">
-      <div>
-        
+          <div 
+        id="toolContent" 
+        class="p-4 max-h-[45vh] overflow-auto 
+no-scrollbar">
+      </div>
+
+    </div>
+
+  </div>
+
+  <input 
+    type="file" 
+    id="mediaInput" 
+    accept="video/*,image/*" 
+    multiple 
+    class="hidden">
+
+  <input 
+    type="file" 
+    id="audioInput" 
+    accept="audio/*" 
+    class="hidden">
+
+  <audio 
+    id="bgAudio" 
+    class="hidden">
+  </audio>
+
+</div>
+
+<script>
+
+/*
+=====================================================
+  CORE ELEMENTS
+===================================================== */
+
+const video=document.getElementById('video');
+const photoPreview=document.getElementById('photoPreview');
+const mediaInput=document.getElementById('mediaInput');
+const clipsContainer=document.getElementById('clipsContainer');
+const 
+  
