@@ -1177,6 +1177,52 @@ function renderClips(){
         wrap.dataset.id=c.id;
 
         wrap.className=
+    'clip-item relative h-[52px] bg-black rounded-lg overflow-hidden flex shrink-0 cursor-pointer';
+
+wrap.style.width=
+    (c.duration*PX_PER_SEC)+'px';
+
+wrap.style.minWidth='60px';
+
+
+if(c.id===selectedClipId){
+    wrap.classList.add('selected');
+}
+
+
+const thumbs=document.createElement('div');
+
+thumbs.className=
+    'flex h-full w-full';
+
+
+if(
+    c.type.startsWith('video') &&
+    c.thumbs &&
+    c.thumbs.length
+){
+
+    c.thumbs.forEach(u=>{
+
+        const im=document.createElement('img');
+
+        im.src=u;
+
+        im.className=
+            'h-full flex-1 object-cover pointer-events-none';
+
+        thumbs.appendChild(im);
+
+    });
+
+}
+
+else if(c.type.startsWith('image')){
+
+    const im=document.createElement('img');
+
+    im.src=c.url;
+  
           
     
   
