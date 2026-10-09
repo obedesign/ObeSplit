@@ -3894,7 +3894,63 @@ window.setCrop=function(type){
 
         video.style.objectFit='contain';
 
-        photoPreview.style.objectFit='contain';
-      
-      
+                photoPreview.style.objectFit='contain';
+
+    }
+    
+    else{
+
+        video.style.objectFit='cover';
+
+        photoPreview.style.objectFit='cover';
+
+    }
+
+};
+
+
+/* =========================================================================
+    TRANSFORM
+========================================================================= */
+
+let previewScale=1;
+let previewRotation=0;
+
+
+window.transformScale=function(amount){
+
+    previewScale*=amount;
+
+    video.style.transform=
+        `scale(${previewScale}) rotate(${previewRotation}deg)`;
+
+    photoPreview.style.transform=
+        `scale(${previewScale}) rotate(${previewRotation}deg)`;
+
+};
+
+
+window.rotatePreview=function(deg){
+
+    previewRotation+=deg;
+
+    video.style.transform=
+        `scale(${previewScale}) rotate(${previewRotation}deg)`;
+
+    photoPreview.style.transform=
+        `scale(${previewScale}) rotate(${previewRotation}deg)`;
+
+};
+
+
+window.resetTransform=function(){
+
+    previewScale=1;
+    previewRotation=0;
+
+    video.style.transform='';
+    photoPreview.style.transform='';
+
+};
+  
     
