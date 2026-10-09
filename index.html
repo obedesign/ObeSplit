@@ -2709,6 +2709,55 @@ if(key==='split'){
 /* VOLUME */
 
 if(key==='volume'){
+
+    const value=
+    Math.round(
+        (info.clip.volume??1)*100
+    );
+
+    area.innerHTML=`
+        <div class="panel-card p-4">
+            <div class="flex justify-between text-[12px] mb-3">
+                <span>Volume</span>
+                <span id="clipVolumeLabel">
+                    ${value}%
+                </span>
+            </div>
+            <input
+                id="clipVolume"
+                type="range"
+                min="0"
+                max="200"
+                value="${value}"
+                class="w-full range-green">
+        </div>
+    `;
+
+    document
+    .getElementById('clipVolume')
+    .oninput=e=>{
+
+        const v=
+        Number(e.target.value);
+
+        info.clip.volume=
+        v/100;
+
+        video.volume=
+        v/100;
+
+        document
+        .getElementById(
+            'clipVolumeLabel'
+        )
+        .textContent=v+'%';
+
+    };
+
+    return;
+
+  }
+  
   
     
   
