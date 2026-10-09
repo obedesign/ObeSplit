@@ -3728,5 +3728,61 @@ window.duplicateSelectedClip=function(){
   };
 
   clips.splice(
-    info.index+1,
+  info.index+1,
+  0,
+  copy
+);
+
+selectedClipId=copy.id;
+
+renderClips();
+
+};
+
+/* ==========================================================
+    REPLACE
+========================================================== */
+
+window.replaceSelectedClip=function(){
+
+  const info=
+    getClipAtTime(globalTime);
+
+  if(!info){
+
+    mediaInput.click();
+
+    return;
+
+  }
+
+
+  const input=
+    document.createElement('input');
+
+  input.type='file';
+
+  input.accept=
+    'video/*,image/*';
+
+  input.onchange=async()=>{
+
+    const file=
+      input.files[0];
+
+    if(!file)return;
+
+    const old=info.clip;
+
+    old.file=file;
+
+    old.url=
+      URL.createObjectURL(file);
+
+    old.type=file.type;
+
+    old.thumbs=[];
+
+    old.duration=
+      
     
