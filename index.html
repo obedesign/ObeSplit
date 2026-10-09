@@ -1561,9 +1561,60 @@ function tick(){
 
     return;
 
-  }
+}
+
+const nextInfo=
+getClipAtTime(globalTime);
+
+
+if(
+  nextInfo &&
+  nextInfo.clip.id!==info.clip.id
+){
+
+  showClip(
+    nextInfo.clip,
+    nextInfo.local
+  );
+
+
+  if(
+    nextInfo.clip.type.startsWith('video')
+  ){
+
+    video.currentTime=
+      nextInfo.local;
+
+    video.play().catch(()=>({}));
 
   }
+
+}
+
+
+updateTimeLabel();
+updatePlayhead();
+
+raf=requestAnimationFrame(tick);
+
+}
+
+function play(){
+
+  if(clips.length===0)return;
+
+  if(globalTime>=totalDuration-0.02){
+    seekGlobal(0);
+  }
+
+  isPlaying=true;
+
+  playIcon.classList.add('hidden');
+
+  pauseIcon.classList.remove('hidden');
+
+  const info=
+  getClipAtTime(globalTime);
   
   
       
