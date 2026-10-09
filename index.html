@@ -3463,6 +3463,59 @@ function adjustSlider(id,label,value){
                 \${value}
             </span>
 
-        </div>
-        
-        
+            </div>
+
+    <input
+      id="${id}Adjust"
+      data-adjust="${id}"
+      type="range"
+      min="0"
+      max="200"
+      value="${value}"
+      class="w-full range-green">
+
+    </div>
+  `;
+}
+
+function bindAdjustSliders(){
+
+    document
+    .querySelectorAll('[data-adjust]')
+    .forEach(input=>{
+
+        input.addEventListener(
+          'input',
+          applyAdjustments
+        );
+
+    });
+
+}
+
+function applyAdjustments(){
+
+    const brightness=
+    Number(
+      document.getElementById(
+        'brightnessAdjust'
+      )?.value||100
+    )/100;
+
+    const contrast=
+    Number(
+      document.getElementById(
+        'contrastAdjust'
+      )?.value||100
+    )/100;
+
+    const saturation=
+    Number(
+      document.getElementById(
+        'saturationAdjust'
+      )?.value||100
+    )/100;
+
+    const blur=
+    Number(
+      
