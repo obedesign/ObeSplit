@@ -2247,7 +2247,50 @@ if(id==='audio'){
     title.textContent='Audio';
     
     content.innerHTML=`
-      
+    <div class="space-y-3">
+        <button
+onclick="document.getElementById('audioInput').click()"
+            class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+            Add Audio
+        </button>
+        
+        <div class="panel-card p-4">
+            <div class="flex justify-between text-[12px] mb-2">
+                <span>Volume</span>
+                <span id="audioVolumeLabel">100%</span>
+            </div>
+            
+            <input
+            id="audioVolumeRange"
+            type="range"
+            min="0"
+            max="100"
+            value="100"
+            class="w-full range-green">
+        </div>
+    </div>
+`;
+
+const range=
+document.getElementById(
+    'audioVolumeRange'
+);
+
+range.oninput=()=>{
+    
+    const value=
+    Number(range.value);
+    
+    video.volume=value/100;
+    
+    document.getElementById(
+        'audioVolumeLabel'
+    ).textContent=value+'%';
+    
+};
+
+return;
+  
         
           
     
