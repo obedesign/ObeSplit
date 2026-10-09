@@ -3620,7 +3620,65 @@ window.splitCurrentClip=function(){
       )
       :[];
 
-    second.thumbs=
-      clip.thumbs
+            second.thumbs=
+            clip.thumbs
+            ?clip.thumbs.slice(
+                Math.max(
+                    1,
+                    Math.floor(
+                        clip.thumbs.length*
+                        (local/clip.duration)
+                    )
+                )
+            )
+            :[];
+
+    }
+
+    clips.splice(
+        info.index,
+        1,
+        first,
+        second
+    );
+
+    selectedClipId=second.id;
+
+    renderClips();
+
+    seekGlobal(
+        info.start+
+        local+
+        0.001
+    );
+
+};
+
+
+/* ==========================================================================
+   DELETE
+========================================================================== */
+
+window.deleteSelectedClip=function(){
+
+    const info=
+        getClipAtTime(globalTime);
+
+    if(!info)return;
+
+    clips.splice(
+        info.index,
+        1
+    );
+
+    selectedClipId=
+        clips.length
+        ?clips[
+            Math.min(
+                info.index,
+                clips.length-1
+            )
+        ]
+      
     
   
