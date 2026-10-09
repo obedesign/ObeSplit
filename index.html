@@ -2604,12 +2604,62 @@ if(id==='background'){
 
     <div class="flex gap-3">
 
-        <button 
-          onclick="setPreviewBackground('#000000')"
-          class="w-11 h-11 rounded-full bg-black border border-[#444]">
-          
-    
-  
+        <button
+   onclick="setPreviewBackground('#000000')"
+   class="w-11 h-11 rounded-full bg-black border border-[#444]">
+</button>
+
+<button
+   onclick="setPreviewBackground('#1a1a1a')"
+   class="w-11 h-11 rounded-full bg-[#1a1a1a] border border-[#444]">
+</button>
+
+<button
+   onclick="setPreviewBackground('#18E58B')"
+   class="w-11 h-11 rounded-full bg-[#18E58B]">
+</button>
+
+</div>
+`;
+
+return;
+
+}
+
+}
+
+/* ==========================================================================
+   EDIT TOOL SELECTION
+   ========================================================================== */
+
+window.selectEditTool=function(key){
+
+    document
+    .querySelectorAll('[data-edit-tool]')
+    .forEach(btn=>{
+
+        btn.classList.toggle(
+          'active',
+          btn.dataset.editTool===key
+        );
+
+    });
+
+
+    const area=
+    document.getElementById(
+      'editOptionArea'
+    );
+
+    const info=
+    getClipAtTime(globalTime);
+
+
+    if(
+      info &&
+      key=='replace'
+    ){
+      
     
   
         
