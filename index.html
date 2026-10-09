@@ -4058,5 +4058,69 @@ window.freezeFrame=function(){
     freezeClip
   );
 
-  renderClips();
+      renderClips();
+
+}catch(e){}
+
+};
+
+
+
+/* =========================================================================
+    MASK
+========================================================================= */
+
+window.applyMask=function(type){
+
+    if(type==='circle'){
+
+        video.style.clipPath=
+        'circle(45% at 50% 50%)';
+
+        photoPreview.style.clipPath=
+        'circle(45% at 50% 50%)';
+
+    }
+
+    else if(type==='square'){
+
+        video.style.clipPath=
+        'inset(10%)';
+
+        photoPreview.style.clipPath=
+        'inset(10%)';
+
+    }
+
+};
+
+
+
+window.clearMask=function(){
+
+    video.style.clipPath='';
+
+    photoPreview.style.clipPath='';
+
+};
+
+
+
+/* =========================================================================
+    UNLINK
+========================================================================= */
+
+window.unlinkClip=function(){
+
+    showFeatureMessage(
+        'Unlink'
+    );
+
+};
+
+
+
+/* =========================================================================
+    FEATURE MESSAGE
+    
       
