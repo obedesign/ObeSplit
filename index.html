@@ -3308,10 +3308,61 @@ if(key==='translate'){
                 id="translateLang"
                 class="w-full bg-[#242424] border border-[#333] rounded-xl px-3 h-11 text-xs">
 
-                <option>English</option>
-                <option>Spanish</option>
-                <option>French</option>
-                
+                        <option>English</option>
+        <option>Spanish</option>
+        <option>French</option>
+        <option>Portuguese</option>
+        <option>Arabic</option>
+        <option>German</option>
+
+      </select>
+
+      <button
+        onclick="showFeatureMessage('Video Translator')"
+        class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+        Translate Video
+
+      </button>
+
+    </div>
+  `;
+
+  return;
+
+}
+
+
+/* FREEZE */
+
+if(key==='freeze'){
+
+  area.innerHTML=`
+
+    <button
+      onclick="freezeFrame()"
+      class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+      Freeze Current Frame
+
+    </button>
+  `;
+
+  return;
+
+}
+
+
+/* REVERSE */
+
+if(key==='reverse'){
+
+  area.innerHTML=`
+
+    <button
+      onclick="showFeatureMessage('Reverse')"
+      class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+      
             
     
         
