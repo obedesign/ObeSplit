@@ -1877,13 +1877,62 @@ document
         }
     );
 
-/* =========================================================================
+/* =============================================================
    UNDO / REDO
-========================================================================= */
+============================================================= */
+
+document
+  .getElementById('undoBtn')
+  .addEventListener(
+    'click',
+    ()=>{
+        
+        const tl=
+          document.getElementById(
+            'textLayer'
+          );
+          
+        if(tl.lastChild){
+          tl.removeChild(
+            tl.lastChild
+          );
+        }
+        
+    }
+  );
   
-       
+document
+  .getElementById('redoBtn')
+  .addEventListener(
+    'click',
+    ()=>{
+        
+        video.style.filter='';
+        
+        photoPreview.style.filter='';
+        
+    }
+  );
   
-  
+/* =============================================================
+   KEYFRAME
+============================================================= */
+
+document
+  .getElementById('keyframeBtn')
+  .addEventListener(
+    'click',
+    ()=>{
+        
+        const marker=
+          document.createElement('div');
+          
+        marker.className=
+          'absolute top-1 w-2.5 h-2.5 bg-white rotate-45 rounded-[1px] border border-black';
+          
+        marker.style.left=
+          playhead.style.left;
+      
   
       
       
