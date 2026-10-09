@@ -2193,6 +2193,61 @@ function openTool(id){
         title.textContent='Edit';
         
         content.innerHTML=`
+    <div 
+      id="editToolsScroll" 
+      class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+      
+      \${editTools.map(
+        ([key,name])=>`
+        
+        <button 
+          class="edit-tool" 
+          data-edit-tool="${key}" 
+          onclick="selectedEditTool('${key}')">
+          
+          ${icons[key]}
+          
+          <span>${name}</span>
+          
+        </button>
+        
+        `
+      ).join('')}
+      
+    </div>
+    
+    <div 
+      id="editOptionArea" 
+      class="mt-3">
+      
+      <div 
+        class="panel-card p-4 text-center">
+        
+        <div class="text-[13px] font-semibold">
+          Select an Edit tool
+        </div>
+        
+        <div class="text-[11px] text-[#777] mt-1">
+          Choose a tool above to edit the selected clip.
+        </div>
+        
+      </div>
+      
+    </div>
+`;
+
+return;
+
+}
+
+/* AUDIO */
+
+if(id==='audio'){
+
+    title.textContent='Audio';
+    
+    content.innerHTML=`
+      
         
           
     
