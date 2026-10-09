@@ -4005,9 +4005,58 @@ window.freezeFrame=function(){
 
     try{
 
-    if(info.clip.type.startsWith('video')){
+  if(info.clip.type.startsWith('video')){
+      
+      ctx.drawImage(
+        video,
+        0,
+        0,
+        can.width,
+        can.height
+      );
+
+  }else{
 
     ctx.drawImage(
-    video,
+      photoPreview,
+      0,
+      0,
+      can.width,
+      can.height
+    );
+
+  }
+
+  const data=
+    can.toDataURL(
+      'image/png'
+    );
+
+
+  const freezeClip={
+    id:
+      Date.now()+
+      Math.random(),
+
+    file:null,
+
+    url:data,
+
+    type:'image/png',
+
+    duration:3,
+
+    thumbs:[],
+
+    cover:null
+
+  };
+
+  clips.splice(
+    info.index+1,
     0,
+    freezeClip
+  );
+
+  renderClips();
       
