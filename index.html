@@ -3952,5 +3952,62 @@ window.resetTransform=function(){
     photoPreview.style.transform='';
 
 };
-  
-    
+
+/* ==========================================================================
+   EXTRACT AUDIO
+========================================================================== */
+
+window.extractAudio=function(){
+
+    const info=
+    getClipAtTime(globalTime);
+
+    if(
+    !info ||
+    !info.clip.type.startsWith('video')
+    ){
+
+    alert('Select a video clip first');
+
+    return;
+
+    }
+
+    alert(
+    'Audio extraction is ready to be connected to the project audio track.'
+    );
+
+};
+
+
+
+
+/* ==========================================================================
+   FREEZE
+========================================================================== */
+
+window.freezeFrame=function(){
+
+    const info=
+    getClipAtTime(globalTime);
+
+    if(!info)return;
+
+    const can=
+    document.createElement('canvas');
+
+    can.width=720;
+    can.height=1280;
+
+    const ctx=
+    can.getContext('2d');
+
+
+    try{
+
+    if(info.clip.type.startsWith('video')){
+
+    ctx.drawImage(
+    video,
+    0,
+      
