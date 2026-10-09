@@ -2656,10 +2656,60 @@ window.selectEditTool=function(key){
 
 
     if(
-      info &&
-      key=='replace'
-    ){
-      
+  !info && 
+  key!=='replace'
+){
+    
+    area.innerHTML=`
+    
+       <div class="panel-card p-4 text-center">
+       
+          <div class="text-[13px] font-semibold">
+             Add media first
+          </div>
+          
+          <div class="text-[11px] text-[#777] mt-1">
+             This Edit tool needs a selected clip.
+          </div>
+          
+       </div>
+    `;
+    
+    return;
+    
+}
+
+/* SPLIT */
+
+if(key==='split'){
+    
+    area.innerHTML=`
+    
+       <div class="panel-card p-4">
+       
+          <div class="text-[12px] font-semibold mb-3">
+             Split at ${fmt(globalTime)}
+          </div>
+          
+          <button
+             onclick="splitCurrentClip()"
+             class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+             
+             Split Clip
+             
+          </button>
+          
+       </div>
+    `;
+    
+    return;
+    
+}
+
+/* VOLUME */
+
+if(key==='volume'){
+  
     
   
         
