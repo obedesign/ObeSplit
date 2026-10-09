@@ -1457,7 +1457,57 @@ function seekGlobal(t){
    );
 
    const info=
-   getClipAtTime(globalTime);
+       getClipAtTime(globalTime);
+
+    if(info){
+
+        showClip(
+            info.clip,
+            info.local
+        );
+
+    }
+
+    updateTimeLabel();
+    updatePlayhead();
+
+}
+
+/*
+=========================================================
+=====
+    PLAYHEAD
+=========================================================
+===== */
+
+function updatePlayhead(){
+
+    if(totalDuration===0){
+
+        playhead.style.left='160px';
+
+        return;
+
+    }
+
+    const baseOffset=160;
+
+    const trackWidth=
+    Math.max(
+        clipsContainer.scrollWidth,
+        clips.reduce(
+            (a,c)=>a+c.duration*PX_PER_SEC,
+            0
+        )
+    );
+
+    const ratio=
+    totalDuration>0
+    ?globalTime/totalDuration
+    :0;
+
+    const x=
+  
   
       
       
