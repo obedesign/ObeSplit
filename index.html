@@ -3517,5 +3517,58 @@ function applyAdjustments(){
     )/100;
 
     const blur=
-    Number(
-      
+Number(
+    document.getElementById(
+        'blurAdjust'
+    )?.value||0
+);
+
+const filter=
+`brightness(${brightness})
+contrast(${contrast})
+saturate(${saturation})
+blur(${blur}px)`;
+
+video.style.filter=filter;
+
+photoPreview.style.filter=filter;
+
+['brightness','contrast','saturation','blur']
+.forEach(id=>{
+
+    const input=
+    document.getElementById(
+        id+'Adjust'
+    );
+
+    const label=
+    document.getElementById(
+        id+'Label'
+    );
+
+    if(input&&label){
+
+        label.textContent=
+        id==='blur'
+        ?input.value+'px'
+        :input.value+'%';
+
+    }
+
+});
+
+}
+
+/* ==========================================================
+   SPLIT
+========================================================== */
+
+window.splitCurrentClip=function(){
+
+    const info=
+    getClipAtTime(globalTime);
+
+    if(!info)return;
+
+    const clip=info.clip;
+  
