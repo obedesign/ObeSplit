@@ -4120,7 +4120,59 @@ window.unlinkClip=function(){
 
 
 
-/* =========================================================================
-    FEATURE MESSAGE
-    
+/* ==========================================================================
+   FEATURE MESSAGE
+========================================================================== */
+
+window.showFeatureMessage=function(name){
+
+  alert(
+    `${name} is added to the ObeSplit Edit system.`
+  );
+
+};
+
+/* ==========================================================================
+   TEXT
+========================================================================== */
+
+window.addTxt=function(){
+
+  const input=
+    document.getElementById(
+      'textInp'
+    );
+
+  const value=
+    input?.value;
+
+  if(!value)return;
+
+
+  const d=
+    document.createElement('div');
+
+  d.textContent=value;
+
+  d.className=
+    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/60 px-3 py-1.5 rounded-lg text-white font-bold';
+
+  d.contentEditable=true;
+
+
+  document
+    .getElementById(
+      'textLayer'
+    )
+    .appendChild(d);
+
+
+  input.value='';
+
+};
+
+/* ==========================================================================
+   CAPTIONS
+========================================================================== */
+  
       
