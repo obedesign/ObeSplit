@@ -3836,6 +3836,65 @@ window.applyFilter=function(filter){
   photoPreview.style.filter=filter;
 
 };
-  
+
+/* =========================================================================
+   ANIMATION
+========================================================================= */
+
+window.animatePreview=function(type){
+
+    if(type==='zoom'){
+
+        video.style.transform=
+        'scale(1.1)';
+
+        photoPreview.style.transform=
+        'scale(1.1)';
+
+    }
+
+    else if(type==='fade'){
+
+        video.style.opacity='.65';
+
+        photoPreview.style.opacity='.65';
+
+    }
+
+    else{
+
+        resetTransform();
+
+        video.style.opacity='1';
+
+        photoPreview.style.opacity='1';
+
+    }
+
+};
+
+
+
+
+/* =========================================================================
+   CROP
+========================================================================= */
+
+window.setCrop=function(type){
+
+    if(type==='square'){
+
+        video.style.objectFit='cover';
+
+        photoPreview.style.objectFit='cover';
+
+    }
+
+    else if(type==='fit'){
+
+        video.style.objectFit='contain';
+
+        photoPreview.style.objectFit='contain';
+      
       
     
