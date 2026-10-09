@@ -4281,4 +4281,62 @@ window.setAspect=function(
 ){
 
   const box=
-    
+  document.getElementById(
+    'previewBox'
+  );
+
+box.style.aspectRatio=ratio;
+
+box.style.width=width;
+
+};
+
+
+/* =========================================================================
+    BACKGROUND
+========================================================================= */
+
+window.setPreviewBackground=function(color){
+
+  document
+    .getElementById(
+      'previewWrap'
+    )
+    .style.background=color;
+
+};
+
+
+/* =========================================================================
+    BOTTOM TOOL BUTTONS
+========================================================================= */
+
+document
+  .querySelectorAll('.tool-btn')
+  .forEach(button=>{
+
+    button.addEventListener(
+      'click',
+      ()=>{
+
+        document
+          .querySelectorAll(
+            '.tool-btn'
+          )
+          .forEach(b=>{
+
+            b.classList.remove(
+              'text-[#18E58B]'
+            );
+
+            b.classList.add(
+              'text-[#999]'
+            );
+
+          });
+
+
+        button.classList.remove(
+          'text-[#999]'
+        );
+        
