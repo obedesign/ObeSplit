@@ -1716,9 +1716,64 @@ move(e);
 
 addMediaBtn.addEventListener(
   'click',
-  () => mediaInput.click()
+  ()=>mediaInput.click()
 );
-  
+
+mediaInput.addEventListener(
+  'change',
+  async e=>{
+
+    if(e.target.files.length){
+
+      await addFiles(
+        e.target.files
+      );
+
+    }
+
+    e.target.value='';
+
+  }
+);
+
+/* ==========================================================
+  PLAY BUTTON
+========================================================== */
+
+playBtn.addEventListener(
+  'click',
+  ()=>{
+
+    isPlaying
+    ?pause()
+    :play();
+
+  }
+);
+
+/* ==========================================================
+  MUTE
+========================================================== */
+
+document
+ .getElementById('muteBtn')
+ .addEventListener(
+   'click',
+   ()=>{
+
+     const info=
+       getClipAtTime(globalTime);
+
+     if(info){
+
+       info.clip.muted=
+         !info.clip.muted;
+
+       video.muted=
+         info.clip.muted;
+
+     }else{
+       
   
   
   
