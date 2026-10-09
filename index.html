@@ -3003,10 +3003,53 @@ if(key==='adjust'){
             ${adjustSlider('saturation', 'Saturation', 100)}
             ${adjustSlider('blur', 'Blur', 0)}
 
+                </div>
+    `;
+
+    bindAdjustSliders();
+
+    return;
+}
+
+/* FILTERS */
+
+if (key === 'filters') {
+
+    area.innerHTML = `
+        <div class="grid grid-cols-3 gap-2">
+            <button onclick="clearFilter()"
+                class="small-control py-3 text-xs">
+                Natural
+            </button>
+
+            <button onclick="applyFilter('grayscale(1)')"
+                class="small-control py-3 text-xs">
+                Mono
+            </button>
+
+            <button onclick="applyFilter('sepia(1)')"
+                class="small-control py-3 text-xs">
+                Warm
+            </button>
+
+            <button onclick="applyFilter('contrast(1.2) saturate(1.4)')"
+                class="small-control py-3 text-xs">
+                Vivid
+            </button>
+
+            <button onclick="applyFilter('brightness(1.2)')"
+                class="small-control py-3 text-xs">
+                Bright
+            </button>
+
+            <button onclick="applyFilter('saturate(.6)')"
+                class="small-control py-3 text-xs">
+                Soft
+            </button>
         </div>
     `;
 
+    return;
 }
-  
   
   
