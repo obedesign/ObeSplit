@@ -2444,6 +2444,60 @@ if(id==='captions'){
 if(id==='filters'){
 
     title.textContent='Filters';
+
+content.innerHTML=`
+    <div class="grid grid-cols-3 gap-2">
+
+        <button
+            onclick="clearFilter()"
+            class="small-control py-3 text-xs">
+
+            Natural
+
+        </button>
+
+        <button
+            onclick="applyFilter('contrast(1.2) saturate(1.4)')"
+            class="small-control py-3 text-xs">
+
+            Vivid
+
+        </button>
+
+        <button
+            onclick="applyFilter('grayscale(1)')"
+            class="small-control py-3 text-xs">
+
+            Mono
+
+        </button>
+
+    </div>
+`;
+
+return;
+
+}
+
+/* STICKER */
+
+if(id==='sticker'){
+
+    title.textContent='Sticker';
+
+    content.innerHTML=`
+
+        <div class="grid grid-cols-4 gap-2">
+
+            <button
+                onclick="addShapeSticker('circle')"
+                class="small-control h-12 flex items-center justify-center">
+
+                <svg width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="8"/>
+                </svg>
+                
   
     
   
