@@ -2852,11 +2852,57 @@ if(key==='delete'){
 
            Choose Replacement Media
 
-        </button>
-
+                </button>
     `;
-
     return;
+}
+
+/* CROP */
+
+if(key==='crop'){
+
+    area.innerHTML=`
+        <div class="panel-card p-4 space-y-3">
+        
+            <div class="text-[12px]">
+                Crop
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2">
+            
+                <button onclick="setCrop('center')"
+                    class="small-control py-3 text-xs">
+                    Center
+                </button>
+                
+                <button onclick="setCrop('square')"
+                    class="small-control py-3 text-xs">
+                    Square
+                </button>
+                
+                <button onclick="setCrop('fit')"
+                    class="small-control py-3 text-xs">
+                    Fit
+                </button>
+                
+            </div>
+            
+        </div>
+    `;
+    
+    return;
+
+}
+
+/* OPACITY */
+
+if(key==='opacity'){
+
+    area.innerHTML=`
+        <div class="panel-card p-4">
+        
+            <div class="flex justify-between text-[12px] mb-3">
+            
     
           
     
