@@ -2137,14 +2137,63 @@ stroke-width="1.6">
 const editTools=[
 
   ['split', 'Split'],
-  ['volume', 'Volume'],
-  ['animations', 'Animations'],
-  ['effects', 'Effects'],
-  ['delete', 'Delete'],
-  ['speed', 'Speed'],
-  ['crop', 'Crop'],
-  
+['volume', 'Volume'],
+['animations', 'Animations'],
+['effects', 'Effects'],
+['delete', 'Delete'],
+['speed', 'Speed'],
+['crop', 'Crop'],
+['duplicate', 'Duplicate'],
+['replace', 'Replace'],
+['overlay', 'Overlay'],
+['adjust', 'Adjust'],
+['filters', 'Filters'],
+['removebg', 'Remove background'],
+['airemove', 'AI remove'],
+['opacity', 'Opacity'],
+['transform', 'Transform'],
+['extract', 'Extract audio'],
+['voice', 'Isolate voice'],
+['audiofx', 'Audio effects'],
+['enhance', 'Enhance voice'],
+['translate', 'Video translator'],
+['freeze', 'Freeze'],
+['reverse', 'Reverse'],
+['mask', 'Mask'],
+['unlink', 'Unlink']
+
+];
+
+/* =========================================================================
+   OPEN TOOL
+========================================================================= */
+
+function openTool(id){
+
+    const panel=
+      document.getElementById(
+        'toolPanel'
+      );
       
+    const content=
+      document.getElementById(
+        'toolContent'
+      );
+      
+    const title=
+      document.getElementById(
+        'toolTitle'
+      );
+      
+      
+    panel.classList.remove('hidden');
+    
+    if(id=='edit'){
+    
+        title.textContent='Edit';
+        
+        content.innerHTML=`
+        
           
     
   
