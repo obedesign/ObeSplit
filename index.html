@@ -1663,10 +1663,62 @@ clipsContainer.getBoundingClientRect();
 
 const move=ev=>{
 
-const x=
-ev.clientX-
-rect.left+
-timelineScroll.scrollLeft;
+const x =
+  ev.clientX -
+  rect.left +
+  timelineScroll.scrollLeft;
+
+const ratio =
+  x /
+  Math.max(
+    1,
+    clipsContainer.scrollWidth
+  );
+
+seekGlobal(
+  ratio * totalDuration
+);
+
+};
+
+const up = () => {
+
+  window.removeEventListener(
+    'pointermove',
+    move
+  );
+
+  window.removeEventListener(
+    'pointerup',
+    up
+  );
+
+};
+
+window.addEventListener(
+  'pointermove',
+  move
+);
+
+window.addEventListener(
+  'pointerup',
+  up
+);
+
+move(e);
+
+}
+);
+
+/* ==========================================================
+   MEDIA INPUT
+========================================================== */
+
+addMediaBtn.addEventListener(
+  'click',
+  () => mediaInput.click()
+);
+  
   
   
   
