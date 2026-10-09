@@ -1931,8 +1931,62 @@ document
           'absolute top-1 w-2.5 h-2.5 bg-white rotate-45 rounded-[1px] border border-black';
           
         marker.style.left=
-          playhead.style.left;
-      
+  playhead.style.left;
+
+document
+  .getElementById(
+    'keyframeMarkers'
+  )
+  .appendChild(marker);
+
+  }
+);
+
+/* ==========================================================================
+   EDIT ICONS
+========================================================================== */
+
+const icons={
+
+split: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+<path d="M6 3l6 9-6 9"/>
+<path d="M18 3l-6 9 6 9"/>
+</svg>`,
+
+volume: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+<path d="M11 5L6 9H2v6h4l5 4V5z"/>
+<path d="M15 9a4 4 0 0 1 0 6"/>
+</svg>`,
+
+animations: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+<path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/>
+</svg>`,
+
+effects: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+<path d="M12 2l2.2 6.8H21l-5.5 4 2.1 6.8-5.6-4.1-5.6 4.1 2.1-6.8-5.5-4h6.8L12 2z"/>
+</svg>`,
+
+delete: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+<path d="M4 7h16"/>
+<path d="M10 11v6M14 11v6"/>
+<path d="M6 7l1 14h10l1-14"/>
+<path d="M9 7V4h6v3"/>
+</svg>`,
+
+speed: `
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+stroke-width="1.6">
+
   
       
       
