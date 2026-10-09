@@ -3784,5 +3784,58 @@ window.replaceSelectedClip=function(){
     old.thumbs=[];
 
     old.duration=
+  file.type.startsWith('image')
+  ?3
+  :1;
+
+if(file.type.startsWith('video')){
+
+  await generateThumbsForClip(
+    old
+  );
+
+}
+
+renderClips();
+
+seekGlobal(
+  info.start+0.01
+);
+
+};
+
+input.click();
+
+};
+
+/* =========================================================================
+   SPEED
+========================================================================= */
+
+window.setClipSpeed=function(speed){
+
+  const info=
+    getClipAtTime(globalTime);
+
+  if(!info)return;
+
+  info.clip.speed=speed;
+
+  video.playbackRate=speed;
+
+};
+
+/* =========================================================================
+   FILTERS
+========================================================================= */
+
+window.applyFilter=function(filter){
+
+  video.style.filter=filter;
+
+  photoPreview.style.filter=filter;
+
+};
+  
       
     
