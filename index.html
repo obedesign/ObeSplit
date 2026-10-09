@@ -1614,7 +1614,60 @@ function play(){
   pauseIcon.classList.remove('hidden');
 
   const info=
-  getClipAtTime(globalTime);
+getClipAtTime(globalTime);
+
+if(
+info &&
+info.clip.type.startsWith('video')
+){
+
+video.currentTime=
+info.local;
+
+video.play().catch(()=>{});
+
+}
+
+raf=requestAnimationFrame(tick);
+
+}
+
+function pause(){
+isPlaying=false;
+
+playIcon.classList.remove('hidden');
+
+pauseIcon.classList.add('hidden');
+
+video.pause();
+
+if(raf){
+cancelAnimationFrame(raf);
+raf=null;
+}
+
+}
+
+/* =========================================================
+TIMELINE DRAG SEEK
+========================================================= */
+
+timelineScroll.addEventListener(
+'pointerdown',
+e=>{
+
+if(e.target.closest('button'))return;
+
+const rect=
+clipsContainer.getBoundingClientRect();
+
+const move=ev=>{
+
+const x=
+ev.clientX-
+rect.left+
+timelineScroll.scrollLeft;
+  
   
   
       
