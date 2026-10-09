@@ -2805,14 +2805,59 @@ if(key==='delete'){
                 Delete the selected clip?
             </div>
 
-            <button
-                onclick="deleteSelectedClip()"
-                class="w-full h-11 bg-[#d93838] text-white rounded-xl font-bold text-[13px]">
-                
-  
+                    <button
+           onclick="deleteSelectedClip()"
+           class="w-full h-11 bg-[#d93838] text-white rounded-xl font-bold text-[13px]">
+
+           Delete Clip
+
+        </button>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+  /* DUPLICATE */
+
+  if(key==='duplicate'){
+
+    area.innerHTML=`
+
+        <button
+           onclick="duplicateSelectedClip()"
+           class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+           Duplicate Clip
+
+        </button>
+
+    `;
+
+    return;
+
+  }
+
+  /* REPLACE */
+
+  if(key==='replace'){
+
+    area.innerHTML=`
+
+        <button
+           onclick="replaceSelectedClip()"
+           class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+           Choose Replacement Media
+
+        </button>
+
+    `;
+
+    return;
     
-  
-        
           
     
   
