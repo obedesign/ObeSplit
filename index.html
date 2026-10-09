@@ -2756,8 +2756,59 @@ if(key==='volume'){
 
     return;
 
-  }
-  
+}
+
+/* SPEED */
+
+if(key==='speed'){
+
+    area.innerHTML=`
+
+        <div class="grid grid-cols-4 gap-2">
+
+            <button onclick="setClipSpeed(.25)"
+                class="small-control py-3 text-xs">
+                0.25x
+            </button>
+
+            <button onclick="setClipSpeed(.5)"
+                class="small-control py-3 text-xs">
+                0.5x
+            </button>
+
+            <button onclick="setClipSpeed(1)"
+                class="small-control py-3 text-xs">
+                1x
+            </button>
+
+            <button onclick="setClipSpeed(2)"
+                class="small-control py-3 text-xs">
+                2x
+            </button>
+
+        </div>
+    `;
+
+    return;
+
+}
+
+/* DELETE */
+
+if(key==='delete'){
+
+    area.innerHTML=`
+
+        <div class="panel-card p-4">
+
+            <div class="text-[12px] mb-3">
+                Delete the selected clip?
+            </div>
+
+            <button
+                onclick="deleteSelectedClip()"
+                class="w-full h-11 bg-[#d93838] text-white rounded-xl font-bold text-[13px]">
+                
   
     
   
