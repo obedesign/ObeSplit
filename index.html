@@ -3257,6 +3257,61 @@ if(key==='audiofx'){
             class="small-control py-3 text-xs">
             
             Bass
+
+</button>
+
+<button
+    onclick="showFeatureMessage('Voice')"
+    class="small-control py-3 text-xs">
+
+    Voice
+
+</button>
+
+</div>
+`;
+
+return;
+
+}
+
+
+/* ENHANCE VOICE */
+
+if(key==='enhance'){
+
+    area.innerHTML=`
+
+        <button
+            onclick="showFeatureMessage('Enhance Voice')"
+            class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+            Enhance Voice
+
+        </button>
+    `;
+
+    return;
+
+}
+
+
+/* TRANSLATOR */
+
+if(key==='translate'){
+
+    area.innerHTML=`
+
+        <div class="space-y-2">
+
+            <select
+                id="translateLang"
+                class="w-full bg-[#242424] border border-[#333] rounded-xl px-3 h-11 text-xs">
+
+                <option>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                
             
     
         
