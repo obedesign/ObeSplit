@@ -2396,6 +2396,54 @@ if(id=='effects'){
 return;
 
 }
+
+/* OVERLAY */
+
+if(id==='overlay'){
+
+    title.textContent='Overlay';
+
+    content.innerHTML=`
+
+        <button 
+            onclick="document.getElementById('mediaInput').click()" 
+            class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+            Add Overlay Media
+
+        </button>
+    `;
+
+    return;
+
+}
+
+/* CAPTIONS */
+
+if(id==='captions'){
+
+    title.textContent='Captions';
+
+    content.innerHTML=`
+
+        <button 
+            onclick="autoCaption()" 
+            class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+
+            Auto Captions
+
+        </button>
+    `;
+
+    return;
+
+}
+
+/* FILTERS */
+
+if(id==='filters'){
+
+    title.textContent='Filters';
   
     
   
