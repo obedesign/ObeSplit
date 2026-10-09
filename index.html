@@ -2497,7 +2497,64 @@ if(id==='sticker'){
                     fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="8"/>
                 </svg>
-                
+
+</button>
+
+<button
+  onclick="addShapeSticker('square')"
+  class="small-control h-12 flex items-center
+justify-center">
+
+  <svg width="24" height="24" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="5" y="5" width="14" height="14" rx="2"/>
+  </svg>
+
+</button>
+
+<button
+  onclick="addShapeSticker('star')"
+  class="small-control h-12 flex items-center
+justify-center">
+
+  <svg width="24" height="24" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 3l2.5 6 6.5.5-5 4.2 1.5
+6.3-5.5-3.3-5.5 3.3 1.5-6.3-5-4.2 6.5-.5L12 3z"/>
+  </svg>
+
+</button>
+
+<button
+  onclick="addShapeSticker('line')"
+  class="small-control h-12 flex items-center
+justify-center">
+
+  <svg width="24" height="24" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M5 19L19 5"/>
+  </svg>
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+/* ASPECT */
+
+if(id=='aspect'){
+
+  title.textContent='Aspect Ratio';
+
+  content.innerHTML=`
+
+    <div class="flex gap-2 flex-wrap">
+    
   
     
   
