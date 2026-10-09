@@ -4171,8 +4171,60 @@ window.addTxt=function(){
 
 };
 
-/* ==========================================================================
+/* =========================================================================
    CAPTIONS
-========================================================================== */
-  
-      
+========================================================================= */
+
+window.autoCaption=()=>{
+
+    const d=
+        document.createElement('div');
+
+    d.textContent=
+        'Caption '+fmt(globalTime);
+
+    d.className=
+        'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/60 px-3 py-1.5 rounded-lg text-white font-bold';
+
+
+    document
+        .getElementById(
+            'textLayer'
+        )
+        .appendChild(d);
+
+};
+
+
+/* =========================================================================
+   STICKERS
+========================================================================= */
+
+window.addShapeSticker=function(type){
+
+    const d=
+        document.createElement('div');
+
+    d.className=
+        'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2';
+
+
+    if(type==='circle'){
+
+        d.innerHTML=`
+            <div style="
+                width:55px;
+                height:55px;
+                border:4px solid #18E58B;
+                border-radius:50%;">
+            </div>
+        `;
+
+    }
+
+    else if(type==='square'){
+
+        d.innerHTML=`
+            <div style="
+                width:55px;
+                
