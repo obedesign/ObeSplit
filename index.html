@@ -2954,13 +2954,59 @@ document
 
 if(key==='transform'){
 
-  area.innerHTML=`
+    area.innerHTML=`
 
-    <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-2 gap-2">
 
-        <button onclick="transformScale(1.1)"
-            class="small-control py-3 text-xs">
-            Scale +
-            
+            <button onclick="transformScale(1.1)"
+                class="small-control py-3 text-xs">
+                Scale +
+            </button>
+
+            <button onclick="transformScale(.9)"
+                class="small-control py-3 text-xs">
+                Scale -
+            </button>
+
+            <button onclick="rotatePreview(-90)"
+                class="small-control py-3 text-xs">
+                Rotate Left
+            </button>
+
+            <button onclick="rotatePreview(90)"
+                class="small-control py-3 text-xs">
+                Rotate Right
+            </button>
+
+            <button onclick="resetTransform()"
+                class="small-control py-3 text-xs col-span-2">
+                Reset Transform
+            </button>
+
+        </div>
+    `;
+
+    return;
+
+}
+
+/* ADJUST */
+
+if(key==='adjust'){
+
+    area.innerHTML=`
+
+        <div class="space-y-4">
+
+            ${adjustSlider('brightness', 'Brightness', 100)}
+            ${adjustSlider('contrast', 'Contrast', 100)}
+            ${adjustSlider('saturation', 'Saturation', 100)}
+            ${adjustSlider('blur', 'Blur', 0)}
+
+        </div>
+    `;
+
+}
+  
   
   
