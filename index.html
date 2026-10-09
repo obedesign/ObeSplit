@@ -3154,5 +3154,54 @@ if(key==='removebg'){
 
             </button>
 
+                </div>
+    `;
+
+    return;
+}
+
+/* AI REMOVE */
+
+if(key==='airemove'){
+
+    area.innerHTML=`
+    
+    <div class="panel-card p-4">
+    
+        <div class="text-[12px] font-semibold">
+            AI Remove
         </div>
+        
+        <div class="text-[11px] text-[#777] mt-1 mb-3">
+            Select an object area for AI removal.
+        </div>
+        
+        <button
+            onclick="showFeatureMessage('AI Remove')"
+            class="w-full h-10 bg-[#18E58B] text-black rounded-xl font-bold text-xs">
+            
+            Start AI Remove
+            
+        </button>
+        
+    </div>
+    `;
+
+    return;
+}
+
+/* EXTRACT AUDIO */
+
+if(key==='extract'){
+
+    area.innerHTML=`
+    
+    <button
+        onclick="extractAudio()"
+        class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+        
+        Extract Audio
+        
+    </button>
+    
         
