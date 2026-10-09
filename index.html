@@ -1506,7 +1506,64 @@ function updatePlayhead(){
     ?globalTime/totalDuration
     :0;
 
-    const x=
+    const x = 
+baseOffset+
+ratio*trackWidth;
+
+playhead.style.left=x+'px';
+
+}
+
+/* ==========================================================
+   PLAYBACK
+========================================================== */
+
+function tick(){
+
+  if(!isPlaying)return;
+
+  const info=
+  getClipAtTime(globalTime);
+
+  if(!info){
+
+    pause();
+
+    seekGlobal(0);
+
+    return;
+
+  }
+
+
+  if(info.clip.type.startsWith('video')){
+
+    if(!video.paused){
+
+      globalTime=
+      info.start+
+      video.currentTime;
+
+    }
+
+  }else{
+
+    globalTime+=1/60;
+
+  }
+
+
+  if(globalTime>=totalDuration){
+
+    pause();
+
+    seekGlobal(totalDuration);
+
+    return;
+
+  }
+
+  }
   
   
       
