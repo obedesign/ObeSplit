@@ -3672,13 +3672,61 @@ window.deleteSelectedClip=function(){
     );
 
     selectedClipId=
-        clips.length
-        ?clips[
-            Math.min(
-                info.index,
-                clips.length-1
-            )
-        ]
-      
+  clips.length
+  ?clips[
+    Math.min(
+      info.index,
+      clips.length-1
+    )
+  ].id
+  :null;
+
+renderClips();
+
+if(clips.length){
+
+  seekGlobal(
+    Math.min(
+      info.start,
+      totalDuration
+    )
+  );
+
+}else{
+
+  video.removeAttribute('src');
+  video.load();
+
+  photoPreview.classList.add(
+    'hidden'
+  );
+
+}
+
+};
+
+/* =========================================================
+   DUPLICATE
+========================================================= */
+
+window.duplicateSelectedClip=function(){
+
+  const info=
+    getClipAtTime(globalTime);
+
+  if(!info)return;
+
+  const copy={
+    ...info.clip,
+    id:
+      Date.now()+
+      Math.random(),
+    thumbs:
+      info.clip.thumbs
+      ?[...info.clip.thumbs]
+      :[]
+  };
+
+  clips.splice(
+    info.index+1,
     
-  
