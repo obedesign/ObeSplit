@@ -3565,10 +3565,62 @@ photoPreview.style.filter=filter;
 
 window.splitCurrentClip=function(){
 
-    const info=
+  const info=
     getClipAtTime(globalTime);
 
-    if(!info)return;
+  if(!info)return;
 
-    const clip=info.clip;
+  const clip=info.clip;
+
+  const local=info.local;
+
+
+  if(
+    local<=0.05 ||
+    local>=clip.duration-0.05
+  ){
+
+    return;
+
+  }
+
+
+  const first={
+    ...clip,
+    id:
+      Date.now()+
+      Math.random(),
+    duration:local
+  };
+
+
+  const second={
+    ...clip,
+    id:
+      Date.now()+
+      Math.random(),
+    duration:
+      clip.duration-local
+  };
+
+
+  if(clip.type.startsWith('video')){
+
+    first.thumbs=
+      clip.thumbs
+      ?clip.thumbs.slice(
+        0,
+        Math.max(
+          1,
+          Math.floor(
+            clip.thumbs.length*
+            (local/clip.duration)
+          )
+        )
+      )
+      :[];
+
+    second.thumbs=
+      clip.thumbs
+    
   
