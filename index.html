@@ -2901,10 +2901,66 @@ if(key==='opacity'){
     area.innerHTML=`
         <div class="panel-card p-4">
         
-            <div class="flex justify-between text-[12px] mb-3">
+                      <div class="flex justify-between text-[12px] mb-3">
+
+               <span>Opacity</span>
+
+               <span id="opacityLabel">100%</span>
+
+          </div>
+
+          <input
+              id="opacityRange"
+              type="range"
+              min="0"
+              max="100"
+              value="100"
+              class="w-full range-green"
+          >
+
+     </div>
+`;
+
+document
+  .getElementById('opacityRange')
+  .oninput=e=>{
+
+    const v=
+      Number(e.target.value);
+
+    info.clip.opacity=
+      v/100;
+
+    video.style.opacity=
+      v/100;
+
+    photoPreview.style.opacity=
+      v/100;
+
+    document
+      .getElementById(
+        'opacityLabel'
+      )
+      .textContent=v+'%';
+
+  };
+
+  return;
+
+}
+
+
+/* TRANSFORM */
+
+if(key==='transform'){
+
+  area.innerHTML=`
+
+    <div class="grid grid-cols-2 gap-2">
+
+        <button onclick="transformScale(1.1)"
+            class="small-control py-3 text-xs">
+            Scale +
             
-    
-          
-    
   
   
