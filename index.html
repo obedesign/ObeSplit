@@ -3359,10 +3359,60 @@ if(key==='reverse'){
 
   area.innerHTML=`
 
-    <button
-      onclick="showFeatureMessage('Reverse')"
-      class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
-      
+            <button
+          onclick="showFeatureMessage('Reverse')"
+          class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+          
+          Reverse Clip
+          
+        </button>
+    `;
+    
+    return;
+    
+}
+
+/* MASK */
+
+if(key==='mask'){
+
+    area.innerHTML=`
+    
+        <div class="grid grid-cols-3 gap-2">
+        
+            <button onclick="applyMask('circle')"
+              class="small-control py-3 text-xs">
+              Circle
+            </button>
             
+            <button onclick="applyMask('square')"
+              class="small-control py-3 text-xs">
+              Square
+            </button>
+            
+            <button onclick="clearMask()"
+              class="small-control py-3 text-xs">
+              None
+            </button>
+            
+        </div>
+        
+    `;
+    
+    return;
+    
+}
+
+/* UNLINK */
+
+if(key==='unlink'){
+
+    area.innerHTML=`
+    
+        <div class="panel-card p-4">
+        
+            <div class="text-[12px] mb-3">
+                Separate the selected video's audio from the video clip.
+                
     
         
