@@ -3098,6 +3098,61 @@ if(key==='effects'){
         
         <button onclick="applyFilter('grayscale(1)')"
             class="small-control py-3 text-xs">
-            Mono
-        </button>
+                    Mono
+    </button>
+
+    <button onclick="applyFilter('sepia(1)')"
+        class="small-control py-3 text-xs">
+        Sepia
+    </button>
+
+    <button onclick="applyFilter('blur(4px)')"
+        class="small-control py-3 text-xs">
+        Blur
+    </button>
+
+    <button onclick="applyFilter('contrast(1.4)')"
+        class="small-control py-3 text-xs">
+        Contrast
+    </button>
+
+    <button onclick="applyFilter('saturate(1.6)')"
+        class="small-control py-3 text-xs">
+        Saturate
+    </button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+/* REMOVE BACKGROUND */
+
+if(key==='removebg'){
+
+    area.innerHTML=`
+
+        <div class="panel-card p-4">
+
+            <div class="text-[12px] font-semibold">
+                Remove Background
+            </div>
+
+            <div class="text-[11px] text-[#777] mt-1 mb-3">
+                Background removal controls are ready for the selected clip.
+            </div>
+
+            <button
+                onclick="showFeatureMessage('Remove Background')"
+                class="w-full h-10 bg-[#18E58B] text-black rounded-xl font-bold text-xs">
+
+                Remove Background
+
+            </button>
+
+        </div>
         
