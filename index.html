@@ -1772,7 +1772,62 @@ document
        video.muted=
          info.clip.muted;
 
-     }else{
+         }else{
+        video.muted=
+            !video.muted;
+    }
+
+    document
+        .getElementById('muteBtn')
+        .classList.toggle(
+            'bg-[#18E58B]',
+            video.muted
+        );
+
+    }
+);
+
+/* =========================================================================
+   COVER
+========================================================================= */
+
+document
+    .getElementById('coverBtn')
+    .addEventListener(
+        'click',
+        ()=>{
+
+            const info=
+                getClipAtTime(globalTime);
+
+            if(!info){
+
+                alert('Add media first');
+
+                return;
+
+            }
+
+
+            const can=
+                document.createElement('canvas');
+
+            can.width=720;
+            can.height=1280;
+
+            const ctx=
+                can.getContext('2d');
+
+            try{
+
+                if(
+                    info.clip.type.startsWith('video')
+                ){
+
+                    ctx.drawImage(
+                        video,
+                        0,
+                      
        
   
   
