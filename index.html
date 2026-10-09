@@ -2553,7 +2553,61 @@ if(id=='aspect'){
 
   content.innerHTML=`
 
-    <div class="flex gap-2 flex-wrap">
+<div class="flex gap-2 flex-wrap">
+
+    <button 
+      onclick="setAspect('9/16','62%')"
+      class="small-control px-4 py-3 text-xs">
+      
+      9:16
+      
+    </button>
+
+    <button 
+      onclick="setAspect('16/9','100%')"
+      class="small-control px-4 py-3 text-xs">
+      
+      16:9
+      
+    </button>
+
+    <button 
+      onclick="setAspect('1/1','62%')"
+      class="small-control px-4 py-3 text-xs">
+      
+      1:1
+      
+    </button>
+
+    <button 
+      onclick="setAspect('4/5','70%')"
+      class="small-control px-4 py-3 text-xs">
+      
+      4:5
+      
+    </button>
+
+</div>
+`;
+
+return;
+
+}
+
+/* BACKGROUND */
+
+if(id==='background'){
+
+    title.textContent='Background';
+
+    content.innerHTML=`
+
+    <div class="flex gap-3">
+
+        <button 
+          onclick="setPreviewBackground('#000000')"
+          class="w-11 h-11 rounded-full bg-black border border-[#444]">
+          
     
   
     
