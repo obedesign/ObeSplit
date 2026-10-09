@@ -3203,5 +3203,60 @@ if(key==='extract'){
         Extract Audio
         
     </button>
+`;
+
+return;
+
+}
+
+/* ISOLATE VOICE */
+
+if(key==='voice'){
+
+    area.innerHTML=`
+    
+    <button
+        onclick="showFeatureMessage('Isolate Voice')"
+        class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">
+        
+        Isolate Voice
+        
+    </button>
+    `;
+    
+    return;
+
+}
+
+/* AUDIO EFFECTS */
+
+if(key==='audiofx'){
+
+    area.innerHTML=`
+    
+    <div class="grid grid-cols-2 gap-2">
+    
+        <button
+            onclick="showFeatureMessage('Echo')"
+            class="small-control py-3 text-xs">
+            
+            Echo
+            
+        </button>
+        
+        <button
+            onclick="showFeatureMessage('Reverb')"
+            class="small-control py-3 text-xs">
+            
+            Reverb
+            
+        </button>
+        
+        <button
+            onclick="showFeatureMessage('Bass')"
+            class="small-control py-3 text-xs">
+            
+            Bass
+            
     
         
