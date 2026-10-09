@@ -1824,10 +1824,63 @@ document
                     info.clip.type.startsWith('video')
                 ){
 
-                    ctx.drawImage(
-                        video,
-                        0,
-                      
+                            ctx.drawImage(
+            video,
+            0,
+            0,
+            can.width,
+            can.height
+        );
+
+    }else{
+
+        ctx.drawImage(
+            photoPreview,
+            0,
+            0,
+            can.width,
+            can.height
+        );
+
+    }
+
+    info.clip.cover=
+        can.toDataURL();
+
+    renderClips();
+
+    }catch(e){}
+
+}
+);
+
+/* =========================================================================
+   FIT
+========================================================================= */
+
+document
+    .getElementById('fitBtn')
+    .addEventListener(
+        'click',
+        ()=>{
+
+            const box=
+                document.getElementById(
+                    'previewBox'
+                );
+
+            box.style.width=
+                box.style.width==='100%'
+                ?'62%'
+                :'100%';
+
+        }
+    );
+
+/* =========================================================================
+   UNDO / REDO
+========================================================================= */
+  
        
   
   
