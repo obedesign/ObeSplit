@@ -4337,6 +4337,59 @@ document
 
 
         button.classList.remove(
-          'text-[#999]'
+  'text-[#999]'
+);
+
+button.classList.add(
+  'text-[#18E58B]'
+);
+
+openTool(
+  button.dataset.tool
+);
+
+  }
+);
+
+});
+
+/* ==========================================================
+   CLOSE TOOL PANEL
+========================================================== */
+
+document
+  .getElementById(
+    'closeToolPanel'
+  )
+  .addEventListener(
+    'click',
+    ()=>{
+
+      document
+        .getElementById(
+          'toolPanel'
+        )
+        .classList.add(
+          'hidden'
         );
-        
+
+    }
+  );
+
+/* ==========================================================
+   ADD AUDIO
+========================================================== */
+
+document
+  .getElementById(
+    'addAudioBtn2'
+  )
+  .addEventListener(
+    'click',
+    ()=>{
+
+      document
+        .getElementById(
+          'audioInput'
+        )
+      
