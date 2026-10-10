@@ -4544,12 +4544,62 @@ document
 
       if(b){
 
-        currentFps=
+                currentFps =
           parseInt(
             b.dataset.fps
           );
 
       }
+
     }
+  );
+
+document
+  .getElementById(
+    'brGroup'
   )
-  
+  .addEventListener(
+    'click',
+    e => {
+
+      const b =
+        e.target.closest(
+          '.br-opt'
+        );
+
+      if (b) {
+
+        currentBitrate =
+          parseInt(
+            b.dataset.br
+          );
+
+        document
+          .getElementById(
+            'bitrateLabel'
+          )
+          .textContent =
+          currentBitrate +
+          ' Mbps';
+
+        updateEstSize();
+
+      }
+
+    }
+  );
+
+/* =========================================================================
+   AI TOGGLE
+========================================================================= */
+
+document
+  .getElementById(
+    'aiToggle'
+  )
+  .addEventListener(
+    'click',
+    () => {
+
+      isAiUhd = !isAiUhd;
+      
