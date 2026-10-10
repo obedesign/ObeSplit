@@ -5004,5 +5004,61 @@ video.addEventListener(
 
   }
 );
-  
+
+video.addEventListener(
+  'ended',
+  ()=>{
+
+    if(!isPlaying)return;
+
+    const info=
+      getClipAtTime(globalTime);
+
+    if(info){
+
+      const next=
+        clips[info.index+1];
+
+      if(next){
+
+        let start=0;
+
+        for(
+          let i=0;
+          i<=info.index;
+          i++
+        ){
+
+          start+=clips[i].duration;
+
+        }
+
+        seekGlobal(start+0.001);
+
+        video.play().catch(()=>{});
+
+      }else{
+
+        pause();
+
+      }
+
+    }
+
+  }
+);
+
+/* =========================================================================
+   INITIAL STATE
+========================================================================= */
+
+updateTimeLabel();
+updateRuler();
+updateEstSize();
+
+</script>
+
+</body>
+</html>
+
     
