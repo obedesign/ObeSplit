@@ -4442,8 +4442,60 @@ aiUhdBtn.addEventListener(
   ()=>{
 
     exportPanel.classList.toggle(
-      'hidden'
-    );
-  }
+    'hidden'
 );
+
+}
+);
+
+
+/* ==========================================================================
+   EXPORT OPTION GROUPS
+========================================================================== */
+
+function bindGroup(selector){
+
+    document
+    .querySelectorAll(selector)
+    .forEach(btn=>{
+
+        btn.addEventListener(
+        'click',
+        ()=>{
+
+            document
+            .querySelectorAll(
+                selector
+            )
+            .forEach(b=>{
+
+                b.classList.remove(
+                'bg-white',
+                'text-black',
+                'font-bold'
+                );
+
+                b.classList.add(
+                'bg-[#242424]'
+                );
+
+            });
+
+            btn.classList.remove(
+            'bg-[#242424]'
+            );
+
+            btn.classList.add(
+            'bg-white',
+            'text-black',
+            'font-bold'
+            );
+
+        }
+        );
+
+    });
+
+}
+  
   
