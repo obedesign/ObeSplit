@@ -4497,5 +4497,59 @@ function bindGroup(selector){
     });
 
 }
-  
+
+
+bindGroup('.res-opt');
+bindGroup('.fps-opt');
+bindGroup('.br-opt');
+
+
+document
+  .getElementById(
+    'resGroup'
+  )
+  .addEventListener(
+    'click',
+    e=>{
+
+      const b=
+        e.target.closest(
+          '.res-opt'
+        );
+
+      if(b){
+
+        currentRes=
+          b.dataset.res;
+
+        updateEstSize();
+
+      }
+    }
+  );
+
+
+document
+  .getElementById(
+    'fpsGroup'
+  )
+  .addEventListener(
+    'click',
+    e=>{
+
+      const b=
+        e.target.closest(
+          '.fps-opt'
+        );
+
+      if(b){
+
+        currentFps=
+          parseInt(
+            b.dataset.fps
+          );
+
+      }
+    }
+  )
   
