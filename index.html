@@ -4947,7 +4947,62 @@ document
 
 
 document
- .getElementById(
+  .getElementById(
     'tabGif'
-   
+  )
+  .addEventListener(
+    'click',
+    () => {
+
+      isGif = true;
+
+      document
+        .getElementById(
+          'tabGif'
+        )
+        .className =
+        'flex-1 py-2 rounded-full bg-white text-black text-[13px] font-bold';
+
+      document
+        .getElementById(
+          'tabVideo'
+        )
+        .className =
+        'flex-1 py-2 rounded-full text-[#777] text-[13px]';
+
+    }
+  );
+
+/* =========================================================================
+   VIDEO EVENTS
+========================================================================= */
+
+video.addEventListener(
+  'loadedmetadata',
+  () => {
+
+    if (!isFinite(video.duration))
+      return;
+
+    if (selectedClipId) {
+
+      const clip =
+        clips.find(
+          c => c.id === selectedClipId
+        );
+
+      if (clip) {
+
+        clip.duration =
+          video.duration;
+
+        renderClips();
+
+      }
+
+    }
+
+  }
+);
+  
     
