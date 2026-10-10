@@ -4891,8 +4891,63 @@ else{
     }catch(e){}
 }
 
-t+=1/currentFps;
+        t+=1/currentFps;
 
-if(
-  
+
+        if(
+            t>=totalDuration
+        ){
+
+            clearInterval(
+                drawLoop
+            );
+
+            recorder.stop();
+
+        }
+
+    },
+    1000/currentFps
+);
+
+}
+);
+
+
+/* =========================================================================
+   EXPORT TABS
+========================================================================= */
+
+document
+ .getElementById(
+    'tabVideo'
+ )
+ .addEventListener(
+    'click',
+    ()=>{
+
+        isGif=false;
+
+        document
+         .getElementById(
+            'tabVideo'
+         )
+         .className=
+         'flex-1 py-2 rounded-full bg-white text-black text-[13px] font-bold';
+
+        document
+         .getElementById(
+            'tabGif'
+         )
+         .className=
+         'flex-1 py-2 rounded-full text-[#777] text-[13px]';
+
+    }
+ );
+
+
+document
+ .getElementById(
+    'tabGif'
+   
     
