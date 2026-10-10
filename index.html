@@ -4389,7 +4389,61 @@ document
     ()=>{
 
       document
-        .getElementById(
-          'audioInput'
-        )
-      
+  .getElementById(
+    'audioInput'
+  )
+  .click();
+
+  }
+);
+
+document
+  .getElementById(
+    'addTextBtn2'
+  )
+  .addEventListener(
+    'click',
+    ()=>openTool('text')
+  );
+
+document
+  .getElementById(
+    'audioInput'
+  )
+  .addEventListener(
+    'change',
+    e=>{
+
+      const f=e.target.files[0];
+
+      if(!f)return;
+
+      const url=
+        URL.createObjectURL(f);
+
+      const audio=
+        document.getElementById(
+          'bgAudio'
+        );
+
+      audio.src=url;
+
+      audio.play().catch(()=>({}));
+
+    }
+  );
+
+/* =======================================================
+   AI UHD
+======================================================= */
+
+aiUhdBtn.addEventListener(
+  'click',
+  ()=>{
+
+    exportPanel.classList.toggle(
+      'hidden'
+    );
+  }
+);
+  
