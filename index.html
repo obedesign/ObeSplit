@@ -4601,5 +4601,60 @@ document
     'click',
     () => {
 
-      isAiUhd = !isAiUhd;
+      isAiUhd=!isAiUhd;
+
+const button=
+  document.getElementById(
+    'aiToggle'
+  );
+
+const knob=
+  button.querySelector(
+    'span'
+  );
+
+if(isAiUhd){
+
+  button.classList.remove(
+    'bg-[#2a2a2a]'
+  );
+
+  button.classList.add(
+    'bg-[#18E58B]'
+  );
+
+  knob.classList.add(
+    'translate-x-5'
+  );
+
+}else{
+
+  button.classList.remove(
+    'bg-[#18E58B]'
+  );
+
+  button.classList.add(
+    'bg-[#2a2a2a]'
+  );
+
+  knob.classList.remove(
+    'translate-x-5'
+  );
+
+}
+
+}
+);
+
+/* =========================================================================
+   WATERMARK
+========================================================================= */
+
+document
+  .getElementById(
+    'wmToggle'
+  )
+  .addEventListener(
+    'click',
+    ()=>{
       
