@@ -4694,12 +4694,63 @@ document
           'bg-[#2a2a2a]'
         );
 
-        knob.classList.remove(
-          'translate-x-5'
+                knob.classList.remove(
+            'translate-x-5'
         );
 
-      }
-
     }
-  );
+
+}
+);
+
+
+/* =========================================================================
+   EXPORT
+========================================================================= */
+
+exportBtn.addEventListener(
+    'click',
+    async()=>{
+
+        if(clips.length===0){
+
+            alert(
+                'Add media first using + button'
+            );
+
+            return;
+
+        }
+
+
+        const resMap={
+
+            '480p':,
+            '720p':,
+            '1080p':,
+            '4K': [3840,2160]
+
+        };
+
+
+        const [w,h]=
+        resMap[currentRes]||;
+
+
+        const canvas=
+        document.getElementById(
+            'exportCanvas'
+        );
+
+
+        canvas.width=w;
+        canvas.height=h;
+
+
+        const ctx=
+        canvas.getContext('2d');
+
+
+        const stream=
+          
   
