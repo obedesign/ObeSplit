@@ -4849,8 +4849,50 @@ setInterval(
 
             recorder.stop();
 
-            return;
+                return;
+}
 
-        }
-      
+ctx.fillStyle='#000';
+
+ctx.fillRect(
+    0,
+    0,
+    w,
+    h
+);
+
+if(
+    info.clip.type.startsWith(
+        'video'
+    )
+){
+    try{
+        video.currentTime=
+            info.local;
+
+        ctx.drawImage(
+            video,
+            0,
+            0,
+            w,
+            h
+        );
+    }catch(e){}
+}
+else{
+    try{
+        ctx.drawImage(
+            photoPreview,
+            0,
+            0,
+            w,
+            h
+        );
+    }catch(e){}
+}
+
+t+=1/currentFps;
+
+if(
+  
     
