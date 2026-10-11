@@ -310,3 +310,85 @@ timelineScroll.addEventListener('pointerdown',e=>{
 addMediaBtn.addEventListener('click',()=>mediaInput.click());
 mediaInput.addEventListener('change',async e=>{if(e.target.files.length){await addFiles(e.target.files);}e.target.value='';});
 playBtn.addEventListener('click',()=>{isPlaying?pause():play();});                                                                                                                                                                                                                                                                                                                                                                                                                         </div>
+document.getElementById('muteBtn').addEventListener('click',()=>{
+ const info=getClipAtTime(globalTime);
+ if(info){info.clip.muted=!info.clip.muted;video.muted=info.clip.muted;}else{video.muted=!video.muted;}
+ document.getElementById('muteBtn').classList.toggle('bg-[#18E58B]',video.muted);
+});
+
+document.getElementById('coverBtn').addEventListener('click',()=>{
+ const info=getClipAtTime(globalTime);if(!info){alert('Add media first');return;}
+ const can=document.createElement('canvas');can.width=720;can.height=1280;const ctx=can.getContext('2d');
+ try{if(info.clip.type.startsWith('video')){ctx.drawImage(video,0,0,can.width,can.height);}else{ctx.drawImage(photoPreview,0,0,can.width,can.height);}info.clip.cover=can.toDataURL();renderClips();}catch(e){}
+});
+document.getElementById('fitBtn').addEventListener('click',()=>{const box=document.getElementById('previewBox');box.style.width=box.style.width==='100%'?'62%':'100%';});
+document.getElementById('undoBtn').addEventListener('click',()=>{const tl=document.getElementById('textLayer');if(tl.lastChild){tl.removeChild(tl.lastChild);}});
+document.getElementById('redoBtn').addEventListener('click',()=>{video.style.filter='';photoPreview.style.filter='';});
+document.getElementById('keyframeBtn').addEventListener('click',()=>{const marker=document.createElement('div');marker.className='absolute top-1 w-2.5 h-2.5 bg-white rotate-45 rounded-[1px] border border-black';marker.style.left=playhead.style.left;document.getElementById('keyframeMarkers').appendChild(marker);});
+
+const icons={
+ split:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3l6 9-6 9"/><path d="M18 3l-6 9 6 9"/></svg>`,
+ volume:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15 9a4 4 0 0 1 0 6"/></svg>`,
+ animations:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/></svg>`,
+ effects:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.2 6.8H21l-5.5 4 2.1 6.8-5.6-4.1-5.6 4.1 2.1-6.8-5.5-4h6.8L12 2z"/></svg>`,
+ delete:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/></svg>`,
+ speed:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 1 18 0"/><path d="M12 12l4-4"/><circle cx="12" cy="12" r="1"/></svg>`,
+ crop:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2v16a4 4 0 0 0 4 4h12"/><path d="M2 6h16a4 4 0 0 1 4 4v12"/></svg>`,
+ duplicate:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="7" width="13" height="13" rx="2"/><path d="M4 16H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"/></svg>`,
+ replace:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 11a8 8 0 0 0-14.9-4"/><path d="M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14.9 4"/><path d="M20 19v-4h-4"/></svg>`,
+ overlay:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="14" height="14" rx="2"/><rect x="8" y="8" width="13" height="13" rx="2"/></svg>`,
+ adjust:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>`,
+ filters:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></svg>`,
+ removebg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M8 16l8-8"/><path d="M5 5l14 14"/></svg>`,
+ airemove:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l1.7 5.3L19 9l-5.3 1.7L12 16l-1.7-5.3L5 9l5.3-1.7L12 2z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>`,
+ opacity:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
+ transform:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>`,
+ extract:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+ voice:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`,
+ audiofx:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>`,
+ enhance:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.4 7.2H22l-6.2 4.5 2.4 7.2L12 16.4 5.8 20.9l2.4-7.2L2 9.2h7.6z"/></svg>`,
+ translate:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>`,
+ freeze:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`,
+ reverse:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="11 5 6 9 11 13"/><path d="M20 9H6"/></svg>`,
+ mask:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/></svg>`,
+ unlink:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/><line x1="18" y1="6" x2="6" y2="18"/></svg>`
+};
+
+const editTools=[
+ ['split','Split'],['volume','Volume'],['animations','Animations'],['effects','Effects'],['delete','Delete'],['speed','Speed'],['crop','Crop'],['duplicate','Duplicate'],['replace','Replace'],['overlay','Overlay'],['adjust','Adjust'],['filters','Filters'],['removebg','Remove background'],['airemove','AI remove'],['opacity','Opacity'],['transform','Transform'],['extract','Extract audio'],['voice','Isolate voice'],['audiofx','Audio effects'],['enhance','Enhance voice'],['translate','Video translator'],['freeze','Freeze'],['reverse','Reverse'],['mask','Mask'],['unlink','Unlink']
+];
+
+function openTool(id){
+ const panel=document.getElementById('toolPanel');
+ const content=document.getElementById('toolContent');
+ const title=document.getElementById('toolTitle');
+ panel.classList.remove('hidden');
+ if(id=='edit'){
+  title.textContent='Edit';
+  content.innerHTML=`<div id="editToolsScroll" class="flex gap-2 overflow-x-auto no-scrollbar pb-2">${editTools.map(([key,name])=>`<button class="edit-tool" data-edit-tool="${key}" onclick="selectEditTool('${key}')">${icons[key]||''}<span>${name}</span></button>`).join('')}</div><div id="editOptionArea" class="mt-3"><div class="panel-card p-4 text-center"><div class="text-[13px] font-semibold">Select an Edit tool</div><div class="text-[11px] text-[#777] mt-1">Choose a tool above to edit the selected clip.</div></div></div>`;
+  return;
+ }
+ if(id==='audio'){
+  title.textContent='Audio';
+  content.innerHTML=`<div class="space-y-3"><button onclick="document.getElementById('audioInput').click()" class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">Add Audio</button><div class="panel-card p-4"><div class="flex justify-between text-[12px] mb-2"><span>Volume</span><span id="audioVolumeLabel">100%</span></div><input id="audioVolumeRange" type="range" min="0" max="100" value="100" class="w-full range-green"></div></div>`;
+  const range=document.getElementById('audioVolumeRange');
+  range.oninput=()=>{const value=Number(range.value);video.volume=value/100;document.getElementById('audioVolumeLabel').textContent=value+'%';};
+  return;
+ }
+ if(id=='text'){
+  title.textContent='Text';
+  content.innerHTML=`<div class="space-y-3"><div class="flex gap-2"><input id="textInp" placeholder="Enter text" class="bg-[#242424] px-4 py-3 rounded-xl flex-1 text-[13px] outline-none border border-[#333]"><button onclick="addTxt()" class="bg-[#18E58B] text-black px-5 rounded-xl font-bold">Add</button></div><div class="panel-card p-3"><div class="text-[11px] text-[#777]">Add text directly over the preview.</div></div></div>`;
+  return;
+ }
+ if(id=='effects'){
+  title.textContent='Effects';
+  content.innerHTML=`<div class="grid grid-cols-3 gap-2"><button onclick="clearFilter()" class="small-control py-3 text-xs">None</button><button onclick="applyFilter('grayscale(1)')" class="small-control py-3 text-xs">B&W</button><button onclick="applyFilter('sepia(1)')" class="small-control py-3 text-xs">Sepia</button><button onclick="applyFilter('contrast(1.3) saturate(1.3)')" class="small-control py-3 text-xs">Vivid</button><button onclick="applyFilter('brightness(1.2)')" class="small-control py-3 text-xs">Bright</button><button onclick="applyFilter('blur(3px)')" class="small-control py-3 text-xs">Blur</button></div>`;
+  return;
+ }
+ if(id==='overlay'){title.textContent='Overlay';content.innerHTML=`<button onclick="document.getElementById('mediaInput').click()" class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">Add Overlay Media</button>`;return;}
+ if(id==='captions'){title.textContent='Captions';content.innerHTML=`<button onclick="autoCaption()" class="w-full h-11 bg-[#18E58B] text-black rounded-xl font-bold text-[13px]">Auto Captions</button>`;return;}
+ if(id==='filters'){title.textContent='Filters';content.innerHTML=`<div class="grid grid-cols-3 gap-2"><button onclick="clearFilter()" class="small-control py-3 text-xs">Natural</button><button onclick="applyFilter('contrast(1.2) saturate(1.4)')" class="small-control py-3 text-xs">Vivid</button><button onclick="applyFilter('grayscale(1)')" class="small-control py-3 text-xs">Mono</button></div>`;return;}
+ if(id==='sticker'){title.textContent='Sticker';content.innerHTML=`<div class="grid grid-cols-4 gap-2"><button onclick="addShapeSticker('circle')" class="small-control h-12 flex items-center justify-center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg></button><button onclick="addShapeSticker('square')" class="small-control h-12 flex items-center justify-center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="2"/></svg></button><button onclick="addShapeSticker('star')" class="small-control h-12 flex items-center justify-center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 6 6.5.5-5 4.2 1.5 6.3-5.5-3.3-5.5 3.3 1.5-6.3-5-4.2 6.5-.5L12 3z"/></svg></button><button onclick="addShapeSticker('line')" class="small-control h-12 flex items-center justify-center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 19L19 5"/></svg></button></div>`;return;}
+ if(id=='aspect'){title.textContent='Aspect Ratio';content.innerHTML=`<div class="flex gap-2 flex-wrap"><button onclick="setAspect('9/16','62%')" class="small-control px-4 py-3 text-xs">9:16</button><button onclick="setAspect('16/9','100%')" class="small-control px-4 py-3 text-xs">16:9</button><button onclick="setAspect('1/1','62%')" class="small-control px-4 py-3 text-xs">1:1</button><button onclick="setAspect('4/5','70%')" class="small-control px-4 py-3 text-xs">4:5</button></div>`;return;}
+ if(id==='background'){title.textContent='Background';content.innerHTML=`<div class="flex gap-3"><button onclick="setPreviewBackground('#000000')" class="w-11 h-11 rounded-full bg-black border border-[#444]"></button><button onclick="setPreviewBackground('#1a1a1a')" class="w-11 h-11 rounded-full bg-[#1a1a1a] border border-[#444]"></button><button onclick="setPreviewBackground('#18E58B')" class="w-11 h-11 rounded-full bg-[#18E58B]"></button></div>`;return;}
+             }
